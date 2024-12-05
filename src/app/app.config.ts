@@ -1,33 +1,8 @@
-import { ApplicationConfig } from '@angular/core';
-import { provideRouter,Routes } from '@angular/router';
-import { Route } from '@angular/router';
-import { RegistrationComponent } from './components/registration/registration.component';
-import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
-import { ViewresultsComponent } from './components/viewresults/viewresults.component';
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
-
-const routes:Routes=[
-  { path: '', component: HomeComponent },
-  {
-      path:'app-registration',
-      component:RegistrationComponent
-  },
-   {
-      path:'app-login',
-      component:LoginComponent
-  },
-  {
-      path:'app-home',
-      component:HomeComponent
-  },
-  {
-    path:'app-viewresults',
-    component: ViewresultsComponent
-  }
-  
-]
+import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes)]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)]
 };

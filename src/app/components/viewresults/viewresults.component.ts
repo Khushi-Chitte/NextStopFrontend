@@ -40,6 +40,7 @@ export class ViewresultsComponent implements OnInit {
         departureTime: '10:00 AM',
         arrivalTime: '2:00 PM',
         price: 500,
+        seatsAvailable: 10, // Added seat availability
       },
       {
         id: 2,
@@ -49,6 +50,7 @@ export class ViewresultsComponent implements OnInit {
         departureTime: '11:00 AM',
         arrivalTime: '3:30 PM',
         price: 600,
+        seatsAvailable: 5, // Added seat availability
       },
     ];
 

@@ -16,9 +16,20 @@
                     <strong>Route:</strong> {{ bus.from }} - {{ bus.to }}<br />
                     <strong>Departure:</strong> {{ bus.departureTime }}<br />
                     <strong>Arrival:</strong> {{ bus.arrivalTime }}<br />
-                    <strong>Price:</strong> ₹{{ bus.price }}
+                    <strong>Price:</strong> ₹{{ bus.price }}<br />
+                    <strong>Seats Available:</strong> {{ bus.seatsAvailable }}<br />
                 </p>
-                <button class="btn btn-danger" (click)="onBook(bus)">Book Now</button>
+                <!-- Button changes based on seat availability -->
+                <button 
+                  class="btn btn-danger" 
+                  (click)="onBook(bus)" 
+                  [disabled]="bus.seatsAvailable <= 0">
+                    Book Now
+                </button>
+                <!-- Optionally show a message if seats are unavailable -->
+                <div *ngIf="bus.seatsAvailable <= 0" class="text-danger mt-2">
+                    Sorry, no seats available.
+                </div>
             </div>
         </div>
     </div>
