@@ -1,0 +1,58 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">NextStop Registration Form</h2>
+    <form #registrationForm="ngForm" (ngSubmit)="onSubmit()" class="p-4 border rounded shadow-sm bg-light">
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" id="name" name="name" [(ngModel)]="user.name" required #name="ngModel"
+                class="form-control" placeholder="Enter your name" />
+            <div *ngIf="name.invalid && name.touched" class="text-danger mt-1">
+                Name is required.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" id="email" name="email" [(ngModel)]="user.email" required #email="ngModel"
+                class="form-control" placeholder="Enter your email" />
+            <div *ngIf="email.invalid && email.touched" class="text-danger mt-1">
+                Valid email is required.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" id="password" name="password" [(ngModel)]="user.password" required
+                #password="ngModel" class="form-control" placeholder="Enter your password" />
+            <div *ngIf="password.invalid && password.touched" class="text-danger mt-1">
+                Password is required.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="role" class="form-label">Role:</label>
+            <select id="role" name="role" [(ngModel)]="user.role" required #role="ngModel" class="form-select">
+                <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
+            </select>
+            <div *ngIf="role.invalid && role.touched" class="text-danger mt-1">
+                Role is required.
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary w-100" [disabled]="registrationForm.invalid">
+                Register
+            </button>
+        </div>
+    </form>
+
+    <div class="mt-5 p-4 border rounded shadow-sm bg-light">
+        <h3 class="mb-3">Fetched User Details</h3>
+        <p><strong>Name:</strong> {{ fetchedUser?.name || 'N/A' }}</p>
+        <p><strong>Email:</strong> {{ fetchedUser?.email || 'N/A' }}</p>
+        <p><strong>Role:</strong> {{ getRoleName(fetchedUser?.role) }}</p>
+        <div class="text-center">
+            <button (click)="fetchData()" class="btn btn-secondary mt-3">Fetch Data</button>
+        </div>
+    </div>
+</div>
