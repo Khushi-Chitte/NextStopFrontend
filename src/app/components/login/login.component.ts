@@ -15,14 +15,11 @@ export class LoginComponent {
     password: ''
   };
 
-  // Login handler
   onLogin() {
   const storedUser = JSON.parse(localStorage.getItem('userDetails') || '{}');
   
-  // Check if the entered credentials match the stored credentials
   if (this.loginData.email === storedUser.email && this.loginData.password === storedUser.password) {
     console.log('Login successful');
-    // You can store the user role in localStorage or set a logged-in state if needed
     localStorage.setItem('loggedIn', 'true');
   } else {
     console.log('Invalid credentials');

@@ -14,14 +14,13 @@ export class RegistrationComponent {
     name: '',
     email: '',
     password: '',
-    role: null,
+    phone: '',
+    address: '',
+    role: '',
+    isActive: true
   };
 
-  roles = [
-    { id: 'admin', name: 'Admin' },
-    { id: 'passenger', name: 'Passenger' },
-    { id: 'operator', name: 'Operator' },
-  ];
+  roles = ['passenger', 'operator', 'admin'];
 
   fetchedUser: any = null;
 
@@ -40,8 +39,8 @@ export class RegistrationComponent {
   }
 
   // Method to get role name by role ID
-  getRoleName(roleId: string | null): string {
-    const role = this.roles.find((r) => r.id === roleId);
-    return role ? role.name : 'Role not found';
-  }
+  // getRoleName(roleId: string | null): string {
+  //   const role = this.roles.find((r) => r.id === roleId);
+  //   return role ? role.name : 'Role not found';
+  // }
 }

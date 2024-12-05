@@ -1,6 +1,6 @@
 .form-container {
     max-width: 500px;
-    margin: 0 auto;
+    margin: 70px auto;
     padding: 20px;
     border-radius: 8px;
     background-color: #f9f9f9;
@@ -60,4 +60,25 @@ h3 {
 
 p {
     font-size: 14px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background: linear-gradient(to right, #ff9a9e, #ff616f);
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(to right, #ff616f, #ff9a9e); /* Reverse gradient on hover */
+}
+
+button:disabled {
+    background: #b0c4de;
+    cursor: not-allowed;
 }

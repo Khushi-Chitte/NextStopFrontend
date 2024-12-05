@@ -23,16 +23,35 @@
         <div class="mb-3">
             <label for="password" class="form-label">Password:</label>
             <input type="password" id="password" name="password" [(ngModel)]="user.password" required
-                #password="ngModel" class="form-control" placeholder="Enter your password" />
+                #password="ngModel" class="form-control" placeholder="Enter your password" 
+                minlength="8" maxlength="255"/>
             <div *ngIf="password.invalid && password.touched" class="text-danger mt-1">
-                Password is required.
+                Password must be between 8 and 255 characters.
             </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone:</label>
+            <input type="text" id="phone" name="phone" [(ngModel)]="user.phone" required
+                #phone="ngModel" class="form-control" placeholder="Enter your phone number" 
+                pattern="^\d{10}$"/>
+            <div *ngIf="phone.invalid && phone.touched"  class="text-danger mt-1">
+                Phone must be numeric and exactly 10 digits.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="address" class="form-label">Address:</label>
+            <textarea type="text" id="address" name="address" [(ngModel)]="user.address" required
+                #address="ngModel" class="form-control" placeholder="Enter your address" 
+                rows="2"></textarea>
         </div>
 
         <div class="mb-3">
             <label for="role" class="form-label">Role:</label>
             <select id="role" name="role" [(ngModel)]="user.role" required #role="ngModel" class="form-select">
-                <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
+                <option value="" disabled>Select a role</option>
+                <option *ngFor="let role of roles">{{ role }}</option>
             </select>
             <div *ngIf="role.invalid && role.touched" class="text-danger mt-1">
                 Role is required.
@@ -46,11 +65,14 @@
         </div>
     </form>
 
-    <div class="mt-5 p-4 border rounded shadow-sm bg-light">
+    <div class="mt-5 mb-5 p-4 border rounded shadow-sm bg-light">
         <h3 class="mb-3">Fetched User Details</h3>
         <p><strong>Name:</strong> {{ fetchedUser?.name || 'N/A' }}</p>
         <p><strong>Email:</strong> {{ fetchedUser?.email || 'N/A' }}</p>
-        <p><strong>Role:</strong> {{ getRoleName(fetchedUser?.role) }}</p>
+        <p><strong>Phone:</strong> {{ fetchedUser?.phone || 'N/A' }}</p>
+        <p><strong>Address:</strong> {{ fetchedUser?.address || 'N/A' }}</p>
+        <p><strong>Role:</strong> {{ fetchedUser?.role || 'N/A'}}</p>
+        <p><strong>isActive:</strong> {{ fetchedUser?.isActive || 'N/A'}}</p>
         <div class="text-center">
             <button (click)="fetchData()" class="btn btn-secondary mt-3">Fetch Data</button>
         </div>
