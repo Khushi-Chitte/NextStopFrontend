@@ -11,12 +11,13 @@
     <div *ngIf="buses.length > 0" class="bus-list">
         <div *ngFor="let bus of buses" class="card mb-3 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">{{ bus.name }}</h5>
+                <h5 class="card-title">{{ bus.busName }}</h5>
                 <p class="card-text">
-                    <strong>Route:</strong> {{ bus.from }} - {{ bus.to }}<br />
+                    <strong>Route:</strong> {{ bus.origin }} - {{ bus.destination }}<br />
+                    <strong>Date:</strong> {{ bus.date }}<br />
                     <strong>Departure:</strong> {{ bus.departureTime }}<br />
                     <strong>Arrival:</strong> {{ bus.arrivalTime }}<br />
-                    <strong>Price:</strong> ₹{{ bus.price }}<br />
+                    <strong>Fare:</strong> ₹{{ bus.fare }}<br />
                     <strong>Seats Available:</strong> {{ bus.seatsAvailable }}<br />
                 </p>
                 <!-- Button changes based on seat availability -->

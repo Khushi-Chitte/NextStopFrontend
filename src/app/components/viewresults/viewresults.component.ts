@@ -33,23 +33,28 @@ export class ViewresultsComponent implements OnInit {
 
     const mockBuses = [
       {
-        id: 1,
-        name: 'Morning Star Travels',
-        from: this.searchParams.from,
-        to: this.searchParams.to,
+        scheduleId: 4,
+        busId: 1,
+        busName: 'Volvo Express',
+        routeId: 1,
+        origin: this.searchParams.origin,
+        destination: this.searchParams.destination,
+        date: this.searchParams.travelDate,
         departureTime: '10:00 AM',
         arrivalTime: '2:00 PM',
-        price: 500,
+        fare: 500,
         seatsAvailable: 10, // Added seat availability
       },
       {
-        id: 2,
-        name: 'VRL Travels',
-        from: this.searchParams.from,
-        to: this.searchParams.to,
+        scheduleId: 4,
+        busId: 1,
+        busName: 'VRL Travels',
+        origin: this.searchParams.origin,
+        destination: this.searchParams.destination,
+        date: this.searchParams.travelDate,
         departureTime: '11:00 AM',
         arrivalTime: '3:30 PM',
-        price: 600,
+        fare: 600,
         seatsAvailable: 5, // Added seat availability
       },
     ];
@@ -57,8 +62,8 @@ export class ViewresultsComponent implements OnInit {
     // Filter buses based on the search criteria
     this.buses = mockBuses.filter(
       (bus) =>
-        bus.from.toLowerCase() === this.searchParams.from.toLowerCase() &&
-        bus.to.toLowerCase() === this.searchParams.to.toLowerCase()
+        bus.origin.toLowerCase() === this.searchParams.origin.toLowerCase() &&
+        bus.destination.toLowerCase() === this.searchParams.destination.toLowerCase()
     );
     console.log('Filtered Buses:', this.buses); // Debug log
   }
