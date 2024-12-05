@@ -55,22 +55,22 @@ export class ViewresultsComponent implements OnInit {
         departureTime: '11:00 AM',
         arrivalTime: '3:30 PM',
         fare: 600,
-        seatsAvailable: 5, // Added seat availability
+        seatsAvailable: 5, 
       },
     ];
 
-    // Filter buses based on the search criteria
-    this.buses = mockBuses.filter(
-      (bus) =>
-        bus.origin.toLowerCase() === this.searchParams.origin.toLowerCase() &&
-        bus.destination.toLowerCase() === this.searchParams.destination.toLowerCase()
-    );
-    console.log('Filtered Buses:', this.buses); // Debug log
+    this.buses = mockBuses;
+    console.log('Filtered Buses:', this.buses); 
   }
 
   onBook(bus: any) {
     console.log('Booking Bus:', bus); // Debug log
     // Navigate to the booking page with bus details
-    this.router.navigate(['/app-book-bus'], { queryParams: { busId: bus.id } });
+    this.router.navigate(['/app-book-bus'], { 
+      queryParams: { 
+        scheduleId: bus.scheduleId,
+        busId: bus.busId
+      }
+     });
   }
 }
