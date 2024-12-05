@@ -1,0 +1,25 @@
+<!-- viewresults.component.html -->
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Available Buses</h2>
+
+    <!-- If no results found -->
+    <div *ngIf="buses.length === 0" class="text-center">
+        <p>No buses found for your search criteria. Try again!</p>
+    </div>
+
+    <!-- List of Buses -->
+    <div *ngIf="buses.length > 0" class="bus-list">
+        <div *ngFor="let bus of buses" class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ bus.name }}</h5>
+                <p class="card-text">
+                    <strong>Route:</strong> {{ bus.from }} - {{ bus.to }}<br />
+                    <strong>Departure:</strong> {{ bus.departureTime }}<br />
+                    <strong>Arrival:</strong> {{ bus.arrivalTime }}<br />
+                    <strong>Price:</strong> ₹{{ bus.price }}
+                </p>
+                <button class="btn btn-danger" (click)="onBook(bus)">Book Now</button>
+            </div>
+        </div>
+    </div>
+</div>

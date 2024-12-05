@@ -4,6 +4,7 @@ import { Route } from '@angular/router';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
+import { ViewresultsComponent } from './components/viewresults/viewresults.component';
 
 
 const routes:Routes=[
@@ -20,6 +21,10 @@ const routes:Routes=[
       path:'app-home',
       component:HomeComponent
   },
+  {
+    path:'app-viewresults',
+    component: ViewresultsComponent
+  }
   
 ]
 

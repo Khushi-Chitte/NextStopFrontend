@@ -25,3 +25,7 @@
 .container {
     z-index: 2;
 }
+
+.searchFormBg {
+    background: linear-gradient(to right, #ff616f, #ff9a9e);
+}

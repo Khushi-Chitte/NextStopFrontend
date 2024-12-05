@@ -1,3 +1,34 @@
+<!--search form-->
+
+<!-- header.component.html -->
+<div class="hero-section text-white text-center py-5" style="background: linear-gradient(to right, #ff616f, #ff9a9e);">
+    <div class="container">
+        <h1 class="display-4">India's No. 1 Online Bus Ticket Booking Site</h1>
+        <div class="mt-4">
+            <form class="row g-3 justify-content-center" (ngSubmit)="onSearch()">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="From" [(ngModel)]="searchData.from" name="from"
+                        required />
+                </div>
+
+                <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="To" [(ngModel)]="searchData.to" name="to"
+                        required />
+                </div>
+
+                <div class="col-md-3">
+                    <input type="date" class="form-control" [(ngModel)]="searchData.date" name="date" required />
+                </div>
+
+                <div class="col-md-2">
+                    <button class="btn btn-danger btn-block w-100" type="submit">Search Buses</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <div class="home-background">
     <div class="container">
         <h1>Welcome to NextStop</h1>
