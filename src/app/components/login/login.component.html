@@ -1,19 +1,47 @@
 <div class="form-container">
     <h2 class="form-title">NextStop Login</h2>
-    <form #loginForm="ngForm" (ngSubmit)="onLogin()">
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" [(ngModel)]="loginData.email" name="email" class="form-control" required />
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input 
+          formControlName="email" 
+          type="email" 
+          id="email" 
+          class="form-control" 
+          [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" 
+          required 
+        />
+        <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="error-messages">
+          <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</span>
+          <span *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email address.</span>
+          <span *ngIf="loginForm.get('email')?.errors?.['maxlength']">Email cannot exceed 100 characters.</span>
         </div>
-
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" [(ngModel)]="loginData.password" name="password" class="form-control"
-                required />
+      </div>
+      
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input 
+          formControlName="password" 
+          type="password" 
+          id="password" 
+          class="form-control" 
+          [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" 
+          required 
+        />
+        <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="error-messages">
+          <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</span>
+          <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters.</span>
+          <span *ngIf="loginForm.get('password')?.errors?.['maxlength']">Password cannot exceed 100 characters.</span>
         </div>
-
-        <div class="form-group">
-            <button type="submit" class="btn btn-submit" [disabled]="loginForm.invalid">Login</button>
-        </div>
+      </div>
+      
+      <!-- Submit Button -->
+      <div class="form-group">
+        <button type="submit" class="btn btn-submit" [disabled]="loginForm.invalid">Login</button>
+      </div>
     </form>
-</div>
+  </div>
+  

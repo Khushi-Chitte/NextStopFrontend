@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { API_URL } from '../Constants';
+import { Constant } from '../components/Constants/constant';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +12,13 @@ export class ApiServiceService {
   constructor(private http:HttpClient) { }
 
   fetchBusesData(){
-    this.http.get<any[]>(API_URL + 'Bus/GetAllBuses').subscribe(
+    this.http.get<any[]>(Constant.BASE_URI + Constant.GetAllBuses).subscribe(
       (result) => this.allBusesData.set(result)
     );
    }
 
    fetchBusSeats(busId: number){
-    this.http.get<any[]>(API_URL + 'Seat/GetSeatsByBusId/'+busId).subscribe(
+    this.http.get<any[]>(Constant.BASE_URI + Constant.GetSeatsByBusId + busId).subscribe(
       (result) => this.allBusSeats.set(result)
     );
    }

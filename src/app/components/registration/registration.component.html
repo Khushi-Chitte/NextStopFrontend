@@ -1,80 +1,64 @@
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <h2 class="text-center mb-4">NextStop Registration Form</h2>
-    <form #registrationForm="ngForm" (ngSubmit)="onSubmit()" class="p-4 border rounded shadow-sm bg-light">
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="p-4 border rounded shadow-sm bg-light">
 
         <div class="mb-3">
             <label for="name" class="form-label">Name:</label>
-            <input type="text" id="name" name="name" [(ngModel)]="user.name" required #name="ngModel"
-                class="form-control" placeholder="Enter your name" />
-            <div *ngIf="name.invalid && name.touched" class="text-danger mt-1">
+            <input type="text" id="name" formControlName="name" class="form-control" placeholder="Enter your name" />
+            <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="text-danger mt-1">
                 Name is required.
             </div>
         </div>
 
         <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
-            <input type="email" id="email" name="email" [(ngModel)]="user.email" required #email="ngModel"
-                class="form-control" placeholder="Enter your email" />
-            <div *ngIf="email.invalid && email.touched" class="text-danger mt-1">
+            <input type="email" id="email" formControlName="email" class="form-control" placeholder="Enter your email" />
+            <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger mt-1">
                 Valid email is required.
             </div>
         </div>
 
         <div class="mb-3">
             <label for="password" class="form-label">Password:</label>
-            <input type="password" id="password" name="password" [(ngModel)]="user.password" required
-                #password="ngModel" class="form-control" placeholder="Enter your password" 
-                minlength="8" maxlength="255"/>
-            <div *ngIf="password.invalid && password.touched" class="text-danger mt-1">
+            <input type="password" id="password" formControlName="password" class="form-control" placeholder="Enter your password" 
+                minlength="8" maxlength="255" />
+            <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger mt-1">
                 Password must be between 8 and 255 characters.
             </div>
         </div>
 
         <div class="mb-3">
             <label for="phone" class="form-label">Phone:</label>
-            <input type="text" id="phone" name="phone" [(ngModel)]="user.phone" required
-                #phone="ngModel" class="form-control" placeholder="Enter your phone number" 
-                pattern="^\d{10}$"/>
-            <div *ngIf="phone.invalid && phone.touched"  class="text-danger mt-1">
+            <input type="text" id="phone" formControlName="phone" class="form-control" placeholder="Enter your phone number" 
+                pattern="^\d{10}$" />
+            <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="text-danger mt-1">
                 Phone must be numeric and exactly 10 digits.
             </div>
         </div>
 
         <div class="mb-3">
             <label for="address" class="form-label">Address:</label>
-            <textarea type="text" id="address" name="address" [(ngModel)]="user.address" required
-                #address="ngModel" class="form-control" placeholder="Enter your address" 
-                rows="2"></textarea>
+            <textarea id="address" formControlName="address" class="form-control" placeholder="Enter your address" rows="2"></textarea>
+            <div *ngIf="registerForm.get('address')?.invalid && registerForm.get('address')?.touched" class="text-danger mt-1">
+                Address is required.
+            </div>
         </div>
 
         <div class="mb-3">
             <label for="role" class="form-label">Role:</label>
-            <select id="role" name="role" [(ngModel)]="user.role" required #role="ngModel" class="form-select">
+            <select id="role" formControlName="role" class="form-select">
                 <option value="" disabled>Select a role</option>
-                <option *ngFor="let role of roles">{{ role }}</option>
+                <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
             </select>
-            <div *ngIf="role.invalid && role.touched" class="text-danger mt-1">
+            <div *ngIf="registerForm.get('role')?.invalid && registerForm.get('role')?.touched" class="text-danger mt-1">
                 Role is required.
             </div>
         </div>
 
         <div class="text-center">
-            <button type="submit" class="btn btn-primary w-100" [disabled]="registrationForm.invalid">
+            <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid">
                 Register
             </button>
         </div>
     </form>
-
-    <div class="mt-5 mb-5 p-4 border rounded shadow-sm bg-light">
-        <h3 class="mb-3">Fetched User Details</h3>
-        <p><strong>Name:</strong> {{ fetchedUser?.name || 'N/A' }}</p>
-        <p><strong>Email:</strong> {{ fetchedUser?.email || 'N/A' }}</p>
-        <p><strong>Phone:</strong> {{ fetchedUser?.phone || 'N/A' }}</p>
-        <p><strong>Address:</strong> {{ fetchedUser?.address || 'N/A' }}</p>
-        <p><strong>Role:</strong> {{ fetchedUser?.role || 'N/A'}}</p>
-        <p><strong>isActive:</strong> {{ fetchedUser?.isActive || 'N/A'}}</p>
-        <div class="text-center">
-            <button (click)="fetchData()" class="btn btn-secondary mt-3">Fetch Data</button>
-        </div>
-    </div>
 </div>
