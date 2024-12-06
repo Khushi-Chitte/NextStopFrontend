@@ -1,6 +1,6 @@
 import { Component, OnInit, Signal } from '@angular/core';
-import { GetAllBusesAPIService } from '../../services/bus/get-all-buses-api.service';
 import { CommonModule } from '@angular/common';
+import { ApiServiceService } from '../../services/api-service.service';
 
 @Component({
   selector: 'app-bus',
@@ -10,17 +10,17 @@ import { CommonModule } from '@angular/common';
   styleUrl: './bus.component.css'
 })
 export class BusComponent implements OnInit{
-  constructor(private apiservice: GetAllBusesAPIService) {
-    this.data = this.apiservice.incomingData;
+  constructor(private apiservice: ApiServiceService) {
+    this.data = this.apiservice.allBusesData;
   }
 
   data: Signal<any[]>;
   ngOnInit(): void {
-    this.apiservice.fetchData();
+    this.apiservice.fetchBusesData();
   }
 
   loadData() {
-    this.apiservice.fetchData();
+    this.apiservice.fetchBusesData();
   }
 
 }
