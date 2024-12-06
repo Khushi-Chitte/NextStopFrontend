@@ -1,16 +1,67 @@
-<p>book-bus</p>
-<br />
-<p>Bus id: {{busId}}</p>
-<p>Schedule id: {{scheduleId}}</p>
-<p>seatsAvailable: {{seatsAvailable}}</p>
-<p>userID: {{userID}}</p>
-<p>Seat numbers:</p>
-<div style="margin: 20px 20px">
-    <div *ngFor="let seat of seats()">
-     <p>seatId: {{ seat.seatId }} </p>
-     <p>seatNumber: {{ seat.seatNumber }} </p>
-     <p>isAvailable: {{ seat.isAvailable }} </p>
-     <br />
+<div class="container">
+  <p>Book Bus</p>
+  <br />
+  <p>Bus ID: {{ busId }}</p>
+  <p>Schedule ID: {{ scheduleId }}</p>
+  <p>Seats Available: {{ seatsAvailable }}</p>
+  <p>User ID: {{ userID }}</p>
+
+  <br />
+  <br />
+
+  <div class="seat-selection">
+    <h2>Book Your Seats</h2>
+
+    <!-- Input for number of seats to book -->
+    <div class="input-container">
+      <label for="seat-count">How many seats would you like to book?&nbsp;</label>
+      <input
+        id="seat-count"
+        type="number"
+        [(ngModel)]="seatsToBook"
+        [disabled]="selectionConfirmed || startSeatSelection"
+        min="1"
+        max="seatsAvailable"
+      />&nbsp;
+      <button 
+        start-selection 
+        (click)="startSelection()" 
+        [disabled]="seatsToBook <= 0 || seatsToBook > seatsAvailable || selectionConfirmed || startSeatSelection">
+        Start Selection
+      </button>
+    </div>
+
+    <!-- Seat Grid -->
+    <div class="rows-container">
+      <div *ngFor="let row of getSeatRows(seats())" class="seat-row">
+        <div
+          *ngFor="let seat of row"
+          class="seat"
+          [class.available]="seat.isAvailable"
+          [class.unavailable]="!seat.isAvailable"
+          [class.selected]="selectedSeats.includes(seat.seatNumber)"
+          [class.disabled]=" selectionConfirmed || (!selectedSeats.includes(seat) && selectedSeats.length >= seatsToBook) || seatsToBook > seatsAvailable"
+          (click)="toggleSeatSelection(seat)"
+          [title]="seat.isAvailable ? 'Click to select this seat' : 'Not Available'"
+        >
+          {{ seat.seatNumber }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button 
+        confirm-selection 
+        (click)="confirmSelection()" 
+        [disabled]="selectedSeats.length !== seatsToBook || selectionConfirmed || seatsToBook<1 || selectedSeats.length > seatsToBook || !startSeatSelection">
+        Confirm Selection
+      </button>
+      <button 
+        reset-selection 
+        (click)="resetSelection()">
+        Reset
+      </button>
     </div>
   </div>
-
+</div>
