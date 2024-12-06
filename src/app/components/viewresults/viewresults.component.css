@@ -1,30 +1,68 @@
 .container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
+    padding: 20px;
 }
 
-.card {
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #ff616f;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Card-like styling for each row */
+.card-row {
+    padding: 20px;
+    margin: 10px 0;
     border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.card:hover {
+.card-row:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
 
-.card-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #ff616f;
+/* Striping for rows */
+.table-striped tbody tr:nth-of-type(odd) .card-row {
+    background-color: #f9f9f9;
 }
 
-.btn-danger {
+.table-hover tbody tr:hover .card-row {
+    background-color: #f1f1f1;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Button and text styling */
+.table .btn-danger {
     background-color: #ff616f;
     border: none;
     font-weight: bold;
+    padding: 8px 12px;
+    color: #fff;
 }
 
-.btn-danger:hover {
+.table .btn-danger:hover {
     background-color: #e64c5d;
+}
+
+.text-danger {
+    font-size: 0.9rem;
+    color: #e64c5d;
 }

@@ -1,0 +1,26 @@
+<div class="hero-section text-white text-center py-5 searchFormBg">
+    <div class="container">
+        <h1 class="display-4">India's No. 1 Online Bus Ticket Booking Site</h1>
+        <div class="mt-4">
+            <form class="row g-3 justify-content-center" (ngSubmit)="onSearch()">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="Origin" [(ngModel)]="searchData.origin" name="origin"
+                        required />
+                </div>
+
+                <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="Destination" [(ngModel)]="searchData.destination" name="destination"
+                        required />
+                </div>
+
+                <div class="col-md-3">
+                    <input type="date" class="form-control" [(ngModel)]="searchData.travelDate" name="travelDate" required />
+                </div>
+
+                <div class="col-md-2">
+                    <button class="btn btn-danger btn-block w-100" type="submit">Search Buses</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
