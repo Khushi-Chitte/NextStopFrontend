@@ -4,3 +4,13 @@
 <p>Schedule id: {{scheduleId}}</p>
 <p>seatsAvailable: {{seatsAvailable}}</p>
 <p>userID: {{userID}}</p>
+<p>Seat numbers:</p>
+<div style="margin: 20px 20px">
+    <div *ngFor="let seat of seats()">
+     <p>seatId: {{ seat.seatId }} </p>
+     <p>seatNumber: {{ seat.seatNumber }} </p>
+     <p>isAvailable: {{ seat.isAvailable }} </p>
+     <br />
+    </div>
+  </div>
+

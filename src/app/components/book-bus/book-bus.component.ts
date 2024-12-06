@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ApiServiceService } from '../../services/api-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-book-bus',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './book-bus.component.html',
   styleUrl: './book-bus.component.css'
 })
@@ -14,9 +16,11 @@ export class BookBusComponent implements OnInit{
   seatsAvailable: any;
   userID: any;
   
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private apiservice: ApiServiceService) {
+    this.seats = this.apiservice.allBusSeats;
+  }
 
-
+  seats: Signal<any[]>;
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -29,7 +33,9 @@ export class BookBusComponent implements OnInit{
 
       this.userID = storedUser.userID;
 
+      this.apiservice.fetchBusSeats(params['busId']);
 
     });
   }
+
 }

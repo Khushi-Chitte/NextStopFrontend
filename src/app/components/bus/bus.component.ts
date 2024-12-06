@@ -15,11 +15,8 @@ export class BusComponent implements OnInit{
   }
 
   data: Signal<any[]>;
-  ngOnInit(): void {
-    this.apiservice.fetchBusesData();
-  }
 
-  loadData() {
+  ngOnInit(): void {
     this.apiservice.fetchBusesData();
   }
 

@@ -17,8 +17,8 @@ export class ApiServiceService {
     );
    }
 
-   fetchBusSeats(){
-    this.http.get<any[]>(API_URL + 'Seat/GetSeatsByBusId/').subscribe(
+   fetchBusSeats(busId: number){
+    this.http.get<any[]>(API_URL + 'Seat/GetSeatsByBusId/'+busId).subscribe(
       (result) => this.allBusSeats.set(result)
     );
    }
