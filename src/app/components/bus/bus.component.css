@@ -1,6 +1,6 @@
 /* General Styling */
 h2 {
-    font-size: 1.8rem;
+    font-size: rem;
     color: #333;
     margin-bottom: 2rem;
     text-align: center;
@@ -33,13 +33,9 @@ h2 {
 }
 
 .table th {
-    background-color: #333;
+    background-color: #ff616f;
     color: #fff;
     font-weight: bold;
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f9f9f9;
 }
 
 /* Responsive Adjustments */
