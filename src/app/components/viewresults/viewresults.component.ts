@@ -11,25 +11,24 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./viewresults.component.css'],
 })
 export class ViewresultsComponent implements OnInit {
-  buses: any[] = []; // Array to store bus results
-  searchParams: any = {}; // Stores the search criteria
+  buses: any[] = []; 
+  searchParams: any = {}; 
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    // Retrieve query parameters from the route
     this.route.queryParams.subscribe((params) => {
-      console.log('Search Parameters:', params); // Debug log
+      console.log('Search Parameters:', params); 
       this.searchParams = params;
 
-      // Fetch buses based on search criteria
+      
       this.fetchBuses();
     });
   }
 
   fetchBuses() {
     console.log('Mock API Call: Fetching buses...');
-    console.log('Search Criteria:', this.searchParams); // Debug log
+    console.log('Search Criteria:', this.searchParams); 
 
     const mockBuses = [
       {
@@ -43,7 +42,7 @@ export class ViewresultsComponent implements OnInit {
         departureTime: '10:00 AM',
         arrivalTime: '2:00 PM',
         fare: 500,
-        seatsAvailable: 10, // Added seat availability
+        seatsAvailable: 10, 
       },
       {
         scheduleId: 4,
@@ -69,7 +68,8 @@ export class ViewresultsComponent implements OnInit {
     this.router.navigate(['/app-book-bus'], { 
       queryParams: { 
         scheduleId: bus.scheduleId,
-        busId: bus.busId
+        busId: bus.busId,
+        seatsAvailable: bus.seatsAvailable
       }
      });
   }
