@@ -1,8 +1,11 @@
 // viewresults.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SearchComponent } from '../search/search.component';
+import { ApiServiceService } from '../../services/api-service.service';
+import { AuthserviceService } from '../../services/authservice.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-viewresults',
@@ -11,67 +14,86 @@ import { SearchComponent } from '../search/search.component';
   templateUrl: './viewresults.component.html',
   styleUrls: ['./viewresults.component.css'],
 })
-export class ViewresultsComponent implements OnInit {
+export class ViewresultsComponent implements OnInit, OnDestroy {
   buses: any[] = []; 
-  searchParams: any = {}; 
+  searchParams: any = {
+    Origin: '',
+    Destination: '',
+    TravelDate: ''
+  }; 
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  isAuthenticated: boolean = false;
+  private authStatusSubscription!: Subscription;
+  private queryParamsSubscription!: Subscription;
+  loading: boolean = true;
+
+  constructor(private route: ActivatedRoute, private router: Router, private apiS: ApiServiceService, private authS: AuthserviceService ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
+    this.queryParamsSubscription = this.route.queryParams.subscribe((params) => {
       console.log('Search Parameters:', params); 
-      this.searchParams = params;
+      this.searchParams = { ...params };
 
-      
-      this.fetchBuses();
+      this.fetchBusSearchResults(params['Origin'], params['Destination'], params['TravelDate']);
+    });
+
+    this.authStatusSubscription = this.authS.isAuthenticated$.subscribe(status =>  {
+      this.isAuthenticated = status;
     });
   }
 
-  fetchBuses() {
-    console.log('Mock API Call: Fetching buses...');
-    console.log('Search Criteria:', this.searchParams); 
+  ngOnDestroy(): void {
+    // Unsubscribe to avoid memory leaks
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
+    }
 
-    const mockBuses = [
-      {
-        scheduleId: 4,
-        busId: 1,
-        busName: 'Volvo Express',
-        routeId: 1,
-        origin: this.searchParams.origin,
-        destination: this.searchParams.destination,
-        date: this.searchParams.travelDate,
-        departureTime: '10:00 AM',
-        arrivalTime: '2:00 PM',
-        fare: 500,
-        seatsAvailable: 10, 
-      },
-      {
-        scheduleId: 4,
-        busId: 1,
-        busName: 'VRL Travels',
-        origin: this.searchParams.origin,
-        destination: this.searchParams.destination,
-        date: this.searchParams.travelDate,
-        departureTime: '11:00 AM',
-        arrivalTime: '3:30 PM',
-        fare: 600,
-        seatsAvailable: 5, 
-      },
-    ];
-
-    this.buses = mockBuses;
-    console.log('Filtered Buses:', this.buses); 
+    if (this.authStatusSubscription) {
+      this.authStatusSubscription.unsubscribe();
+    }
   }
 
-  onBook(bus: any) {
-    console.log('Booking Bus:', bus); // Debug log
-    // Navigate to the booking page with bus details
-    this.router.navigate(['/app-book-bus'], { 
-      queryParams: { 
-        scheduleId: bus.scheduleId,
-        busId: bus.busId,
-        seatsAvailable: bus.seatsAvailable
+
+  fetchBusSearchResults(Origin: string, Destination: string, TravelDate: string) {
+    this.loading = true;
+
+    this.apiS.fetchBusSearchResults(Origin, Destination, TravelDate).subscribe({
+      next: (response: any) => {
+        console.log('Response:', response);
+        if(response && response.length > 0) {
+          this.buses = response;
+          console.log(response);
+        } else {
+          console.error('Invalid response from server');
+        }
+      },
+      error: (error: any) => {
+        console.error('Error in fetching search results', error);
+      },
+      complete: () => {
+        console.log('Request completed');
+        this.loading = false;
       }
+    });
+  }
+  
+
+  onBook(bus: any) {
+    if(this.isAuthenticated) {
+      console.log('Booking Bus:', bus); // Debug log
+      // Navigate to the booking page with bus details
+      this.router.navigate(['/app-book-bus'], { 
+        queryParams: { 
+          scheduleId: bus.scheduleId,
+          busId: bus.busId,
+          seatsAvailable: bus.availableSeats
+        }
      });
+    }
+
+    else {
+      alert("Please login first to book.");
+    }
+    
   }
 }

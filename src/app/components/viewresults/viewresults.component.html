@@ -3,21 +3,27 @@
 <div class="container mt-5">
     <h2 class="text-center mb-4">Available Buses</h2>
 
+    <!-- Show loading spinner while fetching data -->
+    <div *ngIf="loading" class="text-center">
+        <p>Loading buses...</p>
+    </div>
+
     <!-- If no results found -->
-    <div *ngIf="buses.length === 0" class="text-center">
+    <div *ngIf="!loading && buses.length === 0" class="text-center">
         <p>No buses found for your search criteria. Try again!</p>
     </div>
 
     <!-- Table of Buses -->
-    <div *ngIf="buses.length > 0" class="bus-list">
+    <div *ngIf="!loading && buses.length > 0" class="bus-list">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>Bus Name</th>
                     <th>Route</th>
-                    <th>Date</th>
-                    <th>Departure</th>
-                    <th>Arrival</th>
+                    <th>Departure Date</th>
+                    <th>Departure Time</th>
+                    <th>Arrival Date</th>
+                    <th>Arrival Time</th>
                     <th>Fare</th>
                     <th>Seats Available</th>
                     <th>Action</th>
@@ -27,19 +33,20 @@
                 <tr *ngFor="let bus of buses" class="card-row">
                     <td>{{ bus.busName }}</td>
                     <td>{{ bus.origin }} - {{ bus.destination }}</td>
-                    <td>{{ bus.date }}</td>
-                    <td>{{ bus.departureTime }}</td>
-                    <td>{{ bus.arrivalTime }}</td>
+                    <td>{{ bus.date | date:'yyyy-MM-dd' }}</td>
+                    <td>{{ bus.departureTime | date:'hh:mm a' }}</td>
+                    <td>{{ bus.arrivalTime | date:'yyyy-MM-dd' }}</td>
+                    <td>{{ bus.arrivalTime | date:'hh:mm a' }}</td>
                     <td>₹{{ bus.fare }}</td>
-                    <td>{{ bus.seatsAvailable }}</td>
+                    <td>{{ bus.availableSeats }}</td>
                     <td>
                         <button 
                           class="btn btn-danger" 
                           (click)="onBook(bus)" 
-                          [disabled]="bus.seatsAvailable <= 0">
+                          [disabled]="bus.availableSeats <= 0">
                             Book Now
                         </button>
-                        <div *ngIf="bus.seatsAvailable <= 0" class="text-danger mt-2">
+                        <div *ngIf="bus.availableSeats <= 0" class="text-danger mt-2">
                             Sorry, no seats available.
                         </div>
                     </td>

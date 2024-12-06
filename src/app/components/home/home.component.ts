@@ -9,18 +9,5 @@ import { SearchComponent } from '../search/search.component';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-//  searchData = { origin: '', destination: '', travelDate: '' };
 
-//   constructor(private router: Router) {}
-
-//   onSearch() {
-//     // Pass search data to the ViewresultsComponent via queryParams
-//     this.router.navigate(['/app-viewresults'], {
-//       queryParams: {
-//         origin: this.searchData.origin,
-//         destination: this.searchData.destination,
-//         travelDate: this.searchData.travelDate,
-//       },
-//     });
-//   }
 }

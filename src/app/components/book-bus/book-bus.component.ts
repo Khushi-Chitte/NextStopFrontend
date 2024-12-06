@@ -34,9 +34,8 @@ export class BookBusComponent implements OnInit{
       this.scheduleId = params['scheduleId'];
       this.seatsAvailable = params['seatsAvailable'];
       
-      const storedUser = JSON.parse(localStorage.getItem('userDetails') || '{}');
 
-      this.userID = storedUser.userID;
+      this.userID = localStorage.getItem('userId');
 
       this.apiservice.fetchBusSeats(params['busId']);
 

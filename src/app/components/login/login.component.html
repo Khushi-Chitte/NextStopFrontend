@@ -1,5 +1,10 @@
 <div class="form-container">
     <h2 class="form-title">NextStop Login</h2>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
       
       <!-- Email Field -->

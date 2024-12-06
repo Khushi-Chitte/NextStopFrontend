@@ -5,5 +5,6 @@ export const Constant = {
     LOGOUT: 'Authentication/logout',
     GetAllBuses: 'Bus/GetAllBuses',
     GetSeatsByBusId: 'Seat/GetSeatsByBusId/',
+    SearchBuses: 'Booking/SearchBus/',
 }
 

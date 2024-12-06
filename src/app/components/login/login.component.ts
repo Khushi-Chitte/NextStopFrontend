@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 
 export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
+  errorMessage: string = '';
 
   constructor(private authS: AuthserviceService, private router : Router) { }
 
@@ -61,6 +62,13 @@ export class LoginComponent implements OnInit{
           },
           error: (error: any) => {
             console.error('Login failed:', error);
+            if(error.status === 401) {
+              this.errorMessage = 'Invalid email or password. Please try again.';
+              alert(this.errorMessage); 
+            } else {
+              this.errorMessage = 'An unexpected error occurred. Please try again later.';
+              alert(this.errorMessage);
+            }
           },
           complete: () => {
             console.log('Request completed');

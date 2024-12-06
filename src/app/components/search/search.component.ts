@@ -10,18 +10,29 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './search.component.css'
 })
 export class SearchComponent {
-  @Input() searchData = { origin: '', destination: '', travelDate: '' };
+  @Input() searchData = { Origin: '', Destination: '', TravelDate: '' }; // travelDate as a string
+  minDate: string;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
+  }
 
   onSearch() {
-    // Pass search data to the ViewresultsComponent via queryParams
-    this.router.navigate(['/app-viewresults'], {
-      queryParams: {
-        origin: this.searchData.origin,
-        destination: this.searchData.destination,
-        travelDate: this.searchData.travelDate,
-      },
-    });
+    const travelDate = new Date(this.searchData.TravelDate);
+
+    if (!isNaN(travelDate.getTime())) {
+      const travelDateFormatted = travelDate.toISOString().split('T')[0];  // 'yyyy-mm-dd'
+
+      this.router.navigate(['/app-viewresults'], {
+        queryParams: {
+          Origin: this.searchData.Origin,
+          Destination: this.searchData.Destination,
+          TravelDate: travelDateFormatted, 
+        },
+      });
+    } else {
+      console.error("Invalid travel date");
+    }
   }
 }

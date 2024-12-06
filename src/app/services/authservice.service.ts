@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, tap, throwError } from 'rxjs';
 import { Constant } from '../components/Constants/constant';
 import { jwtDecode } from 'jwt-decode';
 
@@ -21,6 +21,31 @@ export class AuthserviceService implements OnInit{
     this.setAuthStatus(isAuthenticated);
   }
 
+  setAuthStatus(isAuthenticated: boolean): void {
+    this.isAuthenticatedSubject.next(isAuthenticated);
+  }
+
+  checkAuthStatus(): void {
+    const token = this.getToken();
+    if (token) {
+      const expiryDate = this.getTokenExpiry();
+
+      if (expiryDate && expiryDate > new Date()) {
+        // Token is valid, set authentication to true
+        this.setAuthStatus(true);
+      } else {
+        // Token has expired, log out automatically
+        this.logout(this.getRefreshToken()).subscribe(() => {
+          console.log('Token expired, logged out automatically');
+          this.setAuthStatus(false); // Set authentication to false
+        });
+      }
+    } else {
+      // No token, user is not authenticated
+      this.setAuthStatus(false);
+    }
+  }
+
   login(email: string, password: string) : Observable<any> {
     const loginData = {
       email: email,  
@@ -30,7 +55,7 @@ export class AuthserviceService implements OnInit{
     return this.http.post(Constant.BASE_URI + Constant.LOGIN, loginData).pipe(
       catchError((error: any) => {
         console.error(error);
-        return of(error); 
+        return throwError(() => (error));  
       })
     );
   }
@@ -76,10 +101,6 @@ export class AuthserviceService implements OnInit{
         console.log('Server response:', response);
       })
     );
-  }
-
-  setAuthStatus(isAuthenticated: boolean): void {
-    this.isAuthenticatedSubject.next(isAuthenticated);
   }
   
 

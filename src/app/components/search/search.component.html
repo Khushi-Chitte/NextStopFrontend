@@ -4,19 +4,20 @@
         <div class="mt-4">
             <form class="row g-3 justify-content-center" (ngSubmit)="onSearch()">
                 <div class="col-md-3">
-                    <input type="text" class="form-control" placeholder="Origin" [(ngModel)]="searchData.origin" name="origin"
+                    <input type="text" class="form-control" placeholder="Origin" [(ngModel)]="searchData.Origin" name="Origin"
                         required />
                 </div>
 
                 <div class="col-md-3">
-                    <input type="text" class="form-control" placeholder="Destination" [(ngModel)]="searchData.destination" name="destination"
+                    <input type="text" class="form-control" placeholder="Destination" [(ngModel)]="searchData.Destination" name="Destination"
                         required />
                 </div>
 
                 <div class="col-md-3">
-                    <input type="date" class="form-control" [(ngModel)]="searchData.travelDate" name="travelDate" required />
+                    <input type="date" class="form-control" [(ngModel)]="searchData.TravelDate" name="TravelDate" required />
+                    <!-- <input type="date" class="form-control" [(ngModel)]="searchData.travelDate" name="travelDate" [min]="minDate" required /> -->
                 </div>
-
+                
                 <div class="col-md-2">
                     <button class="btn btn-danger btn-block w-100" type="submit">Search Buses</button>
                 </div>
