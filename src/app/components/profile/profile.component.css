@@ -89,4 +89,14 @@
   .update-button:hover {
     background: #0056b3;
   }
+    .profile-photo {
+      text-align: center;
+      margin-bottom: 5px;
+    }
   
+    .profile-image {
+      width:120px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
