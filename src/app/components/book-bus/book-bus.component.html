@@ -1,18 +1,69 @@
 <div class="container">
-  <p>Book Bus</p>
-  <br />
-  <p>Bus ID: {{ busId }}</p>
-  <p>Schedule ID: {{ scheduleId }}</p>
-  <p>Seats Available: {{ seatsAvailable }}</p>
-  <p>User ID: {{ userID }}</p>
 
-  <br />
-  <br />
+  <div *ngIf="errorMessage" class="error">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <h2 class="title">Book Bus</h2>
+
+  <div *ngIf="scheduleDetails && busDetails" class="details-content">
+    <div class="detail-item">
+      <span class="label">Operator Name:</span>
+      <span class="value">{{ busDetails.operatorName }}</span>
+    </div>
+    <div class="detail-item">
+      <span class="label">Bus Name:</span>
+      <span class="value">{{ scheduleDetails.busName }}</span>
+    </div>
+    <div class="detail-item">
+      <span class="label">Bus Type:</span>
+      <span class="value">{{ busDetails.busType }}</span>
+    </div>
+    <div class="detail-item">
+      <span class="label">Amenities:</span>
+      <span class="value">{{ busDetails.amenities }}</span>
+    </div>
+    <div class="detail-item">
+      <span class="label">Origin:</span>
+      <span class="value">{{ scheduleDetails.origin }}</span>
+    </div>
+    <div class="detail-item">
+      <span class="label">Destination:</span>
+      <span class="value">{{ scheduleDetails.destination }}</span>
+    </div>
+    <div class="detail-item">
+      <span class="label">Departure Date:</span>
+      <span class="value">{{ scheduleDetails.departureTime | date: 'yyy-MM-dd' }}</span>
+    </div>
+    <div class="detail-item">
+      <span class="label">Departure Time:</span>
+      <span class="value">{{ scheduleDetails.departureTime | date: 'hh:mm a' }}</span>
+    </div>
+    <div class="detail-item">
+      <span class="label">Arrival Date:</span>
+      <span class="value">{{ scheduleDetails.arrivalTime | date: 'yyy-MM-dd' }}</span>
+    </div>
+    <div class="detail-item">
+      <span class="label">Arrival Time:</span>
+      <span class="value">{{ scheduleDetails.arrivalTime | date: 'hh:mm a' }}</span>
+    </div>
+    <div class="detail-item">
+      <span class="label">Fare:</span>
+      <span class="value">₹{{ scheduleDetails.fare }}</span>
+    </div>
+    <div class="detail-item">
+      <span class="label">Seats Availability:</span>
+      <span class="value">{{ seatsAvailable}}/{{busDetails.totalSeats}}</span>
+    </div>
+  </div>
+
+  <div *ngIf="!scheduleDetails" class="loading-message">
+    <p>Loading schedule details...</p>
+  </div>
 
   <div class="seat-selection">
-    <h2>Book Your Seats</h2>
+    <h2>Select Seats</h2>
 
-    <!-- Input for number of seats to book -->
     <div class="input-container">
       <label for="seat-count">How many seats would you like to book?&nbsp;</label>
       <input
@@ -33,14 +84,14 @@
 
     <!-- Seat Grid -->
     <div class="rows-container">
-      <div *ngFor="let row of getSeatRows(seats())" class="seat-row">
+      <div *ngFor="let row of getSeatRows(seats)" class="seat-row">
         <div
           *ngFor="let seat of row"
           class="seat"
           [class.available]="seat.isAvailable"
           [class.unavailable]="!seat.isAvailable"
           [class.selected]="selectedSeats.includes(seat.seatNumber)"
-          [class.disabled]=" selectionConfirmed || (!selectedSeats.includes(seat) && selectedSeats.length >= seatsToBook) || seatsToBook > seatsAvailable"
+          [class.disabled]="selectionConfirmed || (!selectedSeats.includes(seat) && selectedSeats.length >= seatsToBook) || seatsToBook > seatsAvailable"
           (click)="toggleSeatSelection(seat)"
           [title]="seat.isAvailable ? 'Click to select this seat' : 'Not Available'"
         >
@@ -54,13 +105,20 @@
       <button 
         confirm-selection 
         (click)="confirmSelection()" 
-        [disabled]="selectedSeats.length !== seatsToBook || selectionConfirmed || seatsToBook<1 || selectedSeats.length > seatsToBook || !startSeatSelection">
+        [disabled]="selectedSeats.length !== seatsToBook || selectionConfirmed || seatsToBook < 1 || selectedSeats.length > seatsToBook || !startSeatSelection">
         Confirm Selection
       </button>
       <button 
         reset-selection 
         (click)="resetSelection()">
         Reset
+      </button>
+
+      <button 
+        class="btn btn-success"
+        (click)="onConfirmBooking()" 
+        [disabled]="!selectionConfirmed || seatsToBook <= 0">
+        Confirm Booking
       </button>
     </div>
   </div>

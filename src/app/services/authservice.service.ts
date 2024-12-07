@@ -37,7 +37,12 @@ export class AuthserviceService implements OnInit{
         // Token has expired, log out automatically
         this.logout(this.getRefreshToken()).subscribe(() => {
           console.log('Token expired, logged out automatically');
+          alert('Token expired, logged out automatically');
           this.setAuthStatus(false); // Set authentication to false
+          this.removeToken();
+          this.removeRefreshToken();
+          this.removeEmail();
+          this.removeUserId();
         });
       }
     } else {

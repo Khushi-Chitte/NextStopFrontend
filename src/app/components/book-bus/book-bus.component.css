@@ -120,3 +120,66 @@
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+.loading,
+.error {
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+.success-message, .error-message {
+  text-align: center;
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+.success-message {
+  color: green;
+}
+
+.details-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px 30px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.details-content {
+  margin-bottom: 20px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #a09292;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-weight: bold;
+  color: #777;
+}
+
+.value {
+  color: #777;
+}

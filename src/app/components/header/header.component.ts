@@ -25,10 +25,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.authStatusSubscription = this.authS.isAuthenticated$.subscribe(status => {
       this.isAuthenticated = status; 
-      const tokenExpiry = this.authS.getTokenExpiry();
-      if (tokenExpiry && tokenExpiry < new Date()) {
-        this.onLogout();  // Automatically log out if token has expired
-      }
     });
   }
 
