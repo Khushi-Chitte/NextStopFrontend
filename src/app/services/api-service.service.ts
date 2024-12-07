@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Constant } from '../components/Constants/constant';
-import { catchError, Observable, of, throwError } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -216,10 +216,20 @@ export class ApiServiceService {
       Authorization: `Bearer ${jwtToken}`,
     };
 
-    return this.http.post(`${Constant.BASE_URI}${Constant.UpdatePaymentToRefund}${bookingId}`, { headers }).pipe(
+    const refundPaymentData = {
+      bookingId: bookingId
+    }
+
+    return this.http.post(`${Constant.BASE_URI}${Constant.UpdatePaymentToRefund}`, refundPaymentData, { headers }).pipe(
       catchError((error: any) => {
         console.error('Unable to update refund db', error);
         return throwError(() => error);
+      }),
+      map((response: any) => {
+        console.log('Refund payment response:', response);
+        // Here you can access the properties of the response like:
+        console.log(`Payment ID: ${response.paymentId}, Booking ID: ${response.bookingId}`);
+        return response;  // You can return the response for further handling if needed
       })
     );
     

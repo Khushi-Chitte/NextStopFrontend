@@ -86,8 +86,6 @@ export class ConfirmBookingComponent implements OnInit {
             alert('Payment failed. Please try again.');
 
             this.cancelBooking(bookingResponse.bookingId);
-            this.dialogRef.close(false);
-            alert('Payment error');
 
           },
         });
@@ -95,7 +93,6 @@ export class ConfirmBookingComponent implements OnInit {
       },
       error: (bookingError: any) => {
         console.error('Booking failed:', bookingError);
-        this.dialogRef.close(false);
         alert('Booking failed. Please try again.');
       },
       complete: () => {
