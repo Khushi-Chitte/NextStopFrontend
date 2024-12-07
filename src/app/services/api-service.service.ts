@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Constant } from '../components/Constants/constant';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +38,48 @@ export class ApiServiceService {
         return of(error);
       })
     );
+   }
+
+   fetchUserDetails(): Observable<any> {
+    const userId = localStorage.getItem('userId');
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if(!userId || !jwtToken) {
+      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    }
+
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetUserById}${userId}`, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching user details:', error);
+        return throwError(() => error);
+      })
+    );
 
    }
+
+   updateUser(userData: any): Observable<any> {
+    const userId = localStorage.getItem('userId');
+    const jwtToken = localStorage.getItem('jwtToken');
+  
+    if (!userId || !jwtToken) {
+      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    }
+  
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+  
+    return this.http.put(`${Constant.BASE_URI}${Constant.UpdateUser}${userId}`, userData, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Error updating user details:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+  
+
 }

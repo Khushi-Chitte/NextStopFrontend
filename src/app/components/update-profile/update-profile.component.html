@@ -1,0 +1,45 @@
+<div class="update-user-container">
+    <h2>Update Profile</h2>
+  
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  
+    <form (ngSubmit)="onUpdateUser()">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="userData.name"
+          name="name"
+          required
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input
+          type="tel"
+          id="phone"
+          [(ngModel)]="userData.phone"
+          name="phone"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <textarea
+          id="address"
+          [(ngModel)]="userData.address"
+          name="address"
+        ></textarea>
+      </div>
+  
+      <button type="submit" class="update-button">Update Profile</button>
+    </form>
+  </div>
+  

@@ -16,6 +16,9 @@
                     <a class="nav-link" *ngIf="!isAuthenticated" routerLink="/app-registration" routerLinkActive="active">Register</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" *ngIf="isAuthenticated" routerLink="/app-profile" routerLinkActive="active">My Profile</a>
+                </li>
+                <li class="nav-item">
                     <button class="nav-link" *ngIf="isAuthenticated" (click)="onLogout()" routerLinkActive="active">Logout</button>
                 </li>
             </ul>

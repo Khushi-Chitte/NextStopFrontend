@@ -74,7 +74,7 @@ export class AuthserviceService implements OnInit{
     return this.http.post(Constant.BASE_URI + Constant.REGISTER, registerData).pipe(
       catchError((error: any) => {
         console.error(error);
-        return of(error);
+        return throwError(() => (error));
       })
     );
   }

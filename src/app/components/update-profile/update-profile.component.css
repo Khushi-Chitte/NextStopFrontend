@@ -1,0 +1,65 @@
+.update-user-container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  .update-button {
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .update-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .success-message, .error-message {
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  
+  .success-message {
+    color: green;
+  }
+  
+  .error-message {
+    color: red;
+  }
+  

@@ -6,5 +6,7 @@ export const Constant = {
     GetAllBuses: 'Bus/GetAllBuses',
     GetSeatsByBusId: 'Seat/GetSeatsByBusId/',
     SearchBuses: 'Booking/SearchBus/',
+    GetUserById: 'Users/GetUserById/',
+    UpdateUser: 'Users/UpdateUser/',
 }
 

@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class RegistrationComponent implements OnInit {
   registerForm!: FormGroup;
+  apiError: string | null = null;
 
   constructor(private authS: AuthserviceService, private router : Router) { }
 
@@ -53,6 +54,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   onRegister(): void {
+    this.apiError = null; 
+
     if(this.registerForm.valid) {
       const registerData = this.registerForm.value;
       
@@ -82,10 +85,22 @@ export class RegistrationComponent implements OnInit {
             this.router.navigate(['/app-home']);
           } else {
             console.error('Invalid response from server');
+            this.apiError = 'Unexpected server response. Please try again later.';
           }
         },
         error: (error: any) => {
-          console.error('Registration failed', error);
+          console.error('Error occurred:', error);
+          if (error.error) {
+            if (typeof error.error === 'string') {
+              this.apiError = error.error; 
+            } else if (error.error.message) {
+              this.apiError = error.error.message; 
+            } else {
+              this.apiError = 'Registration failed. Please try again later.';
+            }
+          } else {
+            this.apiError = 'An unexpected error occurred. Please try again later.';
+          }
         },
         complete: () => {
           console.log('Request completed');
