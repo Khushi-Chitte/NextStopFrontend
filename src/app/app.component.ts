@@ -4,11 +4,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { AuthserviceService } from './services/authservice.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,HeaderComponent,FooterComponent,FormsModule],
+  imports: [RouterOutlet,HeaderComponent,FooterComponent,FormsModule, MatDialogModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

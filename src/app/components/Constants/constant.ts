@@ -8,5 +8,11 @@ export const Constant = {
     SearchBuses: 'Booking/SearchBus/',
     GetUserById: 'Users/GetUserById/',
     UpdateUser: 'Users/UpdateUser/',
+    GetScheduleById: 'Schedule/GetScheduleById/',
+    GetBusById: 'Bus/GetBusById/',
+    BookTicket: 'Booking/BookTicket',
+    UpdatePayment: 'Payment/InitiatePayment',
+    CancelBooking: 'Booking/CancelBooking',
+    ViewBookingsByUserId: 'Booking/ViewBookingsByUserId/',
 }
 

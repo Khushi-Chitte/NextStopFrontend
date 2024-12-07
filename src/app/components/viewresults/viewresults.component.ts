@@ -62,6 +62,11 @@ export class ViewresultsComponent implements OnInit, OnDestroy {
         console.log('Response:', response);
         if(response && response.length > 0) {
           this.buses = response;
+
+          this.buses.forEach((bus: any) =>{
+            this.fetchBusDetailsById(bus.busId);
+          });
+
           console.log(response);
         } else {
           console.error('Invalid response from server');
@@ -75,10 +80,27 @@ export class ViewresultsComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
     });
+
+    
+  }
+
+  fetchBusDetailsById(busId: any) {
+    this.apiS.fetchBusDetailsById(busId).subscribe({
+      next: (busDetails: any) => {
+        console.log('Bus Details:', busDetails);
+        const bus = this.buses.find(b => b.busId === busId);
+        if (bus) {
+          bus.busType = busDetails.busType; 
+        }
+      },
+      error: (error: any) => {
+        console.error('Error fetching bus details:', error);
+      }
+    });
   }
   
 
-  onBook(bus: any) {
+  onView(bus: any) {
     if(this.isAuthenticated) {
       console.log('Booking Bus:', bus); // Debug log
       // Navigate to the booking page with bus details

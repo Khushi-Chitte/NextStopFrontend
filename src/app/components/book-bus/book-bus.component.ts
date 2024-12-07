@@ -1,8 +1,10 @@
 import { Component, OnInit, Signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiServiceService } from '../../services/api-service.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmBookingComponent } from '../confirm-booking/confirm-booking.component';
 
 @Component({
   selector: 'app-book-bus',
@@ -16,15 +18,15 @@ export class BookBusComponent implements OnInit{
   scheduleId: any;
   seatsAvailable: number = 0;
   userID: any;
-  seats: Signal<any[]>;
+  seats: any[] = [];
   selectedSeats: string[] = [];
   seatsToBook: number = 0;
   selectionConfirmed: boolean = false;
   startSeatSelection: boolean = false;
-  
-  constructor(private route: ActivatedRoute, private apiservice: ApiServiceService) {
-    this.seats = this.apiservice.allBusSeats;
-  }
+  scheduleDetails: any;
+  errorMessage: string = '';
+  busDetails: any;
+  constructor(private route: ActivatedRoute, private apiservice: ApiServiceService, private router: Router, private dialog: MatDialog) { }
 
 
   ngOnInit() {
@@ -33,14 +35,44 @@ export class BookBusComponent implements OnInit{
       this.busId = params['busId'];
       this.scheduleId = params['scheduleId'];
       this.seatsAvailable = params['seatsAvailable'];
-      
+    });
 
       this.userID = localStorage.getItem('userId');
+  
+      this.apiservice.fetchBusSeats(this.busId).subscribe({
+        next: (seats: any) => {
+          this.seats = seats;
+          console.log('Fetched seats:', this.seats);
+        },
+        error: (error: any) => {
+          console.error('Error fetching seats:', error);
+          alert('Error fetching seats. Please try again later.');
+        },
+      }); 
 
-      this.apiservice.fetchBusSeats(params['busId']);
+      this.apiservice.fetchScheduleDetails(this.scheduleId).subscribe({
+        next: (schedule: any) => {
+          this.scheduleDetails = schedule;
+          console.log('Schedule Details: ', schedule);
+        },
+        error: (error: any) => {
+          this.errorMessage  = 'Failed to fetch schedule details';
+          console.error(this.errorMessage, error);
+        },
+      });
 
-    });
+      this.apiservice.fetchBusDetailsById(this.busId).subscribe({
+        next: (bus: any) => {
+          this.busDetails = bus;
+          console.log('Bus Details', bus);
+        },
+        error: (error: any) => {
+          this.errorMessage = 'Failed to fetch bus details';
+          console.error(this.errorMessage, error);
+        }
+      });
   }
+  
 
   toggleSeatSelection(seat: any) {
     if (this.startSeatSelection && seat.isAvailable && !this.selectionConfirmed) {
@@ -81,6 +113,32 @@ export class BookBusComponent implements OnInit{
     }
   
     return rows;
+  }
+
+  onConfirmBooking() {
+    if (this.selectionConfirmed) {
+      // Open ConfirmBookingComponent as a dialog
+      const dialogRef = this.dialog.open(ConfirmBookingComponent, {
+        width: '700px',
+        height: 'auto',
+        data: {
+          selectedSeats: this.selectedSeats,
+          busDetails: this.busDetails,
+          scheduleDetails: this.scheduleDetails,
+          seatsToBook: this.seatsToBook
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === false) {
+          this.router.navigate(['/app-book-bus']);
+        } else if (result) {
+          console.log('Booking Confirmed:', result);
+        }
+      });
+    } else {
+      alert('Please confirm your seat selection before proceeding.');
+    }
   }
   
 
