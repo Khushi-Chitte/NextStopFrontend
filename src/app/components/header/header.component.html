@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
     <div class="container">
-        <a class="navbar-brand text-danger" href="#">NextStop</a>
+        <!-- Add logo image here -->
+        <a class="navbar-brand text-danger d-flex align-items-center" href="#">
+            <img src="/assets/logo1.jpg" alt="NextStop Logo" class="logo me-2" style="height: 50px; width: auto;" />
+            NextStop
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,10 +14,12 @@
                     <a class="nav-link" routerLink="/app-home" routerLinkActive="active">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" *ngIf="!isAuthenticated" routerLink="/app-login" routerLinkActive="active">Login</a>
+                    <a class="nav-link" *ngIf="!isAuthenticated" routerLink="/app-login"
+                        routerLinkActive="active">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" *ngIf="!isAuthenticated" routerLink="/app-registration" routerLinkActive="active">Register</a>
+                    <a class="nav-link" *ngIf="!isAuthenticated" routerLink="/app-registration"
+                        routerLinkActive="active">Register</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" *ngIf="isAuthenticated" routerLink="/app-bookings" routerLinkActive="active">My Bookings</a>
@@ -22,7 +28,8 @@
                     <a class="nav-link" *ngIf="isAuthenticated" routerLink="/app-profile" routerLinkActive="active">My Profile</a>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link" *ngIf="isAuthenticated" (click)="onLogout()" routerLinkActive="active">Logout</button>
+                    <button class="nav-link" *ngIf="isAuthenticated" (click)="onLogout()"
+                        routerLinkActive="active">Logout</button>
                 </li>
             </ul>
         </div>

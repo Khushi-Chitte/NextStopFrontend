@@ -1,5 +1,5 @@
 export const Constant = {
-    BASE_URI : 'https://localhost:7032/api/',
+    BASE_URI : 'https://localhost:7101/api/',
     LOGIN:'Authentication/login',
     REGISTER:'Authentication/register',
     LOGOUT: 'Authentication/logout',
