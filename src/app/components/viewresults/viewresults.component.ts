@@ -94,7 +94,7 @@ export class ViewresultsComponent implements OnInit, OnDestroy {
         }
       },
       error: (error: any) => {
-        console.error('Error fetching bus details:', error);
+        console.error('Error fetching bus details: ', error);
       }
     });
   }

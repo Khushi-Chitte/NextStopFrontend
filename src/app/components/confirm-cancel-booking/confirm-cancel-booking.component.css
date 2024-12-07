@@ -1,0 +1,76 @@
+/* General container styles */
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading styles */
+  h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  
+  /* Buttons styling */
+  button {
+    font-size: 0.95rem;
+    padding: 10px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 40px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  /* Danger Button (Cancel Booking) */
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+  }
+  
+  /* Secondary Button (Go Back) */
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    margin-left: 10px;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+  }
+  
+  /* Responsive Layout for Smaller Screens */
+  @media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+  
+    h2 {
+        font-size: 1.6rem;
+    }
+  
+    button {
+        width: 100%;
+        margin-top: 10px;
+    }
+  
+    .btn-secondary {
+        margin-left: 0;
+    }
+  }
+  
+  

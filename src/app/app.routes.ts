@@ -9,6 +9,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
 import { ConfirmBookingComponent } from './components/confirm-booking/confirm-booking.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
+import { ViewBookingComponent } from './components/view-booking/view-booking.component';
 
 export const routes: Routes = [
     { path: 'app-home', component: HomeComponent },
@@ -21,5 +22,7 @@ export const routes: Routes = [
     { path: 'app-update-profile', component: UpdateProfileComponent },
     { path: 'app-confirm-booking', component: ConfirmBookingComponent },
     { path: 'app-bookings', component: BookingsComponent },
+    { path: 'app-view-booking', component: ViewBookingComponent },
+    { path: 'app-confirm-cancel-booking', component: ConfirmBookingComponent },
     { path: '', redirectTo: '/app-home', pathMatch: 'full' }
 ];

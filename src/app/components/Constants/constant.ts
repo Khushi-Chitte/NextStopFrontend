@@ -13,6 +13,8 @@ export const Constant = {
     BookTicket: 'Booking/BookTicket',
     UpdatePayment: 'Payment/InitiatePayment',
     CancelBooking: 'Booking/CancelBooking',
-    ViewBookingsByUserId: 'Booking/ViewBookingsByUserId/',
+    BookingsByUserId: 'Booking/ViewBookingsByUserId/',
+    BookingByBookingId: 'Booking/ViewBookingByBookingId/',
+    UpdatePaymentToRefund: 'Payment/InitiateRefund/',
 }
 

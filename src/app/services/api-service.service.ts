@@ -175,13 +175,55 @@ export class ApiServiceService {
       Authorization: `Bearer ${jwtToken}`,
     };
     
-    return this.http.get(`${Constant.BASE_URI}${Constant.GetBusById}${userId}`).pipe(
+    return this.http.get(`${Constant.BASE_URI}${Constant.BookingsByUserId}${userId}`, { headers }).pipe(
       catchError((error: any) => {
-        console.error('Error fetching user details:', error);
+        console.error('Error fetching booking:', error);
         return throwError(() => error);
       })
     );
 
+  }
+
+  fetchUserBookingByBookingId(bookingId: any) {
+    const userId = localStorage.getItem('userId');
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if (!userId || !jwtToken) {
+      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+
+    return this.http.get(`${Constant.BASE_URI}${Constant.BookingByBookingId}${bookingId}`, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching booking details:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  refundPaymentUpdate(bookingId: number) {
+    const userId = localStorage.getItem('userId');
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if (!userId || !jwtToken) {
+      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+
+    return this.http.post(`${Constant.BASE_URI}${Constant.UpdatePaymentToRefund}${bookingId}`, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Unable to update refund db', error);
+        return throwError(() => error);
+      })
+    );
+    
+    
   }
   
   
