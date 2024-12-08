@@ -21,16 +21,31 @@
                     <a class="nav-link" *ngIf="!isAuthenticated" routerLink="/app-registration"
                         routerLinkActive="active">Register</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" *ngIf="isAuthenticated" routerLink="/app-bookings" routerLinkActive="active">My Bookings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" *ngIf="isAuthenticated" routerLink="/app-profile" routerLinkActive="active">My Profile</a>
-                </li>
+                
                 <li class="nav-item">
                     <button class="nav-link" *ngIf="isAuthenticated" (click)="onLogout()"
                         routerLinkActive="active">Logout</button>
                 </li>
+
+                <li class="nav-item">
+  <a class="nav-link" routerLink="/app-notification">
+    <i class="fas fa-bell"></i>
+  </a>
+</li>
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="fas fa-user"></i> Profile
+    </button>
+    <ul class="dropdown-menu">
+        <li class="nav-item">
+            <a class="nav-link" *ngIf="isAuthenticated" routerLink="/app-bookings" routerLinkActive="active">My Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" *ngIf="isAuthenticated" routerLink="/app-profile" routerLinkActive="active">My Profile</a>
+        </li>
+    </ul>
+</div>
+
             </ul>
         </div>
     </div>
