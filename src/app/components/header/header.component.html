@@ -13,53 +13,46 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/app-home" routerLinkActive="active">Home</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/app-about" routerLinkActive="active">About</a>
-                </li>
-               
+                    <a class="nav-link" *ngIf="isAuthenticated && (role === 'operator' || role === 'admin')" routerLink="/app-manage-routes" routerLinkActive="active">Manage Routes</a>
+                </li>   
+
                 <li class="nav-item">
                     <a class="nav-link" *ngIf="!isAuthenticated" routerLink="/app-login"
                         routerLinkActive="active">Login</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" *ngIf="!isAuthenticated" routerLink="/app-registration"
                         routerLinkActive="active">Register</a>
                 </li>
-                
-               
 
                 <li class="nav-item">
-                    <a class="nav-link" *ngIf="isAuthenticated && (role === 'operator' || role === 'admin')" routerLink="/app-manage-routes" routerLinkActive="active">Manage Routes</a>
+                    <a class="nav-link" routerLink="/app-about" routerLinkActive="active">About</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" *ngIf="isAuthenticated && role === 'passenger'" routerLink="/app-bookings" routerLinkActive="active">My Bookings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" *ngIf="isAuthenticated" routerLink="/app-profile" routerLinkActive="active">My Profile</a>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" *ngIf="isAuthenticated" (click)="onLogout()"
-                        routerLinkActive="active">Logout</button>
-                </li>
-  <a class="nav-link" routerLink="/app-notification">
-    <i class="fas fa-bell"></i>
-  </a>
-<div class="dropdown">
-    <button *ngIf="isAuthenticated" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <i class="fas fa-user"></i> Profile
-    </button>
-    <ul class="dropdown-menu">
-        <li class="nav-item">
-            <a class="nav-link" *ngIf="isAuthenticated" routerLink="/app-bookings" routerLinkActive="active">My Bookings</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" *ngIf="isAuthenticated" routerLink="/app-profile" routerLinkActive="active">My Profile</a>
-        </li>
-        <li class="nav-item">
-            <button class="nav-link" *ngIf="isAuthenticated" (click)="onLogout()" routerLinkActive="active">Logout</button>
-        </li>
-    </ul>
-</div>
+                
+                <a class="nav-link" *ngIf="isAuthenticated" routerLink="/app-notification">
+                    <i class="fas fa-bell"></i>
+                </a>
+                <span class="spacer"></span> <div class="dropdown">
+                </div>
+                <div class="dropdown">
+                    <button *ngIf="isAuthenticated" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user"></i> Profile
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" *ngIf="isAuthenticated && role === 'passenger'" routerLink="/app-bookings" routerLinkActive="active">My Bookings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" *ngIf="isAuthenticated" routerLink="/app-profile" routerLinkActive="active">My Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" *ngIf="isAuthenticated" (click)="onLogout()" routerLinkActive="active">Logout</button>
+                        </li>
+                    </ul>
+                </div>
 
             </ul>
         </div>

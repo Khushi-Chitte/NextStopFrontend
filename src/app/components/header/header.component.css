@@ -22,3 +22,7 @@
 .nav-item .dropdown-menu a:hover {
     background-color: #f8f9fa;
 }
+
+.spacer {
+    margin-right: 10px; 
+}
