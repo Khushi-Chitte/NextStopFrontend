@@ -235,6 +235,26 @@ export class ApiServiceService {
     
     
   }
+
+  fetchPaymentStatus(bookingId: any) {
+    const userId = localStorage.getItem('userId');
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if (!userId || !jwtToken) {
+      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+
+    return this.http.get(`${Constant.BASE_URI}${Constant.PaymentStatus}${bookingId}`, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching Payment Status:', error);
+        return throwError(() => error);
+      })
+    );
+  }
   
   
 

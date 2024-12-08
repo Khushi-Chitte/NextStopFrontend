@@ -20,14 +20,16 @@
     font-weight: bold;
   }
   
-  .success-message, .error-message {
+  .successMessage, .errorMessage {
     text-align: center;
     font-weight: bold;
     background-color: #f9f9f9;
+    margin-bottom: 0;
   }
   
-  .success-message {
+  .success {
     color: green;
+    font: bold;
   }
   
   .details-card {

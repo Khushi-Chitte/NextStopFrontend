@@ -52,6 +52,8 @@ export class ConfirmBookingComponent implements OnInit {
     if (!this.selectedSeats.length || !this.scheduleDetails || !this.busDetails) {
       console.error('Incomplete booking details. Cannot proceed with payment.');
       this.isProcessing = true;
+      alert('Invalid booking details. Please try again.');
+      this.dialogRef.close(false);
       return;
     }
 
@@ -87,6 +89,8 @@ export class ConfirmBookingComponent implements OnInit {
 
             this.cancelBooking(bookingResponse.bookingId);
 
+            this.dialogRef.close(false);
+
           },
         });
 
@@ -94,6 +98,7 @@ export class ConfirmBookingComponent implements OnInit {
       error: (bookingError: any) => {
         console.error('Booking failed:', bookingError);
         alert('Booking failed. Please try again.');
+        this.dialogRef.close(false);
       },
       complete: () => {
         this.isProcessing = false;

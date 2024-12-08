@@ -130,17 +130,18 @@ export class BookBusComponent implements OnInit{
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        if (result === false) {
+        if (result === true) {
+          console.log('Booking confirmed and payment successful.');
+          alert('Your booking was successful!');
+          this.router.navigate(['/app-bookings']);
+        } else if (result === false) {
+          console.log('Booking process canceled or failed.');
+          alert('Booking was canceled or payment failed. Please try again.');
           this.router.navigate(['/app-book-bus']);
-        } else if (result) {
-          console.log('Booking Confirmed:', result);
         }
       });
     } else {
       alert('Please confirm your seat selection before proceeding.');
     }
   }
-  
-
-
 }

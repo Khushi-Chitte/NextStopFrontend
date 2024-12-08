@@ -17,7 +17,9 @@ export class ViewBookingComponent implements OnInit {
   scheduleId: any;
   bookingDetails: any;
   scheduleDetails: any;
-  errorMessage: any;
+  paymentDetails: any;
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
 
   constructor(private route: ActivatedRoute, private apiService: ApiServiceService, private dialog: MatDialog) { }
 
@@ -28,6 +30,7 @@ export class ViewBookingComponent implements OnInit {
 
       if(this.bookingId) {
         this.fetchBooking(this.bookingId);
+        this.fetchPaymentStatus(this.bookingId);
       }
 
       if(this.scheduleId) {
@@ -63,6 +66,18 @@ export class ViewBookingComponent implements OnInit {
     });
   }
 
+  fetchPaymentStatus(bookingId: any) {
+    this.apiService.fetchPaymentStatus(bookingId).subscribe({
+      next: (payment: any) => {
+        this.paymentDetails = payment;
+      },
+      error: (error: any) => {
+        this.errorMessage = 'Unable to fetch payment details.';
+        console.error(this.errorMessage, error);
+      }
+    });
+  }
+
   onCancelBooking() {
     const dialogRef = this.dialog.open(ConfirmCancelBookingComponent, {
       width: '600px',
@@ -72,9 +87,13 @@ export class ViewBookingComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.successMessage = 'Booking canceled successfully and payment refunded!';
+        this.errorMessage = null;
+        this.fetchBooking(this.bookingId);
         console.log('Booking canceled with ID: ', this.bookingId);
       } else {
         console.log('Booking cancellation aborted');
+        this.errorMessage = 'Booking cancellation aborted';
       }
     });
   }

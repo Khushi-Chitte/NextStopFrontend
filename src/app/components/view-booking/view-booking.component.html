@@ -1,9 +1,11 @@
-<div *ngIf="errorMessage" class="error">
-    <p>{{ errorMessage }}</p>
-  </div>
- 
-  
   <div class="details-container">
+    <div *ngIf="errorMessage" class="error errorMessage">
+      <p>{{ errorMessage }}</p>
+    </div>
+  
+    <div *ngIf="successMessage" class="success successMessage">
+      <p>{{ successMessage }}</p>
+    </div>
   
     <div *ngIf="!bookingDetails && !errorMessage" class="loading">
       <p>Loading booking details...</p>
@@ -56,6 +58,10 @@
         <div class="detail-item">
           <span class="label">Booking Date:</span>
           <span class="value">{{ bookingDetails.bookingDate | date }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Payment Status:</span>
+          <span class="value">{{ paymentDetails.paymentStatus }}</span>
         </div>
       </div>
   
