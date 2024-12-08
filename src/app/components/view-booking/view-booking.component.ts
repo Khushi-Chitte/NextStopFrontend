@@ -18,6 +18,7 @@ export class ViewBookingComponent implements OnInit {
   bookingDetails: any;
   scheduleDetails: any;
   errorMessage: any;
+  successMessage: string | null = null;
 
   constructor(private route: ActivatedRoute, private apiService: ApiServiceService, private dialog: MatDialog) { }
 
@@ -72,9 +73,12 @@ export class ViewBookingComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.successMessage = 'Booking canceled successfully and payment refunded!';
+        this.fetchBooking(this.bookingId);
         console.log('Booking canceled with ID: ', this.bookingId);
       } else {
         console.log('Booking cancellation aborted');
+        this.errorMessage = 'Booking cancellation aborted';
       }
     });
   }

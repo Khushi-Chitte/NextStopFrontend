@@ -1,12 +1,18 @@
 <div class="container">
-    <h2>Confirm Cancel Booking</h2>
-  
-    <button class="btn btn-danger"  (click)="cancelBooking()">
-        Cancel Booking
-      </button>
-    
-      <button class="btn btn-secondary"  (click)="goBack()">
-        Go Back
-      </button>
+  <h2>Confirm Cancel Booking</h2>
 
+  <!-- Show loading spinner if processing -->
+  <div *ngIf="isProcessing" class="loading-spinner">
+    <p>Processing cancellation...</p>
   </div>
+
+  <!-- Cancel Booking Button -->
+  <button class="btn btn-danger" [disabled]="isProcessing" (click)="cancelBooking()">
+    {{ isProcessing ? 'Processing...' : 'Cancel Booking' }}
+  </button>
+
+  <!-- Go Back Button -->
+  <button class="btn btn-secondary" [disabled]="isProcessing" (click)="goBack()">
+    Go Back
+  </button>
+</div>
