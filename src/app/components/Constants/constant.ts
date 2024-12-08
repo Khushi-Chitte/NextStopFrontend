@@ -1,6 +1,6 @@
 export const Constant = {
-    BASE_URI : 'https://localhost:7032/api/',   //ayush uri
-    // BASE_URI : 'https://localhost:7101/api/', //khushi uri
+    // BASE_URI : 'https://localhost:7032/api/',   //ayush uri
+    BASE_URI : 'https://localhost:7101/api/', //khushi uri
     LOGIN:'Authentication/login',
     REGISTER:'Authentication/register',
     LOGOUT: 'Authentication/logout',
@@ -18,9 +18,4 @@ export const Constant = {
     BookingByBookingId: 'Booking/ViewBookingByBookingId/',
     UpdatePaymentToRefund: 'Payment/InitiateRefund',
     PaymentStatus: 'Payment/GetPaymentStatus/',
-    CreateRoute: 'Route/CreateRoute',
-    ViewAllRoutes: 'Route/GetAllRoutes',
-    UpdateRoute: 'Route/UpdateRoute/',
-    DeleteRoute: 'Route/DeleteRoute/',
 }
-

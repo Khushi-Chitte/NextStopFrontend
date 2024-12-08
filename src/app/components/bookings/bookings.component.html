@@ -3,7 +3,7 @@
 
     <div *ngIf="errorMessage" class="error">
         <p>{{ errorMessage }}</p>
-      </div>
+    </div>
 
     <!-- Table of Bookings -->
     <div *ngIf="bookings.length > 0" class="bus-list">
@@ -31,9 +31,7 @@
                     <td>{{ booking.status }}</td>
                     <td>{{ booking.bookingDate | date:'yyyy-MM-dd' }}</td>
                     <td>
-                        <button 
-                          class="btn btn-danger" 
-                          (click)="onView(booking)" >
+                        <button class="btn btn-danger" (click)="onView(booking)">
                             View Booking
                         </button>
                     </td>

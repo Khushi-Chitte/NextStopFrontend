@@ -85,7 +85,8 @@ button {
 }
 
 button:hover {
-    background: linear-gradient(to right, #ff616f, #ff9a9e); /* Reverse gradient on hover */
+    background: linear-gradient(to right, #ff616f, #ff9a9e);
+    /* Reverse gradient on hover */
 }
 
 button:disabled {

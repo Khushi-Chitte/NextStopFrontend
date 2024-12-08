@@ -156,7 +156,7 @@ export class ApiServiceService {
     );
   }
 
-  fetchUserBookings() : Observable<any> {
+  fetchUserBookings() {
     const userId = localStorage.getItem('userId');
     const jwtToken = localStorage.getItem('jwtToken');
 
@@ -177,7 +177,7 @@ export class ApiServiceService {
 
   }
 
-  fetchUserBookingByBookingId(bookingId: any) : Observable<any> {
+  fetchUserBookingByBookingId(bookingId: any) {
     const userId = localStorage.getItem('userId');
     const jwtToken = localStorage.getItem('jwtToken');
 
@@ -197,7 +197,7 @@ export class ApiServiceService {
     );
   }
 
-  refundPaymentUpdate(bookingId: number) : Observable<any> {
+  refundPaymentUpdate(bookingId: number) {
     const userId = localStorage.getItem('userId');
     const jwtToken = localStorage.getItem('jwtToken');
 
@@ -229,7 +229,7 @@ export class ApiServiceService {
     
   }
 
-  fetchPaymentStatus(bookingId: any) : Observable<any> {
+  fetchPaymentStatus(bookingId: any) {
     const userId = localStorage.getItem('userId');
     const jwtToken = localStorage.getItem('jwtToken');
 
@@ -244,76 +244,6 @@ export class ApiServiceService {
     return this.http.get(`${Constant.BASE_URI}${Constant.PaymentStatus}${bookingId}`, { headers }).pipe(
       catchError((error: any) => {
         console.error('Error fetching Payment Status:', error);
-        return throwError(() => error);
-      })
-    );
-  }
-
-  createRoute(routeData: any) : Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.post(`${Constant.BASE_URI}${Constant.CreateRoute}`, routeData, { headers }).pipe(
-      catchError((error: any) => {
-        console.error('Error create route:', error);
-        return throwError(() => error);
-      })
-    );
-
-  }
-
-  fetchAllRoutes() : Observable<any> {
-    return this.http.get(`${Constant.BASE_URI}${Constant.ViewAllRoutes}`).pipe(
-      catchError((error: any) => {
-        console.error('Error fetching routes:', error);
-        return throwError(() => error);
-      })
-    );
-  }
-
-  updateRoute(routeId: number, routeData: any): Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.put(`${Constant.BASE_URI}${Constant.UpdateRoute}${routeId}`, routeData, { headers }).pipe(
-      catchError((error: any) => {
-        console.error('Error updating route:', error);
-        return throwError(() => error);
-      })
-    );
-  }
-
-  deleteRoute(routeId: number): Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.delete(`${Constant.BASE_URI}${Constant.DeleteRoute}${routeId}`, { headers }).pipe(
-      catchError((error: any) => {
-        console.error('Error deleting route:', error);
         return throwError(() => error);
       })
     );

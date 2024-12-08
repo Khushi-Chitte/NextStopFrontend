@@ -68,23 +68,24 @@
 }
 
 .loading,
-  .error {
+.error {
     text-align: center;
     font-size: 18px;
     color: #666;
-  }
-  
-  .error {
+}
+
+.error {
     color: red;
     font-weight: bold;
-  }
+}
 
-  .success-message, .error-message {
+.success-message,
+.error-message {
     text-align: center;
     font-weight: bold;
     background-color: #f9f9f9;
-  }
+}
 
-  .success-message {
+.success-message {
     color: green;
-  }
+}

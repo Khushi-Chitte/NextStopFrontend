@@ -42,10 +42,7 @@
                     <td>₹{{ bus.fare }}</td>
                     <td>{{ bus.availableSeats }}</td>
                     <td>
-                        <button 
-                          class="btn btn-danger" 
-                          (click)="onView(bus)" 
-                          [disabled]="bus.availableSeats <= 0">
+                        <button class="btn btn-danger" (click)="onView(bus)" [disabled]="bus.availableSeats <= 0">
                             View Bus
                         </button>
                         <div *ngIf="bus.availableSeats <= 0" class="text-danger mt-2">

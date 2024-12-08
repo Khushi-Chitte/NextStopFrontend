@@ -66,17 +66,9 @@
 
     <div class="input-container">
       <label for="seat-count">How many seats would you like to book?&nbsp;</label>
-      <input
-        id="seat-count"
-        type="number"
-        [(ngModel)]="seatsToBook"
-        [disabled]="selectionConfirmed || startSeatSelection"
-        min="1"
-        max="seatsAvailable"
-      />&nbsp;
-      <button 
-        start-selection 
-        (click)="startSelection()" 
+      <input id="seat-count" type="number" [(ngModel)]="seatsToBook"
+        [disabled]="selectionConfirmed || startSeatSelection" min="1" max="seatsAvailable" />&nbsp;
+      <button start-selection (click)="startSelection()"
         [disabled]="seatsToBook <= 0 || seatsToBook > seatsAvailable || selectionConfirmed || startSeatSelection">
         Start Selection
       </button>
@@ -85,16 +77,11 @@
     <!-- Seat Grid -->
     <div class="rows-container">
       <div *ngFor="let row of getSeatRows(seats)" class="seat-row">
-        <div
-          *ngFor="let seat of row"
-          class="seat"
-          [class.available]="seat.isAvailable"
-          [class.unavailable]="!seat.isAvailable"
-          [class.selected]="selectedSeats.includes(seat.seatNumber)"
+        <div *ngFor="let seat of row" class="seat" [class.available]="seat.isAvailable"
+          [class.unavailable]="!seat.isAvailable" [class.selected]="selectedSeats.includes(seat.seatNumber)"
           [class.disabled]="selectionConfirmed || (!selectedSeats.includes(seat) && selectedSeats.length >= seatsToBook) || seatsToBook > seatsAvailable"
           (click)="toggleSeatSelection(seat)"
-          [title]="seat.isAvailable ? 'Click to select this seat' : 'Not Available'"
-        >
+          [title]="seat.isAvailable ? 'Click to select this seat' : 'Not Available'">
           {{ seat.seatNumber }}
         </div>
       </div>
@@ -102,22 +89,15 @@
 
     <!-- Action Buttons -->
     <div class="action-buttons">
-      <button 
-        confirm-selection 
-        (click)="confirmSelection()" 
+      <button confirm-selection (click)="confirmSelection()"
         [disabled]="selectedSeats.length !== seatsToBook || selectionConfirmed || seatsToBook < 1 || selectedSeats.length > seatsToBook || !startSeatSelection">
         Confirm Selection
       </button>
-      <button 
-        reset-selection 
-        (click)="resetSelection()">
+      <button reset-selection (click)="resetSelection()">
         Reset
       </button>
 
-      <button 
-        class="btn btn-success"
-        (click)="onConfirmBooking()" 
-        [disabled]="!selectionConfirmed || seatsToBook <= 0">
+      <button class="btn btn-success" (click)="onConfirmBooking()" [disabled]="!selectionConfirmed || seatsToBook <= 0">
         Confirm Booking
       </button>
     </div>
