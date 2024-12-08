@@ -380,7 +380,7 @@ export class ApiServiceService {
     );
   }
 
-  fetchSeatLogs(bookingId: number) {
+  fetchSeatLogs(bookingId: number) : Observable<any> {
     const userId = localStorage.getItem('userId');
     const jwtToken = localStorage.getItem('jwtToken');
 
@@ -395,6 +395,57 @@ export class ApiServiceService {
     return this.http.get(`${Constant.BASE_URI}${Constant.ViewSeatLogs}${bookingId}`, { headers }).pipe(
       catchError((error: any) => {
         console.error('Error fetching Payment Status:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  fetchAllBuses() : Observable<any> {
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetAllBuses}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching buses:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  fetchBusesByOperatorId() : Observable<any> {
+    const userId = localStorage.getItem('userId');
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if (!userId || !jwtToken) {
+      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+
+    const operatorId = userId;
+
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetBusesByOperatorId}${operatorId}`, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching buses:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  deleteSeatsByBusId(busId: number): Observable<any> {
+    const userId = localStorage.getItem('userId');
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if (!userId || !jwtToken) {
+      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+
+    return this.http.delete(`${Constant.BASE_URI}${Constant.DeleteSeats}${busId}`, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Error deleting seats:', error);
         return throwError(() => error);
       })
     );

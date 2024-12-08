@@ -86,6 +86,9 @@ export class AddBusComponent implements OnInit {
         this.createdBusId = bus.busId;
         this.createdBusTotalSeats = bus.totalSeats;
 
+        this.isSubmitting = false;
+        this.createBusForm.reset();
+
         const seatNumbers = this.generateSeatNumbers(this.createdBusTotalSeats);
 
         const seatData = {
@@ -96,19 +99,50 @@ export class AddBusComponent implements OnInit {
         this.createSeatsForBus(seatData);
       },
       error: (error: any) => {
-        this.errorMessage = 'Failed to create bus. Please try again.';
-        console.error(this.errorMessage, error);
+        this.handleError(error);
+        this.isSubmitting = false;
+      },
+      complete: () => {
         this.isSubmitting = false;
       }
     });
+  }
+
+  handleError(error: any) {
+    if (error.error) {
+      if (typeof error.error === 'string') {
+        this.errorMessage = error.error;
+      } else if (error.error.message) {
+        this.errorMessage = error.error.message;
+      } else {
+        this.errorMessage = 'Failed to create bus. Please try again';
+      }
+    } else {
+      this.errorMessage = 'An unexpected error occurred. Please try again later.';
+    }
+    console.error(this.errorMessage, error);
   }
 
   createSeatsForBus(seatData: any) {
     this.apiService.createSeatsForBus(seatData).subscribe({
       next: (response: any) => {
         this.successMessage = 'Bus and its seats created successfully!';
-        this.createBusForm.reset();
         this.isSubmitting = false;
+  
+        // Reset the form with initial values if needed
+        var operatorId = parseInt(localStorage.getItem('userId') ?? '0');
+
+        if(this.isAdmin) operatorId = 0;
+        
+        this.createBusForm.reset({
+          operatorId: operatorId, // Retain operatorId if needed
+        });
+        
+        // Mark as pristine and untouched to refresh state
+        this.createBusForm.markAsPristine();
+        this.createBusForm.markAsUntouched();
+        this.createBusForm.updateValueAndValidity(); // Ensure validity is recalculated
+  
         this.busCreated.emit();
       },
       error: (error: any) => {
@@ -119,14 +153,19 @@ export class AddBusComponent implements OnInit {
       },
     });
   }
+  
+  
+  
 
   deleteBus(busId: number) {
     this.apiService.deleteBus(busId).subscribe({
       next: (response) => {
         console.log('Bus deleted:', response);
+        this.isSubmitting = false;
       },
       error: (error) => {
         console.error('Error deleting Bus:', error);
+        this.isSubmitting = false;
       }
     });
   }

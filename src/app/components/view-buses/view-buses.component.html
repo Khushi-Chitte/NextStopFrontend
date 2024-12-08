@@ -1,1 +1,83 @@
-<p>view-buses works!</p>
+<div class="container mt-2">
+    <h2 class="text-center mb-4">Buses</h2>
+
+    <div *ngIf="errorMessage" class="error">
+        <p>{{ errorMessage }}</p>
+      </div>
+
+      <div class="mb-3">
+        <div class="row g-2">
+
+          <div class="col-md-2">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search by Bus Number"
+              [(ngModel)]="searchBusNumber"
+              (input)="searchByBusNumber()"
+            />
+          </div>
+
+          <div class="col-md-2" *ngIf="isAdmin">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search by OperatorId"
+              [(ngModel)]="searchOperatorId"
+              (input)="searchByOperationId()"
+            />
+          </div>
+
+
+          <div class="col">
+            <button class="btn btn-secondary" (click)="resetSearch()">Reset</button>
+          </div>
+        </div> 
+        </div>
+
+
+        
+
+
+    <div *ngIf="buses.length > 0" class="bus-list">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Bus Id</th>
+                    <th>Bus Name</th>
+                    <th>Bus Number</th>
+                    <th>Bus Type</th>
+                    <th>Total Seats</th>
+                    <th>Amenities</th>
+                    <th>Operator Id</th>
+                    <th>Operator Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let bus of filteredBuses" class="card-row">
+                    <td>{{ bus.busId }}</td>
+                    <td>{{ bus.busName }}</td>
+                    <td>{{ bus.busNumber }}</td>
+                    <td>{{ bus.busType }}</td>
+                    <td>{{ bus.totalSeats }}</td>
+                    <td>{{ bus.amenities }}</td>
+                    <td>{{ bus.operatorId }}</td>
+                    <td>{{ bus.operatorName }}</td>
+                    <td>
+                        <button 
+                          class="btn btn-primary" 
+                          (click)="onUpdate(bus.busId)" >
+                            Update
+                        </button>
+                        <button 
+                          class="btn btn-danger" 
+                          (click)="onDelete(bus.busId)" >   
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

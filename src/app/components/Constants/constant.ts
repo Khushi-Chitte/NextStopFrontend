@@ -26,4 +26,6 @@ export const Constant = {
     CreateSeats: 'Seat/CreateSeatsForBus',
     DeleteBus: 'Bus/DeleteBus/',
     ViewSeatLogs: 'Booking/GetSeatLogByBookingId/',
+    GetBusesByOperatorId: 'Bus/GetBusesByOperatorId/',
+    DeleteSeats: 'Seat/DeleteAllSeatsByBusId/',
 }
