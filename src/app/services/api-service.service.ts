@@ -255,6 +255,36 @@ export class ApiServiceService {
       })
     );
   }
+
+  createRoute(routeData: any) {
+    const userId = localStorage.getItem('userId');
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if (!userId || !jwtToken) {
+      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+
+    return this.http.post(`${Constant.BASE_URI}${Constant.CreateRoute}`, routeData, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Error create route:', error);
+        return throwError(() => error);
+      })
+    );
+
+  }
+
+  fetchAllRoutes() {
+    return this.http.get(`${Constant.BASE_URI}${Constant.ViewAllRoutes}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching routes:', error);
+        return throwError(() => error);
+      })
+    );
+  }
   
   
 

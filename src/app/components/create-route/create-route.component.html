@@ -1,0 +1,74 @@
+<div class="form-container">
+    <h2>Create a New Route</h2>
+  
+    <form [formGroup]="createRouteForm" (ngSubmit)="onCreateRoute()">
+      <div class="form-group">
+        <label for="origin">Origin</label>
+        <input
+          id="origin"
+          type="text"
+          formControlName="origin"
+          [class.invalid]="createRouteForm.get('origin')?.invalid && createRouteForm.get('origin')?.touched"
+          placeholder="Enter origin"
+        />
+        <div class="error-message" *ngIf="createRouteForm.get('origin')?.invalid && createRouteForm.get('origin')?.touched">
+          Origin is required and must not exceed 100 characters.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="destination">Destination</label>
+        <input
+          id="destination"
+          type="text"
+          formControlName="destination"
+          [class.invalid]="createRouteForm.get('destination')?.invalid && createRouteForm.get('destination')?.touched"
+          placeholder="Enter destination"
+        />
+        <div class="error-message" *ngIf="createRouteForm.get('destination')?.invalid && createRouteForm.get('destination')?.touched">
+          Destination is required and must not exceed 100 characters.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="distance">Distance(in Km)</label>
+        <input
+          id="distance"
+          type="number"
+          formControlName="distance"
+          [class.invalid]="createRouteForm.get('distance')?.invalid && createRouteForm.get('distance')?.touched"
+          placeholder="Enter distance"
+        />
+        <div class="error-message" *ngIf="createRouteForm.get('distance')?.invalid && createRouteForm.get('distance')?.touched">
+          Distance must be a non-negative number.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="estimatedTime">Estimated Time</label>
+        <input
+          id="estimatedTime"
+          type="text"
+          formControlName="estimatedTime"
+          [class.invalid]="createRouteForm.get('estimatedTime')?.invalid && createRouteForm.get('estimatedTime')?.touched"
+          placeholder="Enter estimated time (optional)"
+        />
+        <div class="error-message" *ngIf="createRouteForm.get('estimatedTime')?.invalid && createRouteForm.get('estimatedTime')?.touched">
+          Estimated time must not exceed 50 characters.
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button type="submit" [disabled]="isSubmitting || createRouteForm.invalid">Create Route</button>
+      </div>
+    </form>
+  
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
+  

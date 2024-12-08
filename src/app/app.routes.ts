@@ -10,6 +10,8 @@ import { UpdateProfileComponent } from './components/update-profile/update-profi
 import { ConfirmBookingComponent } from './components/confirm-booking/confirm-booking.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { ViewBookingComponent } from './components/view-booking/view-booking.component';
+import { CreateRouteComponent } from './components/create-route/create-route.component';
+import { ManageRoutesComponent } from './components/manage-routes/manage-routes.component';
 
 export const routes: Routes = [
     { path: 'app-home', component: HomeComponent },
@@ -24,5 +26,6 @@ export const routes: Routes = [
     { path: 'app-bookings', component: BookingsComponent },
     { path: 'app-view-booking', component: ViewBookingComponent },
     { path: 'app-confirm-cancel-booking', component: ConfirmBookingComponent },
+    { path: 'app-manage-routes', component: ManageRoutesComponent },
     { path: '', redirectTo: '/app-home', pathMatch: 'full' }
 ];
