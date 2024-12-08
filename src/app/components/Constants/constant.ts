@@ -18,7 +18,9 @@ export const Constant = {
     BookingByBookingId: 'Booking/ViewBookingByBookingId/',
     UpdatePaymentToRefund: 'Payment/InitiateRefund',
     PaymentStatus: 'Payment/GetPaymentStatus/',
-    CreateRoute : 'Route/CreateRoute',
+    CreateRoute: 'Route/CreateRoute',
     ViewAllRoutes: 'Route/GetAllRoutes',
+    UpdateRoute: 'Route/UpdateRoute/',
+    DeleteRoute: 'Route/DeleteRoute/',
 }
 

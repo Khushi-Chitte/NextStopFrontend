@@ -12,6 +12,7 @@ import { BookingsComponent } from './components/bookings/bookings.component';
 import { ViewBookingComponent } from './components/view-booking/view-booking.component';
 import { CreateRouteComponent } from './components/create-route/create-route.component';
 import { ManageRoutesComponent } from './components/manage-routes/manage-routes.component';
+import { UpdateRoutesComponent } from './components/update-routes/update-routes.component';
 
 export const routes: Routes = [
     { path: 'app-home', component: HomeComponent },
@@ -27,5 +28,6 @@ export const routes: Routes = [
     { path: 'app-view-booking', component: ViewBookingComponent },
     { path: 'app-confirm-cancel-booking', component: ConfirmBookingComponent },
     { path: 'app-manage-routes', component: ManageRoutesComponent },
+    { path: 'app-update-routes', component: UpdateRoutesComponent },
     { path: '', redirectTo: '/app-home', pathMatch: 'full' }
 ];
