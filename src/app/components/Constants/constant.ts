@@ -22,4 +22,8 @@ export const Constant = {
     ViewAllRoutes: 'Route/GetAllRoutes',
     UpdateRoute: 'Route/UpdateRoute/',
     DeleteRoute: 'Route/DeleteRoute/',
+    CreateBus: 'Bus/CreateBus',
+    CreateSeats: 'Seat/CreateSeatsForBus',
+    DeleteBus: 'Bus/DeleteBus/',
+    ViewSeatLogs: 'Booking/GetSeatLogByBookingId/',
 }

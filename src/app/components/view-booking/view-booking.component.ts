@@ -18,6 +18,7 @@ export class ViewBookingComponent implements OnInit {
   bookingDetails: any;
   scheduleDetails: any;
   paymentDetails: any;
+  seatLogDetails: any;
   errorMessage: string | null = null;
   successMessage: string | null = null;
 
@@ -31,6 +32,7 @@ export class ViewBookingComponent implements OnInit {
       if(this.bookingId) {
         this.fetchBooking(this.bookingId);
         this.fetchPaymentStatus(this.bookingId);
+        this.fetchSeatLog(this.bookingId);
       }
 
       if(this.scheduleId) {
@@ -61,6 +63,19 @@ export class ViewBookingComponent implements OnInit {
       },
       error: (error: any) => {
         this.errorMessage = 'Unable to fetch schedule details.';
+        console.error(this.errorMessage, error);
+      },
+    });
+  }
+
+  fetchSeatLog(bookingId :number) {
+    this.apiService.fetchSeatLogs(bookingId).subscribe({
+      next: (seatLog: any) => {
+        this.seatLogDetails = seatLog;
+        console.log('SeatLog Details: ', seatLog);
+      },
+      error: (error: any) => {
+        this.errorMessage = 'Unable to fetch SeatLog details.';
         console.error(this.errorMessage, error);
       },
     });

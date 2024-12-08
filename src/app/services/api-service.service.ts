@@ -318,6 +318,87 @@ export class ApiServiceService {
       })
     );
   }
+
+  createBus(busData: any) : Observable<any> {
+    const userId = localStorage.getItem('userId');
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if (!userId || !jwtToken) {
+      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+
+    return this.http.post(`${Constant.BASE_URI}${Constant.CreateBus}`, busData, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Error create bus:', error);
+        return throwError(() => error);
+      })
+    );
+
+  }
+
+  createSeatsForBus(seatsData: any) {
+    const userId = localStorage.getItem('userId');
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if (!userId || !jwtToken) {
+      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+
+    return this.http.post(`${Constant.BASE_URI}${Constant.CreateSeats}`, seatsData, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Error create bus:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  deleteBus(busId: number): Observable<any> {
+    const userId = localStorage.getItem('userId');
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if (!userId || !jwtToken) {
+      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+
+    return this.http.delete(`${Constant.BASE_URI}${Constant.DeleteBus}${busId}`, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Error deleting bus:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  fetchSeatLogs(bookingId: number) {
+    const userId = localStorage.getItem('userId');
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if (!userId || !jwtToken) {
+      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+
+    return this.http.get(`${Constant.BASE_URI}${Constant.ViewSeatLogs}${bookingId}`, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching Payment Status:', error);
+        return throwError(() => error);
+      })
+    );
+  }
   
   
 

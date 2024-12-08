@@ -1,1 +1,101 @@
-<p>add-bus works!</p>
+<div class="form-container">
+    <h2>Create a New Bus</h2>
+  
+    <form [formGroup]="createBusForm" (ngSubmit)="onAddBus()">
+        <div class="form-group" *ngIf="isAdmin">
+            <label for="operatorId">OperatorId</label>
+            <input
+              id="operatorId"
+              type="number"
+              formControlName="operatorId"
+              [class.invalid]="createBusForm.get('operatorId')?.invalid && createBusForm.get('operatorId')?.touched"
+              placeholder="Enter operatorId(admin only)"
+            />
+            <div class="error-message" *ngIf="createBusForm.get('operatorId')?.invalid && createBusForm.get('operatorId')?.touched">
+              OperatorId is required;
+            </div>
+          </div>
+      <div class="form-group">
+        <label for="busName">Bus Name</label>
+        <input
+          id="busName"
+          type="text"
+          formControlName="busName"
+          [class.invalid]="createBusForm.get('busName')?.invalid && createBusForm.get('busName')?.touched"
+          placeholder="Enter bus name"
+        />
+        <div class="error-message" *ngIf="createBusForm.get('busName')?.invalid && createBusForm.get('busName')?.touched">
+          Bus name is required and must not exceed 100 characters.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="busNumber">Bus Number</label>
+        <input
+          id="busNumber"
+          type="text"
+          formControlName="busNumber"
+          [class.invalid]="createBusForm.get('busNumber')?.invalid && createBusForm.get('busNumber')?.touched"
+          placeholder="Enter bus number"
+        />
+        <div class="error-message" *ngIf="createBusForm.get('busNumber')?.invalid && createBusForm.get('busNumber')?.touched">
+          Bus number is required and must not exceed 50 characters.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="busType">Bus Type</label>
+        <select
+          id="busType"
+          formControlName="busType"
+          [class.invalid]="createBusForm.get('busType')?.invalid && createBusForm.get('busType')?.touched">
+          <option value="" disabled>Select Bus type</option>
+          <option *ngFor="let busType of busTypes" [value]="busType">{{ busType }}</option>
+    </select>
+        <div class="error-message" *ngIf="createBusForm.get('busType')?.invalid && createBusForm.get('busType')?.touched">
+          Bus type is required.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="totalSeats">Total Seats</label>
+        <input
+          id="totalSeats"
+          type="number"
+          formControlName="totalSeats"
+          [class.invalid]="createBusForm.get('totalSeats')?.invalid && createBusForm.get('totalSeats')?.touched"
+          placeholder="Enter total seats"
+        />
+        <div class="error-message" *ngIf="createBusForm.get('totalSeats')?.invalid && createBusForm.get('totalSeats')?.touched">
+          Total seats are required and must be a positive number.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="amenities">Amenities</label>
+        <input
+          id="amenities"
+          type="text"
+          formControlName="amenities"
+          [class.invalid]="createBusForm.get('amenities')?.invalid && createBusForm.get('amenities')?.touched"
+          placeholder="Enter bus amenities"
+        />
+        <div class="error-message" *ngIf="createBusForm.get('amenities')?.invalid && createBusForm.get('amenities')?.touched">
+          Amenities are required and must not exceed 255 characters.
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button type="submit" [disabled]="isSubmitting || createBusForm.invalid">Create Bus</button>
+      </div>
+    </form>
+  
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
+  

@@ -26,12 +26,23 @@
         <span class="label">Bus Name:</span>
         <span class="value">{{ scheduleDetails.busName }}</span>
       </div>
+
+
       <div class="detail-item">
         <span class="label">Reserved Seats:</span>
         <span class="value" *ngIf="bookingDetails.reservedSeats?.length > 0">{{ bookingDetails.reservedSeats?.join(', ')
           }}</span>
         <span class="value" *ngIf="bookingDetails.reservedSeats?.length === 0">N/A</span>
       </div>
+
+      <!-- <div class="detail-item">
+        <span class="label">Reserved Seats:</span>
+        <span class="value" *ngIf="seatLogDetails.seats?.length > 0">{{ seatLogDetails.seats
+          }}</span>
+        <span class="value" *ngIf="seatLogDetails.seats?.length === 0">N/A</span>
+      </div> -->
+
+      
       <div class="detail-item">
         <span class="label">Departure Date:</span>
         <span class="value">{{ scheduleDetails.departureTime | date }}</span>

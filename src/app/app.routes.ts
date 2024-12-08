@@ -12,6 +12,7 @@ import { ViewBookingComponent } from './components/view-booking/view-booking.com
 import { NotificationComponent } from './components/notification/notification.component';
 import { AboutComponent } from './components/about/about.component';
 import { ManageRoutesComponent } from './components/manage-routes/manage-routes.component';
+import { ManageBusesComponent } from './components/manage-buses/manage-buses.component';
 
 export const routes: Routes = [
     { path: 'app-home', component: HomeComponent },
@@ -26,6 +27,7 @@ export const routes: Routes = [
     { path: 'app-view-booking', component: ViewBookingComponent },
     { path: 'app-confirm-cancel-booking', component: ConfirmBookingComponent },
     { path: 'app-manage-routes', component: ManageRoutesComponent },
+    { path: 'app-manage-buses', component: ManageBusesComponent },
     { path:'app-about', component:AboutComponent},
     { path: 'app-notification', component: NotificationComponent },
     { path: '', redirectTo: '/app-home', pathMatch: 'full' },

@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './create-route.component.html',
   styleUrl: './create-route.component.css'
 })
-export class CreateRouteComponent implements OnInit{
+export class CreateRouteComponent implements OnInit {
   createRouteForm!: FormGroup;
   errorMessage: string = '';
   successMessage: string = '';

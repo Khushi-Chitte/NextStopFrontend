@@ -24,6 +24,7 @@ export class BookingsComponent implements OnInit{
         console.log('Booking Details: ',booking);
         
         this.addFromScheduleDetails();
+        this.addFromSeatLogs();
 
       },
       error: (error: any) => {
@@ -31,6 +32,7 @@ export class BookingsComponent implements OnInit{
         console.error(this.errorMessage);
       }
     });
+
   }
 
   addFromScheduleDetails(): void {
@@ -52,6 +54,23 @@ export class BookingsComponent implements OnInit{
       });
     });
   }  
+
+  addFromSeatLogs() {
+    this.bookings.forEach((booking: any) => {
+      const bookingId = booking.bookingId;
+
+      this.apiService.fetchSeatLogs(bookingId).subscribe({
+        next: (seatLog: any) => {
+          booking.seatFromLog = seatLog.seats;
+        },
+        error: (error : any) => {
+          console.error(`Failed to fetch seat log for bookingId: ${bookingId}`, error);
+          booking.seatFromLog = 'Unavailable'
+        },
+      });
+
+    });
+  }
 
   onView(booking: any) {
     console.log("View Booking", booking);
