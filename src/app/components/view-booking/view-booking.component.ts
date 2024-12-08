@@ -17,6 +17,7 @@ export class ViewBookingComponent implements OnInit {
   scheduleId: any;
   bookingDetails: any;
   scheduleDetails: any;
+  paymentDetails: any;
   errorMessage: string | null = null;
   successMessage: string | null = null;
 
@@ -29,6 +30,7 @@ export class ViewBookingComponent implements OnInit {
 
       if(this.bookingId) {
         this.fetchBooking(this.bookingId);
+        this.fetchPaymentStatus(this.bookingId);
       }
 
       if(this.scheduleId) {
@@ -61,6 +63,18 @@ export class ViewBookingComponent implements OnInit {
         this.errorMessage = 'Unable to fetch schedule details.';
         console.error(this.errorMessage, error);
       },
+    });
+  }
+
+  fetchPaymentStatus(bookingId: any) {
+    this.apiService.fetchPaymentStatus(bookingId).subscribe({
+      next: (payment: any) => {
+        this.paymentDetails = payment;
+      },
+      error: (error: any) => {
+        this.errorMessage = 'Unable to fetch payment details.';
+        console.error(this.errorMessage, error);
+      }
     });
   }
 

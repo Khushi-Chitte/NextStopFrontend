@@ -17,5 +17,6 @@ export const Constant = {
     BookingsByUserId: 'Booking/ViewBookingsByUserId/',
     BookingByBookingId: 'Booking/ViewBookingByBookingId/',
     UpdatePaymentToRefund: 'Payment/InitiateRefund',
+    PaymentStatus: 'Payment/GetPaymentStatus/',
 }
 
