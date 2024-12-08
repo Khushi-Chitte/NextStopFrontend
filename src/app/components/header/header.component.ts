@@ -13,18 +13,20 @@ import { Subscription } from 'rxjs';
   imports: [RouterLink,RouterLinkActive,FormsModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
-  
-  
 })
+
 export class HeaderComponent implements OnInit, OnDestroy{
   isAuthenticated: boolean = false;
   private authStatusSubscription!: Subscription;
+  role: string | null = null;
 
   constructor(private authS: AuthserviceService, private router: Router) {}
 
   ngOnInit(): void {
     this.authStatusSubscription = this.authS.isAuthenticated$.subscribe(status => {
       this.isAuthenticated = status; 
+      this.role = this.authS.getUserRoles();
+      console.log('Current role: ', this.role);
     });
   }
 

@@ -7,15 +7,8 @@ import { catchError, map, Observable, of, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiServiceService {
-  allBusesData = signal<any[]>([]);
 
   constructor(private http:HttpClient) { }
-
-  fetchBusesData() {
-    this.http.get<any[]>(Constant.BASE_URI + Constant.GetAllBuses).subscribe(
-      (result) => this.allBusesData.set(result)
-    );
-   }
 
    fetchBusSeats(busId: number): Observable<any[]> {
     return this.http.get<any[]>(`${Constant.BASE_URI}${Constant.GetSeatsByBusId}${busId}`).pipe(

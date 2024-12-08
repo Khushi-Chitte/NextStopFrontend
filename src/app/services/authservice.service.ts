@@ -148,6 +148,15 @@ export class AuthserviceService implements OnInit{
     return null;
   }
 
+  getUserRoles() : string | null {
+    const decodedToken = this.decodeToken();
+    if(decodedToken) {
+      const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+      return role;
+    }
+    return null;
+  }
+
   getRefreshToken(): string | null {
     return localStorage.getItem('refreshToken');
   }
