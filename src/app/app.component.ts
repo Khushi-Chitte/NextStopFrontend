@@ -17,7 +17,9 @@ import { NotificationComponent } from './components/notification/notification.co
 export class AppComponent implements OnInit {
   title = 'NextStop-Frontend';
 
-  constructor(private authService: AuthserviceService) { }
+  constructor(private authService: AuthserviceService) {
+    this.authService.checkAuthStatus(); 
+   }
 
   ngOnInit(): void {
     // Check authentication status when the app initializes

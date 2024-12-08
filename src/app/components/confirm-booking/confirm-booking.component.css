@@ -3,7 +3,8 @@
   width: 80%;
   max-width: 900px;
   margin: 20px auto;
-  padding: 15px; /* Reduced padding */
+  padding: 15px;
+  /* Reduced padding */
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -11,25 +12,32 @@
 
 /* Heading styles */
 h2 {
-  font-size: 1.8rem;  /* Reduced size */
+  font-size: 1.8rem;
+  /* Reduced size */
   color: #333;
-  margin-bottom: 15px; /* Reduced bottom margin */
+  margin-bottom: 15px;
+  /* Reduced bottom margin */
   text-align: center;
 }
 
 h3 {
-  font-size: 1.3rem;  /* Reduced size */
+  font-size: 1.3rem;
+  /* Reduced size */
   color: #555;
-  margin-bottom: 5px;  /* Reduced bottom margin */
-  margin-top: 10px;    /* Reduced top margin */
+  margin-bottom: 5px;
+  /* Reduced bottom margin */
+  margin-top: 10px;
+  /* Reduced top margin */
 }
 
 /* Paragraph styles */
 p {
-  font-size: 0.95rem;  /* Slightly smaller font size */
+  font-size: 0.95rem;
+  /* Slightly smaller font size */
   color: #333;
   line-height: 1.4;
-  margin-bottom: 8px;   /* Reduced bottom margin */
+  margin-bottom: 8px;
+  /* Reduced bottom margin */
 }
 
 /* Strong labels for bus and schedule details */
@@ -40,11 +48,14 @@ strong {
 
 /* Buttons styling */
 button {
-  font-size: 0.95rem; /* Slightly smaller font size */
-  padding: 10px 18px;  /* Reduced padding */
+  font-size: 0.95rem;
+  /* Slightly smaller font size */
+  padding: 10px 18px;
+  /* Reduced padding */
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 15px;   /* Reduced top margin */
+  margin-top: 15px;
+  /* Reduced top margin */
   transition: background-color 0.3s, transform 0.2s;
 }
 
@@ -76,40 +87,48 @@ button {
 /* Responsive Layout for Smaller Screens */
 @media (max-width: 768px) {
   .container {
-      width: 95%;
+    width: 95%;
   }
 
   h2 {
-      font-size: 1.6rem;  /* Slightly smaller font size for smaller screens */
+    font-size: 1.6rem;
+    /* Slightly smaller font size for smaller screens */
   }
 
   h3 {
-      font-size: 1.2rem;  /* Slightly smaller font size */
+    font-size: 1.2rem;
+    /* Slightly smaller font size */
   }
 
   p {
-      font-size: 0.9rem;  /* Slightly smaller font size */
+    font-size: 0.9rem;
+    /* Slightly smaller font size */
   }
 
   button {
-      width: 100%;
-      margin-top: 10px;  /* Reduced margin */
+    width: 100%;
+    margin-top: 10px;
+    /* Reduced margin */
   }
 
   .btn-secondary {
-      margin-left: 0; /* No left margin on smaller screens */
+    margin-left: 0;
+    /* No left margin on smaller screens */
   }
 }
 
 /* Section Styling for Bus and Schedule Details */
 section {
   background-color: #fff;
-  padding: 10px; /* Reduced padding */
+  padding: 10px;
+  /* Reduced padding */
   border-radius: 6px;
-  margin-top: 15px;  /* Reduced margin-top */
+  margin-top: 15px;
+  /* Reduced margin-top */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 section p {
-  margin: 5px 0;  /* Reduced margins */
+  margin: 5px 0;
+  /* Reduced margins */
 }

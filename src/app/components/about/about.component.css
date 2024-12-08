@@ -1,0 +1,67 @@
+.about-container {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.about-header h1 {
+    font-size: 2.5rem;
+    color: #343a40;
+}
+
+.about-header p {
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+.about-content {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+section h2 {
+    font-size: 1.8rem;
+    color: #343a40;
+}
+
+section p,
+section ul {
+    font-size: 1.1rem;
+    color: #495057;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+ul li strong {
+    color: #007bff;
+}
+
+.contact ul li {
+    font-size: 1rem;
+    color: #495057;
+}
+
+.contact ul li a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.contact ul li a:hover {
+    text-decoration: underline;
+}

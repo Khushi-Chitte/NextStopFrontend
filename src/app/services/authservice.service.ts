@@ -13,7 +13,13 @@ export class AuthserviceService implements OnInit{
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false); // Default: not authenticated
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private http:HttpClient) { }
+  // constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {
+  const token = this.getToken();
+  const isAuthenticated = !!token;
+  this.setAuthStatus(isAuthenticated);
+}
+
 
   ngOnInit(): void {
     const token = this.getToken();
@@ -126,17 +132,19 @@ export class AuthserviceService implements OnInit{
   
 
   decodeToken(): any | null {
-    const jwtToken = this.getToken();
-    if (jwtToken) {
-      try {
-        return jwtDecode(jwtToken); // Decode the token and return its payload
-      } catch (error) {
-        console.error('Error decoding token:', error);
-        return null;
-      }
-    }
+  const jwtToken = this.getToken();
+  if (!jwtToken) return null;
+
+  try {
+    return jwtDecode(jwtToken); // Returns decoded payload
+  } catch (error) {
+    console.error('Failed to decode token:', error);
+    this.removeToken(); // Remove corrupted token
+    this.setAuthStatus(false);
     return null;
   }
+}
+
 
   getTokenExpiry(): Date | null {
     const decodedToken = this.decodeToken();

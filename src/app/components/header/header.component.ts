@@ -35,23 +35,28 @@ export class HeaderComponent implements OnInit, OnDestroy{
     }
   }
 
-  onLogout(): void {
-    const refreshToken = this.authS.getRefreshToken();
-    this.authS.logout(refreshToken).subscribe(response => {
-      if (response.success) {
-        console.log(response.message);
+onLogout(): void {
+  const refreshToken = this.authS.getRefreshToken();
+  this.authS.logout(refreshToken).subscribe({
+    next: response => {
+      console.log('Logout successful:', response.message);
+      this.cleanupSession();
+      this.router.navigate(['/app-login']);
+    },
+    error: err => {
+      console.error('Logout failed:', err.message || err);
+      alert('Failed to logout. Please try again.');
+    }
+  });
+}
 
-        this.authS.removeToken();
-        this.authS.removeRefreshToken();
-        this.authS.removeEmail();
-        this.authS.removeUserId();
 
-        alert('Logged out successfully');
-        this.router.navigate(['/app-login']);
-      } else {
-        console.error(response.message);
-      }
-    });
-  }
+private cleanupSession(): void {
+  this.authS.removeToken();
+  this.authS.removeRefreshToken();
+  this.authS.removeEmail();
+  this.authS.removeUserId();
+}
+
 
 }

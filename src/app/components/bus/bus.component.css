@@ -8,16 +8,20 @@ h2 {
 
 /* Table Styling */
 .table-container {
-    max-width: 90%; /* Restrict table width */
-    margin: 4rem auto; /* Add space around the table and center it */
-    background-color: #fff; /* Optional: Ensure the table background stands out */
+    max-width: 90%;
+    /* Restrict table width */
+    margin: 4rem auto;
+    /* Add space around the table and center it */
+    background-color: #fff;
+    /* Optional: Ensure the table background stands out */
     border-radius: 8px;
     padding: 1rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .table {
-    width: 100%; /* Ensure the table takes up the container's width */
+    width: 100%;
+    /* Ensure the table takes up the container's width */
     border-collapse: collapse;
 }
 

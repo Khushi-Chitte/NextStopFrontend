@@ -1,44 +1,43 @@
 <div class="container">
-    <h2>Confirm Booking</h2>
-  
-    <!-- Display bus and schedule details when available -->
-    <div *ngIf="busDetails && scheduleDetails">
-      <h3>Bus Details</h3>
-      <p><strong>Bus Name:</strong> {{ busDetails.busName }}</p>
-      <p><strong>Bus Type:</strong> {{ busDetails.busType }}</p>
-      <p><strong>Operator Name:</strong> {{ busDetails.operatorName }}</p>
-      <p><strong>Amenities:</strong> {{ busDetails.amenities }}</p>
-  
-      <h3>Schedule Details</h3>
-      <p><strong>Route:</strong> {{ scheduleDetails.origin }} - {{ scheduleDetails.destination }}</p>
-      <p><strong>Departure:</strong> {{ scheduleDetails.departureTime | date:'yyyy-MM-dd HH:mm' }}</p>
-      <p><strong>Arrival:</strong> {{ scheduleDetails.arrivalTime | date:'yyyy-MM-dd HH:mm' }}</p>
-      <p><strong>Fare per seat:</strong> ₹{{ scheduleDetails.fare }}</p>
-  
-      <h3>Selected Seats</h3>
-      <p>{{ selectedSeats.join(', ') }}</p>
-  
-      <h3>Seats to Book:</h3>
-      <p>{{ seatsToBook }}</p>
-  
-      <h3>Total Fare:</h3>
-      <p>₹{{ totalFare }}</p>
-  
-      <!-- Show loading spinner if processing is ongoing -->
-      <div *ngIf="isProcessing" class="loading-spinner">
-        <p>Processing payment...</p>
-      </div>
-  
-      <!-- Confirm Booking Button, disabled during processing -->
-      <button class="btn btn-primary" [disabled]="isProcessing" (click)="makePayment()">
-        {{ isProcessing ? 'Processing...' : 'Make Payment' }}
-      </button>
-  
-      <!-- Go Back Button -->
-       <button class="btn btn-secondary" [disabled]="isProcessing" (click)="goBack()">
-        Go Back
-       </button>
-        
+  <h2>Confirm Booking</h2>
+
+  <!-- Display bus and schedule details when available -->
+  <div *ngIf="busDetails && scheduleDetails">
+    <h3>Bus Details</h3>
+    <p><strong>Bus Name:</strong> {{ busDetails.busName }}</p>
+    <p><strong>Bus Type:</strong> {{ busDetails.busType }}</p>
+    <p><strong>Operator Name:</strong> {{ busDetails.operatorName }}</p>
+    <p><strong>Amenities:</strong> {{ busDetails.amenities }}</p>
+
+    <h3>Schedule Details</h3>
+    <p><strong>Route:</strong> {{ scheduleDetails.origin }} - {{ scheduleDetails.destination }}</p>
+    <p><strong>Departure:</strong> {{ scheduleDetails.departureTime | date:'yyyy-MM-dd HH:mm' }}</p>
+    <p><strong>Arrival:</strong> {{ scheduleDetails.arrivalTime | date:'yyyy-MM-dd HH:mm' }}</p>
+    <p><strong>Fare per seat:</strong> ₹{{ scheduleDetails.fare }}</p>
+
+    <h3>Selected Seats</h3>
+    <p>{{ selectedSeats.join(', ') }}</p>
+
+    <h3>Seats to Book:</h3>
+    <p>{{ seatsToBook }}</p>
+
+    <h3>Total Fare:</h3>
+    <p>₹{{ totalFare }}</p>
+
+    <!-- Show loading spinner if processing is ongoing -->
+    <div *ngIf="isProcessing" class="loading-spinner">
+      <p>Processing payment...</p>
     </div>
+
+    <!-- Confirm Booking Button, disabled during processing -->
+    <button class="btn btn-primary" [disabled]="isProcessing" (click)="makePayment()">
+      {{ isProcessing ? 'Processing...' : 'Make Payment' }}
+    </button>
+
+    <!-- Go Back Button -->
+    <button class="btn btn-secondary" [disabled]="isProcessing" (click)="goBack()">
+      Go Back
+    </button>
+
   </div>
-  
+</div>

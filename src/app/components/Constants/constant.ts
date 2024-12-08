@@ -19,4 +19,3 @@ export const Constant = {
     UpdatePaymentToRefund: 'Payment/InitiateRefund',
     PaymentStatus: 'Payment/GetPaymentStatus/',
 }
-

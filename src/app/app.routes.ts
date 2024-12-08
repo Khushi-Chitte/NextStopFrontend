@@ -11,6 +11,7 @@ import { ConfirmBookingComponent } from './components/confirm-booking/confirm-bo
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { ViewBookingComponent } from './components/view-booking/view-booking.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { AboutComponent } from './components/about/about.component';
 
 export const routes: Routes = [
     { path: 'app-home', component: HomeComponent },
@@ -26,6 +27,7 @@ export const routes: Routes = [
     { path: 'app-view-booking', component: ViewBookingComponent },
     { path: 'app-confirm-cancel-booking', component: ConfirmBookingComponent },
     { path: '', redirectTo: '/app-home', pathMatch: 'full' },
+    { path:'app-about', component:AboutComponent},
     { path: 'app-notification', component: NotificationComponent }
 
 ];
