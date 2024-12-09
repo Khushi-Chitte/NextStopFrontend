@@ -87,16 +87,8 @@ export class AddBusComponent implements OnInit {
         this.createdBusTotalSeats = bus.totalSeats;
 
         this.isSubmitting = false;
+        this.busCreated.emit();
         this.createBusForm.reset();
-
-        const seatNumbers = this.generateSeatNumbers(this.createdBusTotalSeats);
-
-        const seatData = {
-          busId: this.createdBusId,
-          seatNumbers: seatNumbers
-        };
-
-        this.createSeatsForBus(seatData);
       },
       error: (error: any) => {
         this.handleError(error);
@@ -121,65 +113,6 @@ export class AddBusComponent implements OnInit {
       this.errorMessage = 'An unexpected error occurred. Please try again later.';
     }
     console.error(this.errorMessage, error);
-  }
-
-  createSeatsForBus(seatData: any) {
-    this.apiService.createSeatsForBus(seatData).subscribe({
-      next: (response: any) => {
-        this.successMessage = 'Bus and its seats created successfully!';
-        this.isSubmitting = false;
-  
-        // Reset the form with initial values if needed
-        var operatorId = parseInt(localStorage.getItem('userId') ?? '0');
-
-        if(this.isAdmin) operatorId = 0;
-        
-        this.createBusForm.reset({
-          operatorId: operatorId, // Retain operatorId if needed
-        });
-        
-        // Mark as pristine and untouched to refresh state
-        this.createBusForm.markAsPristine();
-        this.createBusForm.markAsUntouched();
-        this.createBusForm.updateValueAndValidity(); // Ensure validity is recalculated
-  
-        this.busCreated.emit();
-      },
-      error: (error: any) => {
-        this.errorMessage = 'Failed to create seats. So bus also got deleted. Please try again.';
-        console.error(this.errorMessage, error);
-        this.deleteBus(this.createdBusId);
-        this.isSubmitting = false;
-      },
-    });
-  }
-  
-  
-  
-
-  deleteBus(busId: number) {
-    this.apiService.deleteBus(busId).subscribe({
-      next: (response) => {
-        console.log('Bus deleted:', response);
-        this.isSubmitting = false;
-      },
-      error: (error) => {
-        console.error('Error deleting Bus:', error);
-        this.isSubmitting = false;
-      }
-    });
-  }
-
-  generateSeatNumbers(totalSeats: number): string[] {
-    let seatNumbers: string[] = [];
-    
-    for (let i = 1; i <= totalSeats; i++) {
-      seatNumbers.push(i.toString());
-    }
-    
-    return seatNumbers;
-  }
-  
-
+  }  
 
 }

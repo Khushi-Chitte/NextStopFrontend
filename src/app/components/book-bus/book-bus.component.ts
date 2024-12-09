@@ -18,7 +18,9 @@ export class BookBusComponent implements OnInit{
   scheduleId: any;
   seatsAvailable: number = 0;
   userID: any;
-  seats: any[] = [];
+  allSeats: any[] = [];
+  allSeatNumbers: any[] = [];
+  bookedSeatNumbers: any[] = [];
   selectedSeats: string[] = [];
   seatsToBook: number = 0;
   selectionConfirmed: boolean = false;
@@ -26,7 +28,9 @@ export class BookBusComponent implements OnInit{
   scheduleDetails: any;
   errorMessage: string = '';
   busDetails: any;
+  seats: any[] = [];
   constructor(private route: ActivatedRoute, private apiservice: ApiServiceService, private router: Router, private dialog: MatDialog) { }
+
 
 
   ngOnInit() {
@@ -39,20 +43,57 @@ export class BookBusComponent implements OnInit{
 
       this.userID = localStorage.getItem('userId');
   
-      this.apiservice.fetchBusSeats(this.busId).subscribe({
-        next: (seats: any) => {
-          this.seats = seats;
-          console.log('Fetched seats:', this.seats);
+      // Fetch all seat numbers
+    this.apiservice.fetchBusSeats(this.busId).subscribe({
+      next: (allSeats: any[]) => {
+        this.allSeats = allSeats;
+        this.allSeatNumbers = allSeats.map(seat => seat.seatNumber);
+
+        // Fetch booked seat numbers
+        this.apiservice.fetchScheduledSeatsByScheduleId(this.scheduleId).subscribe({
+          next: (bookedSeats: any[]) => {
+            this.bookedSeatNumbers = bookedSeats.map(seat => seat.seatNumber);
+
+            // Populate seats array with availability data
+            this.seats = this.allSeatNumbers.map(seatNumber => ({
+              isAvailable: !this.bookedSeatNumbers.includes(seatNumber),
+              seatNumber
+            }));
+
+            console.log('All seats:', this.seats);
+          },
+          error: (error: any) => {
+            console.error('Error fetching booked seats:', error);
+            // Set all seats as available in case of error
+            this.seats = this.allSeatNumbers.map(seatNumber => ({
+              isAvailable: true,
+              seatNumber
+            }));
+          }
+        });
+      },
+      error: (error: any) => {
+        console.error('Error fetching all seats:', error);
+        alert('Error fetching all seats. Please try again later.');
+      }
+    });
+
+      this.apiservice.fetchScheduledSeatsByScheduleId(this.scheduleId).subscribe({
+        next: (scheduledSeats: any[]) => {
+          this.bookedSeatNumbers = scheduledSeats.map(seat => seat.seatNumber); // Extract seat numbers
+          console.log('Booked seats numbers:', this.bookedSeatNumbers);
         },
         error: (error: any) => {
-          console.error('Error fetching seats:', error);
-          alert('Error fetching seats. Please try again later.');
-        },
-      }); 
+          this.errorMessage = 'Failed to fetch scheduled seats';
+          console.error(this.errorMessage, error);
+        }
+      });
+      
 
       this.apiservice.fetchScheduleDetails(this.scheduleId).subscribe({
         next: (schedule: any) => {
           this.scheduleDetails = schedule;
+
           console.log('Schedule Details: ', schedule);
         },
         error: (error: any) => {
@@ -71,6 +112,9 @@ export class BookBusComponent implements OnInit{
           console.error(this.errorMessage, error);
         }
       });
+
+
+
   }
   
 

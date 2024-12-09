@@ -34,7 +34,7 @@
                 <tr *ngFor="let bus of buses" class="card-row">
                     <td>{{ bus.busName }}</td>
                     <td>{{ bus.origin }} - {{ bus.destination }}</td>
-                    <td>{{ bus.date | date:'yyyy-MM-dd' }}</td>
+                    <td>{{ bus.departureTime | date:'yyyy-MM-dd' }}</td>
                     <td>{{ bus.departureTime | date:'hh:mm a' }}</td>
                     <td>{{ bus.arrivalTime | date:'yyyy-MM-dd' }}</td>
                     <td>{{ bus.arrivalTime | date:'hh:mm a' }}</td>

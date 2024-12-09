@@ -60,7 +60,7 @@ export class ConfirmBookingComponent implements OnInit {
     const bookTicketData = {
       userId: parseInt(localStorage.getItem('userId') || '0'), 
       scheduleId: this.scheduleDetails.scheduleId,
-      selectedSeats: this.selectedSeats,
+      seatNumbers: this.selectedSeats,
     };
 
     console.log('Book ticket data: ', bookTicketData);

@@ -28,7 +28,7 @@ export class BookingsComponent implements OnInit{
 
       },
       error: (error: any) => {
-        this.errorMessage = 'Failed to fetch booking details';
+        this.handleError(error);
         console.error(this.errorMessage);
       }
     });
@@ -70,6 +70,21 @@ export class BookingsComponent implements OnInit{
       });
 
     });
+  }
+
+  handleError(error: any) {
+    if (error.error) {
+      if (typeof error.error === 'string') {
+        this.errorMessage = error.error;
+      } else if (error.error.message) {
+        this.errorMessage = error.error.message;
+      } else {
+        this.errorMessage = 'Failed to fetch booking details';
+      }
+    } else {
+      this.errorMessage = 'An unexpected error occurred. Please try again later.';
+    }
+    console.error(this.errorMessage, error);
   }
 
   onView(booking: any) {

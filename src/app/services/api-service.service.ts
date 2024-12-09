@@ -19,6 +19,15 @@ export class ApiServiceService {
     );
   }
 
+  fetchScheduledSeatsByScheduleId(scheduleId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${Constant.BASE_URI}${Constant.GetScheduledSeatsByScheduleId}${scheduleId}`).pipe(
+      catchError((error) => {
+        console.error('Error fetching bus seats:', error);
+        return throwError(() => new Error('Error fetching bus seats.'));
+      })
+    );
+  }
+
    fetchBusSearchResults(Origin: string, Destination: string, TravelDate: string) : Observable<any> {
     const searchData = {
       Origin: Origin,
@@ -217,15 +226,6 @@ export class ApiServiceService {
 
   }
 
-  createSeatsForBus(seatsData: any) {
-    return this.http.post(`${Constant.BASE_URI}${Constant.CreateSeats}`, seatsData).pipe(
-      catchError((error: any) => {
-        console.error('Error create bus:', error);
-        return throwError(() => error);
-      })
-    );
-  }
-
   deleteBus(busId: number): Observable<any> {
     return this.http.delete(`${Constant.BASE_URI}${Constant.DeleteBus}${busId}`).pipe(
       catchError((error: any) => {
@@ -266,16 +266,6 @@ export class ApiServiceService {
     return this.http.get(`${Constant.BASE_URI}${Constant.GetBusesByOperatorId}${operatorId}`).pipe(
       catchError((error: any) => {
         console.error('Error fetching buses:', error);
-        return throwError(() => error);
-      })
-    );
-  }
-
-  deleteSeatsByBusId(busId: number): Observable<any> {
-
-    return this.http.delete(`${Constant.BASE_URI}${Constant.DeleteSeats}${busId}`).pipe(
-      catchError((error: any) => {
-        console.error('Error deleting seats:', error);
         return throwError(() => error);
       })
     );

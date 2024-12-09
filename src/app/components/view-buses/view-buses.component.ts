@@ -60,7 +60,7 @@ export class ViewBusesComponent implements OnInit, OnDestroy {
         this.filteredBuses = buses;
       },
       error: (error: any) => {
-        this.errorMessage = 'Failed to fetch buses';
+        this.handleError(error);
         console.error(this.errorMessage);
       },
     });
@@ -73,7 +73,7 @@ export class ViewBusesComponent implements OnInit, OnDestroy {
         this.filteredBuses = buses;
       },
       error: (error: any) => {
-        this.errorMessage = 'Failed to fetch buses';
+        this.handleError(error);
         console.error(this.errorMessage);
       },
     });
@@ -173,7 +173,7 @@ export class ViewBusesComponent implements OnInit, OnDestroy {
       } else if (error.error.message) {
         this.errorMessage = error.error.message;
       } else {
-        this.errorMessage = 'Failed to create bus. Please try again';
+        this.errorMessage = 'Failed to process the bus. Please try again';
       }
     } else {
       this.errorMessage = 'An unexpected error occurred. Please try again later.';

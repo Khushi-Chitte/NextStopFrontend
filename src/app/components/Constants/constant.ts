@@ -1,11 +1,13 @@
 export const Constant = {
-    BASE_URI : 'https://localhost:7032/api/',   //ayush uri
+    BASE_URI : 'https://localhost:7194/api/',   //ayush uri
     // BASE_URI : 'https://localhost:7101/api/', //khushi uri
     LOGIN:'Authentication/login',
     REGISTER:'Authentication/register',
     LOGOUT: 'Authentication/logout',
     GetAllBuses: 'Bus/GetAllBuses',
-    GetSeatsByBusId: 'Seat/GetSeatsByBusId/',
+    GetSeatsByBusId: 'Bus/GetSeatsByBusId/',
+    GetScheduledSeatsByScheduleId: 'Bus/GetScheduledSeatsByScheduleId/',
+
     SearchBuses: 'Booking/SearchBus/',
     GetUserById: 'Users/GetUserById/',
     UpdateUser: 'Users/UpdateUser/',
@@ -23,10 +25,8 @@ export const Constant = {
     UpdateRoute: 'Route/UpdateRoute/',
     DeleteRoute: 'Route/DeleteRoute/',
     CreateBus: 'Bus/CreateBus',
-    CreateSeats: 'Seat/CreateSeatsForBus',
     DeleteBus: 'Bus/DeleteBus/',
     ViewSeatLogs: 'Booking/GetSeatLogByBookingId/',
     GetBusesByOperatorId: 'Bus/GetBusesByOperatorId/',
-    DeleteSeats: 'Seat/DeleteAllSeatsByBusId/',
     UpdateBus: 'Bus/UpdateBus/',
 }
