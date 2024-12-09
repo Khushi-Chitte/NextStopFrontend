@@ -43,7 +43,7 @@
                     <td>{{ bus.availableSeats }}</td>
                     <td>
                         <button class="btn btn-danger" (click)="onView(bus)" [disabled]="bus.availableSeats <= 0">
-                            View Bus
+                            Book Now
                         </button>
                         <div *ngIf="bus.availableSeats <= 0" class="text-danger mt-2">
                             Sorry, no seats available.

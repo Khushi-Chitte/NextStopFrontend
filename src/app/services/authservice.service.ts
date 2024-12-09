@@ -10,10 +10,9 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class AuthserviceService implements OnInit{
 
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false); // Default: not authenticated
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false); 
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  // constructor(private http:HttpClient) { }
   constructor(private http: HttpClient) {
   const token = this.getToken();
   const isAuthenticated = !!token;
@@ -44,7 +43,7 @@ export class AuthserviceService implements OnInit{
         this.logout(this.getRefreshToken()).subscribe(() => {
           console.log('Token expired, logged out automatically');
           alert('Token expired, logged out automatically');
-          this.setAuthStatus(false); // Set authentication to false
+          this.setAuthStatus(false); 
           this.removeToken();
           this.removeRefreshToken();
           this.removeEmail();

@@ -131,6 +131,7 @@ export class ViewBusesComponent implements OnInit{
               },
               error: (error) => {
                 console.error('Error updating bus:', error);
+                this.handleError(error);
               }
             });
           }
@@ -160,8 +161,24 @@ export class ViewBusesComponent implements OnInit{
       },
       error: (error : any) => {
         console.log(`error deleting bus with busID ${busId}`)
+        this.errorMessage = 'error deleting bus';
       }
     });
+  }
+
+  handleError(error: any) {
+    if (error.error) {
+      if (typeof error.error === 'string') {
+        this.errorMessage = error.error;
+      } else if (error.error.message) {
+        this.errorMessage = error.error.message;
+      } else {
+        this.errorMessage = 'Failed to create bus. Please try again';
+      }
+    } else {
+      this.errorMessage = 'An unexpected error occurred. Please try again later.';
+    }
+    console.error(this.errorMessage, error);
   }
 
 

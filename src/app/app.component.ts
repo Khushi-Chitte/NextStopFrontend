@@ -6,11 +6,10 @@ import { FormsModule } from '@angular/forms';
 import { AuthserviceService } from './services/authservice.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { NotificationComponent } from './components/notification/notification.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,HeaderComponent,FooterComponent,FormsModule, MatDialogModule,CommonModule,NotificationComponent],
+  imports: [RouterOutlet,HeaderComponent,FooterComponent,FormsModule, MatDialogModule,CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

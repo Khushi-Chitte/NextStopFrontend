@@ -1,12 +1,12 @@
-<h2 class="text-center mt-4 mb-4">Update Route</h2>
+<h2 class="text-center mt-4 mb-4">Update Bus</h2>
 
-<form (ngSubmit)="onSave()" #updateRouteForm="ngForm" class="p-4 border rounded shadow-sm bg-light">
+<form (ngSubmit)="onSave()" #updateBusForm="ngForm" class="p-4 border rounded shadow-sm bg-light">
   <div class="mb-3">
     <label for="busName" class="form-label">Bus Name</label>
     <input
       type="text"
       id="busName"
-      name="busName"
+      name="busName"  
       [(ngModel)]="busData.busName"
       required
       class="form-control"
@@ -19,7 +19,7 @@
     <input
       type="text"
       id="busNumber"
-      name="busNumber"
+      name="busNumber"  
       [(ngModel)]="busData.busNumber"
       required
       class="form-control"
@@ -27,28 +27,25 @@
     />
   </div>
 
-  <!-- <div class="mb-3">
+  <div class="mb-3">
     <label for="busType" class="form-label">Bus Type</label>
-    <select
-      id="busType"
-      name="busType"
-      [(ngModel)]="busData.busType"
-      required
-      class='form-control"
-      <option value="" disabled>Select Bus type</option>
-      <option *ngFor="let busType of busTypes">{{ busType }}</option>
-</select> -->
+    <select [(ngModel)]="busData.busType" class="form-control" id="busType" name="busType" required>  <!-- Added name attribute -->
+      <option [value]="busData.busType" selected>{{ busData.busType }}</option>
+      <option [value]="type" *ngFor="let type of busData.busTypes">{{ type }}</option>
+    </select>
+  </div>
 
   <div class="mb-3">
     <label for="totalSeats" class="form-label">Total Seats</label>
     <input
       type="text"
       id="totalSeats"
-      name="totalSeats"
+      name="totalSeats" 
       [(ngModel)]="busData.totalSeats"
       required
       class="form-control"
       placeholder="Enter total seats"
+      disabled
     />
   </div>
 
@@ -57,7 +54,7 @@
     <input
       type="text"
       id="amenities"
-      name="amenities"
+      name="amenities"  
       [(ngModel)]="busData.amenities"
       required
       class="form-control"
