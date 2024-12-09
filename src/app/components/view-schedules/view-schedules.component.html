@@ -1,1 +1,81 @@
-<p>view-schedules works!</p>
+<div class="container mt-2">
+    <h2 class="text-center mb-4">Schedules</h2>
+
+    <div *ngIf="errorMessage" class="error">
+        <p>{{ errorMessage }}</p>
+    </div>
+
+    <div class="mb-3">
+        <!-- <div class="row g-2">
+            <div class="col-md-2">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search by Schedule ID"
+                    [(ngModel)]="searchScheduleId"
+                    (input)="searchByScheduleId()"
+                />
+            </div>
+
+            <div class="col-md-2">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search by Bus ID"
+                    [(ngModel)]="searchBusId"
+                    (input)="searchByBusId()"
+                />
+            </div>
+
+            <div class="col">
+                <button class="btn btn-secondary" (click)="resetSearch()">Reset</button>
+            </div>
+        </div> -->
+    </div>
+
+    <div *ngIf="schedules.length > 0" class="schedule-list">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Schedule ID</th>
+                    <th>Bus ID</th>
+                    <th>Bus Name</th>
+                    <th>Bus Number</th>
+                    <th>Route ID</th>
+                    <th>Route</th>
+                    <th>Departure Time</th>
+                    <th>Arrival Time</th>
+                    <th>Fare</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let schedule of filteredSchedules" class="card-row">
+                    <td>{{ schedule.scheduleId }}</td>
+                    <td>{{ schedule.busId }}</td>
+                    <td>{{ schedule.busName }}</td>
+                    <td>{{ schedule.busNumber }}</td>
+                    <td>{{ schedule.routeId }}</td>
+                    <td>{{ schedule.origin }} → {{ schedule.destination }}</td>
+                    <td>{{ schedule.departureTime | date:'shortTime' }}</td>
+                    <td>{{ schedule.arrivalTime | date:'shortTime' }}</td>
+                    <td>₹{{ schedule.fare }}</td>
+                    <td>{{ schedule.date | date:'mediumDate' }}</td>
+                    <td>
+                        <button 
+                            class="btn btn-primary" 
+                            (click)="onUpdate(schedule.scheduleId)" >
+                            Update
+                        </button>
+                        <button 
+                            class="btn btn-danger" 
+                            (click)="onDelete(schedule.scheduleId)" >
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Constant } from '../components/Constants/constant';
-import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -280,6 +280,43 @@ export class ApiServiceService {
       })
     );
   }
+
+  fetchAllSchedules(): Observable<any> {
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetAllSchedules}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching schedules:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  fetchSchedulesByBusId(busId: any) : Observable<any> {
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetSchedulesByBusId}${busId}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching Payment Status:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  fetchSchedulesByOperatorId() : Observable<any> {
+    const userId = localStorage.getItem('userId');
+
+    if (!userId) {
+      return throwError(() => new Error('missing user ID'));
+    }
+
+
+    const operatorId = userId;
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetSchedulesByOperatorId}${operatorId}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching Payment Status:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  
   
   
 

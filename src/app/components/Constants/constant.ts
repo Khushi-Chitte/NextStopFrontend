@@ -7,7 +7,6 @@ export const Constant = {
     GetAllBuses: 'Bus/GetAllBuses',
     GetSeatsByBusId: 'Bus/GetSeatsByBusId/',
     GetScheduledSeatsByScheduleId: 'Bus/GetScheduledSeatsByScheduleId/',
-
     SearchBuses: 'Booking/SearchBus/',
     GetUserById: 'Users/GetUserById/',
     UpdateUser: 'Users/UpdateUser/',
@@ -29,4 +28,7 @@ export const Constant = {
     ViewSeatLogs: 'Booking/GetSeatLogByBookingId/',
     GetBusesByOperatorId: 'Bus/GetBusesByOperatorId/',
     UpdateBus: 'Bus/UpdateBus/',
+    GetAllSchedules: 'Schedule/GetAllSchedules',
+    GetSchedulesByBusId: 'Schedule/bus/',
+    GetSchedulesByOperatorId: 'Schedule/operator/',
 }
