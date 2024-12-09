@@ -5,6 +5,7 @@ import { AuthserviceService } from '../../services/authservice.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { UpdateBusesComponent } from '../update-buses/update-buses.component';
 
 @Component({
   selector: 'app-view-buses',
@@ -112,7 +113,30 @@ export class ViewBusesComponent implements OnInit{
     if (!this.isAuthenticated) {
       alert('Login first to update');
     } else {
-      console.log('Update Bus');
+      const busToUpdate = this.buses.find(bus => bus.busId === busId);
+
+      console.log(busToUpdate);
+
+      if(busToUpdate) {
+        const dialogRef = this.dialog.open(UpdateBusesComponent, {
+          data: {...busToUpdate}
+        });
+
+        dialogRef.afterClosed().subscribe(updatedBus => {
+          if(updatedBus) {
+            this.apiService.updateBus(busId, updatedBus).subscribe({
+              next: (response: any) => {
+                console.log('Bus updated:', response);
+                this.loadBuses();
+              },
+              error: (error) => {
+                console.error('Error updating bus:', error);
+              }
+            });
+          }
+        });
+      }
+      
     }
 
   }

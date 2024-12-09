@@ -1,0 +1,73 @@
+<h2 class="text-center mt-4 mb-4">Update Route</h2>
+
+<form (ngSubmit)="onSave()" #updateRouteForm="ngForm" class="p-4 border rounded shadow-sm bg-light">
+  <div class="mb-3">
+    <label for="busName" class="form-label">Bus Name</label>
+    <input
+      type="text"
+      id="busName"
+      name="busName"
+      [(ngModel)]="busData.busName"
+      required
+      class="form-control"
+      placeholder="Enter Bus Name"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="busNumber" class="form-label">Bus Number</label>
+    <input
+      type="text"
+      id="busNumber"
+      name="busNumber"
+      [(ngModel)]="busData.busNumber"
+      required
+      class="form-control"
+      placeholder="Enter Bus Number"
+    />
+  </div>
+
+  <!-- <div class="mb-3">
+    <label for="busType" class="form-label">Bus Type</label>
+    <select
+      id="busType"
+      name="busType"
+      [(ngModel)]="busData.busType"
+      required
+      class='form-control"
+      <option value="" disabled>Select Bus type</option>
+      <option *ngFor="let busType of busTypes">{{ busType }}</option>
+</select> -->
+
+  <div class="mb-3">
+    <label for="totalSeats" class="form-label">Total Seats</label>
+    <input
+      type="text"
+      id="totalSeats"
+      name="totalSeats"
+      [(ngModel)]="busData.totalSeats"
+      required
+      class="form-control"
+      placeholder="Enter total seats"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="amenities" class="form-label">Amenities</label>
+    <input
+      type="text"
+      id="amenities"
+      name="amenities"
+      [(ngModel)]="busData.amenities"
+      required
+      class="form-control"
+      placeholder="Enter amenities"
+    />
+  </div>
+
+  <!-- Actions -->
+  <div class="d-flex justify-content-between mt-4">
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </div>
+</form>

@@ -450,6 +450,26 @@ export class ApiServiceService {
       })
     );
   }
+
+  updateBus(busId: number, busData: any): Observable<any> {
+    const userId = localStorage.getItem('userId');
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if (!userId || !jwtToken) {
+      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+
+    return this.http.put(`${Constant.BASE_URI}${Constant.UpdateBus}${busId}`, busData, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Error updating bus:', error);
+        return throwError(() => error);
+      })
+    );
+  }
   
   
 
