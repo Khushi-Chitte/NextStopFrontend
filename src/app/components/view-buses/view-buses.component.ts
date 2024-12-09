@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiServiceService } from '../../services/api-service.service';
 import { AuthserviceService } from '../../services/authservice.service';
@@ -14,7 +14,7 @@ import { UpdateBusesComponent } from '../update-buses/update-buses.component';
   templateUrl: './view-buses.component.html',
   styleUrl: './view-buses.component.css'
 })
-export class ViewBusesComponent implements OnInit{
+export class ViewBusesComponent implements OnInit, OnDestroy {
   buses: any[] = [];
   filteredBuses: any[] = [];
   errorMessage: string = '';

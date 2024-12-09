@@ -37,17 +37,13 @@ export class ApiServiceService {
 
    fetchUserDetails(): Observable<any> {
     const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
 
-    if(!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    if(!userId) {
+      return throwError(() => new Error('missing user ID'));
     }
 
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    }
 
-    return this.http.get(`${Constant.BASE_URI}${Constant.GetUserById}${userId}`, { headers }).pipe(
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetUserById}${userId}`).pipe(
       catchError((error: any) => {
         console.error('Error fetching user details:', error);
         return throwError(() => error);
@@ -58,17 +54,12 @@ export class ApiServiceService {
 
    updateUser(userData: any): Observable<any> {
     const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
   
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    if (!userId) {
+      return throwError(() => new Error('missing user ID'));
     }
   
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-  
-    return this.http.put(`${Constant.BASE_URI}${Constant.UpdateUser}${userId}`, userData, { headers }).pipe(
+    return this.http.put(`${Constant.BASE_URI}${Constant.UpdateUser}${userId}`, userData).pipe(
       catchError((error: any) => {
         console.error('Error updating user details:', error);
         return throwError(() => error);
@@ -95,18 +86,7 @@ export class ApiServiceService {
   }
 
   bookTicket(bookTicketData: any): Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-  
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-  
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.post(`${Constant.BASE_URI}${Constant.BookTicket}`, bookTicketData, { headers }).pipe(
+    return this.http.post(`${Constant.BASE_URI}${Constant.BookTicket}`, bookTicketData).pipe(
       catchError((error: any) => {
         console.error('Error fetching user details:', error);
         return throwError(() => error);
@@ -115,18 +95,7 @@ export class ApiServiceService {
   }
 
   updatePayment(updatePaymentData: any): Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-  
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-  
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.post(`${Constant.BASE_URI}${Constant.UpdatePayment}`, updatePaymentData, { headers }).pipe(
+    return this.http.post(`${Constant.BASE_URI}${Constant.UpdatePayment}`, updatePaymentData).pipe(
       catchError((error: any) => {
         console.error('Error fetching user details:', error);
         return throwError(() => error);
@@ -135,20 +104,9 @@ export class ApiServiceService {
   }
 
   cancelBooking(bookingId: number): Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-  
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-  
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-  
     const cancelBookingData = { bookingId: bookingId };
   
-    return this.http.post(`${Constant.BASE_URI}${Constant.CancelBooking}`, cancelBookingData, { headers }).pipe(
+    return this.http.post(`${Constant.BASE_URI}${Constant.CancelBooking}`, cancelBookingData).pipe(
       catchError((error: any) => {
         console.error('Error cancelling booking:', error);
         return throwError(() => error);
@@ -158,17 +116,12 @@ export class ApiServiceService {
 
   fetchUserBookings() : Observable<any> {
     const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
 
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    if (!userId) {
+      return throwError(() => new Error('missing user ID.'));
     }
-  
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
     
-    return this.http.get(`${Constant.BASE_URI}${Constant.BookingsByUserId}${userId}`, { headers }).pipe(
+    return this.http.get(`${Constant.BASE_URI}${Constant.BookingsByUserId}${userId}`).pipe(
       catchError((error: any) => {
         console.error('Error fetching booking:', error);
         return throwError(() => error);
@@ -178,18 +131,7 @@ export class ApiServiceService {
   }
 
   fetchUserBookingByBookingId(bookingId: any) : Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.get(`${Constant.BASE_URI}${Constant.BookingByBookingId}${bookingId}`, { headers }).pipe(
+    return this.http.get(`${Constant.BASE_URI}${Constant.BookingByBookingId}${bookingId}`).pipe(
       catchError((error: any) => {
         console.error('Error fetching booking details:', error);
         return throwError(() => error);
@@ -198,22 +140,11 @@ export class ApiServiceService {
   }
 
   refundPaymentUpdate(bookingId: number) : Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
     const refundPaymentData = {
       bookingId: bookingId
     }
 
-    return this.http.post(`${Constant.BASE_URI}${Constant.UpdatePaymentToRefund}`, refundPaymentData, { headers }).pipe(
+    return this.http.post(`${Constant.BASE_URI}${Constant.UpdatePaymentToRefund}`, refundPaymentData).pipe(
       catchError((error: any) => {
         console.error('Unable to update refund db', error);
         return throwError(() => error);
@@ -230,18 +161,7 @@ export class ApiServiceService {
   }
 
   fetchPaymentStatus(bookingId: any) : Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.get(`${Constant.BASE_URI}${Constant.PaymentStatus}${bookingId}`, { headers }).pipe(
+    return this.http.get(`${Constant.BASE_URI}${Constant.PaymentStatus}${bookingId}`).pipe(
       catchError((error: any) => {
         console.error('Error fetching Payment Status:', error);
         return throwError(() => error);
@@ -250,18 +170,8 @@ export class ApiServiceService {
   }
 
   createRoute(routeData: any) : Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
 
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.post(`${Constant.BASE_URI}${Constant.CreateRoute}`, routeData, { headers }).pipe(
+    return this.http.post(`${Constant.BASE_URI}${Constant.CreateRoute}`, routeData).pipe(
       catchError((error: any) => {
         console.error('Error create route:', error);
         return throwError(() => error);
@@ -280,18 +190,7 @@ export class ApiServiceService {
   }
 
   updateRoute(routeId: number, routeData: any): Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.put(`${Constant.BASE_URI}${Constant.UpdateRoute}${routeId}`, routeData, { headers }).pipe(
+    return this.http.put(`${Constant.BASE_URI}${Constant.UpdateRoute}${routeId}`, routeData).pipe(
       catchError((error: any) => {
         console.error('Error updating route:', error);
         return throwError(() => error);
@@ -300,18 +199,7 @@ export class ApiServiceService {
   }
 
   deleteRoute(routeId: number): Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.delete(`${Constant.BASE_URI}${Constant.DeleteRoute}${routeId}`, { headers }).pipe(
+    return this.http.delete(`${Constant.BASE_URI}${Constant.DeleteRoute}${routeId}`).pipe(
       catchError((error: any) => {
         console.error('Error deleting route:', error);
         return throwError(() => error);
@@ -320,18 +208,7 @@ export class ApiServiceService {
   }
 
   createBus(busData: any) : Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.post(`${Constant.BASE_URI}${Constant.CreateBus}`, busData, { headers }).pipe(
+    return this.http.post(`${Constant.BASE_URI}${Constant.CreateBus}`, busData).pipe(
       catchError((error: any) => {
         console.error('Error create bus:', error);
         return throwError(() => error);
@@ -341,18 +218,7 @@ export class ApiServiceService {
   }
 
   createSeatsForBus(seatsData: any) {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.post(`${Constant.BASE_URI}${Constant.CreateSeats}`, seatsData, { headers }).pipe(
+    return this.http.post(`${Constant.BASE_URI}${Constant.CreateSeats}`, seatsData).pipe(
       catchError((error: any) => {
         console.error('Error create bus:', error);
         return throwError(() => error);
@@ -361,18 +227,7 @@ export class ApiServiceService {
   }
 
   deleteBus(busId: number): Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.delete(`${Constant.BASE_URI}${Constant.DeleteBus}${busId}`, { headers }).pipe(
+    return this.http.delete(`${Constant.BASE_URI}${Constant.DeleteBus}${busId}`).pipe(
       catchError((error: any) => {
         console.error('Error deleting bus:', error);
         return throwError(() => error);
@@ -381,18 +236,7 @@ export class ApiServiceService {
   }
 
   fetchSeatLogs(bookingId: number) : Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
-
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.get(`${Constant.BASE_URI}${Constant.ViewSeatLogs}${bookingId}`, { headers }).pipe(
+    return this.http.get(`${Constant.BASE_URI}${Constant.ViewSeatLogs}${bookingId}`).pipe(
       catchError((error: any) => {
         console.error('Error fetching Payment Status:', error);
         return throwError(() => error);
@@ -411,19 +255,15 @@ export class ApiServiceService {
 
   fetchBusesByOperatorId() : Observable<any> {
     const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
 
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
+    if (!userId) {
+      return throwError(() => new Error('missing user ID'));
     }
 
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
 
     const operatorId = userId;
 
-    return this.http.get(`${Constant.BASE_URI}${Constant.GetBusesByOperatorId}${operatorId}`, { headers }).pipe(
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetBusesByOperatorId}${operatorId}`).pipe(
       catchError((error: any) => {
         console.error('Error fetching buses:', error);
         return throwError(() => error);
@@ -432,18 +272,8 @@ export class ApiServiceService {
   }
 
   deleteSeatsByBusId(busId: number): Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
 
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.delete(`${Constant.BASE_URI}${Constant.DeleteSeats}${busId}`, { headers }).pipe(
+    return this.http.delete(`${Constant.BASE_URI}${Constant.DeleteSeats}${busId}`).pipe(
       catchError((error: any) => {
         console.error('Error deleting seats:', error);
         return throwError(() => error);
@@ -452,18 +282,8 @@ export class ApiServiceService {
   }
 
   updateBus(busId: number, busData: any): Observable<any> {
-    const userId = localStorage.getItem('userId');
-    const jwtToken = localStorage.getItem('jwtToken');
 
-    if (!userId || !jwtToken) {
-      return throwError(() => new Error('User not authenticated or missing user ID/token.'));
-    }
-
-    const headers = {
-      Authorization: `Bearer ${jwtToken}`,
-    };
-
-    return this.http.put(`${Constant.BASE_URI}${Constant.UpdateBus}${busId}`, busData, { headers }).pipe(
+    return this.http.put(`${Constant.BASE_URI}${Constant.UpdateBus}${busId}`, busData).pipe(
       catchError((error: any) => {
         console.error('Error updating bus:', error);
         return throwError(() => error);
