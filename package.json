@@ -21,8 +21,6 @@
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
     "@fortawesome/fontawesome-free": "^6.7.1",
-    "html2canvas": "^1.4.1",
-    "jspdf": "^2.5.2",
     "jwt-decode": "^4.0.0",
     "pdfmake": "^0.2.15",
     "pdfmake-unicode": "^0.0.1",
