@@ -4,6 +4,8 @@ import { ApiServiceService } from '../../services/api-service.service';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmCancelBookingComponent } from '../confirm-cancel-booking/confirm-cancel-booking.component';
+import * as pdfMake from 'pdfmake/build/pdfmake.js';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 
 @Component({
   selector: 'app-view-booking',
@@ -22,7 +24,16 @@ export class ViewBookingComponent implements OnInit {
   errorMessage: string | null = null;
   successMessage: string | null = null;
 
-  constructor(private route: ActivatedRoute, private apiService: ApiServiceService, private dialog: MatDialog) { }
+  constructor(private route: ActivatedRoute, private apiService: ApiServiceService, private dialog: MatDialog) {
+    const pdfMakeInstance = pdfMake as any;
+    pdfMakeInstance.vfs = pdfFonts.vfs;
+
+    if (!pdfMakeInstance.fonts) {
+      pdfMakeInstance.fonts = {};
+    }
+  }
+  
+
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -114,8 +125,119 @@ export class ViewBookingComponent implements OnInit {
     });
   }
 
+  generatePDF() : void {
+    if (!this.bookingDetails) {
+      console.error('Booking details not available for PDF generation.');
+      return;
+    }
 
+    const docDefinition = this.getPDFDefinition(); 
 
+    pdfMake.createPdf(docDefinition)
+      .download('booking-details.pdf'); 
+  }
+
+  getPDFDefinition(): any {
+    return {
+      content: [
+        {
+          text: 'Booking Details',
+          fontSize: 20,
+          bold: true,
+          alignment: 'center',
+          margin: [0, 10, 0, 20],
+        },
+        {
+          table: {
+            widths: ['25%', '75%'], // Adjust column widths
+            body: [
+              [
+                { text: 'Booking ID:', bold: true },
+                this.bookingDetails?.bookingId || 'Data not available',
+              ],
+              [
+                { text: 'Route:', bold: true },
+                `${this.scheduleDetails?.origin || 'Unknown'} - ${this.scheduleDetails?.destination || 'Unknown'}`,
+              ],
+              [
+                { text: 'Bus Name:', bold: true },
+                this.scheduleDetails?.busName || 'Data not available',
+              ],
+              [
+                { text: 'Reserved Seats:', bold: true },
+                this.seatLogDetails?.seats || 'No seats reserved',
+              ],
+              [
+                { text: 'Departure Date:', bold: true },
+                this.scheduleDetails?.departureTime
+                  ? this.getTextRepresentation(this.scheduleDetails.departureTime)
+                  : 'Data not available',
+              ],
+              [
+                { text: 'Departure Time:', bold: true },
+                this.scheduleDetails?.departureTime
+                  ? this.getTextRepresentation(this.scheduleDetails.departureTime, true)
+                  : 'Data not available',
+              ],
+              [
+                { text: 'Arrival Date:', bold: true },
+                this.scheduleDetails?.arrivalTime
+                  ? this.getTextRepresentation(this.scheduleDetails.arrivalTime)
+                  : 'Data not available',
+              ],
+              [
+                { text: 'Arrival Time:', bold: true },
+                this.scheduleDetails?.arrivalTime
+                  ? this.getTextRepresentation(this.scheduleDetails.arrivalTime, true)
+                  : 'Data not available',
+              ],
+              [
+                { text: 'Total Fare:', bold: true },
+                `₹${this.bookingDetails?.totalFare || 'Data not available'}`,
+              ],
+              [
+                { text: 'Status:', bold: true },
+                this.bookingDetails?.status || 'Data not available',
+              ],
+              [
+                { text: 'Booking Date:', bold: true },
+                this.bookingDetails?.bookingDate
+                  ? this.getTextRepresentation(this.bookingDetails.bookingDate)
+                  : 'Data not available',
+              ],
+              [
+                { text: 'Payment Status:', bold: true },
+                this.paymentDetails?.paymentStatus || 'Data not available',
+              ],
+            ],
+          },
+          layout: 'lightHorizontalLines',
+          margin: [0, 0, 0, 20],
+        },
+        {
+          text: 'Thank you for booking with NextStop!',
+          fontSize: 12,
+          alignment: 'center',
+          margin: [0, 20, 0, 0],
+        },
+      ],
+    };
+  }
+  
+  
+
+  getTextRepresentation(dateTime: any, formatTime?: boolean): string {
+    if (typeof dateTime === 'string' && !isNaN(Date.parse(dateTime))) {
+      const date = new Date(dateTime);
+      if (formatTime) {
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      } else {
+        return date.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' });
+      }
+    }
+    return 'N/A'; 
+  }
+  
   
 
 }

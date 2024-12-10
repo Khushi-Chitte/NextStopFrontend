@@ -4,6 +4,15 @@
     padding: 20px;
 }
 
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.d-flex input {
+  margin-right: 10px;
+}
+
 .table {
     width: 100%;
     margin-top: 20px;
@@ -89,3 +98,15 @@
     justify-content: center; /* Centers the buttons horizontally */
     gap: 5px; /* Adds spacing between buttons */
   }
+
+  /* Active button styling */
+button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Filter indicator styling */
+.filter-indicator p {
+  font-size: 1.1em;
+  font-weight: bold;
+}

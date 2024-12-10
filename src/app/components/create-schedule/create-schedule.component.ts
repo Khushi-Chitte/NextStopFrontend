@@ -21,10 +21,13 @@ export class CreateScheduleComponent implements OnInit {
   operatorBuses: { busId: number, busNumber: string, operatorName: string , busName: string }[] = [];
   allBuses: { busId: number, busNumber: string, operatorName: string, busName: string }[] = [];
   routes: any[] = []; 
+  minDate: string;
 
   @Output() scheduleCreated = new EventEmitter<void>();
 
-  constructor(private apiService: ApiServiceService, private authService: AuthserviceService) { }
+  constructor(private apiService: ApiServiceService, private authService: AuthserviceService) { 
+    this.minDate = new Date().toISOString().split('T')[0];
+  }
 
   ngOnInit(): void {
     this.isAdmin = this.authService.getUserRoles() === 'admin';

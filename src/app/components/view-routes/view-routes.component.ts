@@ -114,7 +114,7 @@ export class ViewRoutesComponent implements OnInit, OnDestroy {
 
       if (routeToUpdate) {
         const dialogRef = this.dialog.open(UpdateRoutesComponent, {
-          data: { ...routeToUpdate }  // Pass current route data to dialog
+          data: { ...routeToUpdate }  
         });
 
         dialogRef.afterClosed().subscribe(updatedRoute => {

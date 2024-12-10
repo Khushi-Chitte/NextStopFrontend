@@ -5,34 +5,47 @@
         <p>{{ errorMessage }}</p>
     </div>
 
+    <!-- Buttons to toggle between showing all or latest schedules -->
     <div class="mb-3">
-        <!-- <div class="row g-2">
-            <div class="col-md-2">
-                <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search by Schedule ID"
-                    [(ngModel)]="searchScheduleId"
-                    (input)="searchByScheduleId()"
-                />
-            </div>
-
-            <div class="col-md-2">
-                <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search by Bus ID"
-                    [(ngModel)]="searchBusId"
-                    (input)="searchByBusId()"
-                />
-            </div>
-
-            <div class="col">
-                <button class="btn btn-secondary" (click)="resetSearch()">Reset</button>
-            </div>
-        </div> -->
+        <button 
+            class="btn btn-secondary m-2" 
+            (click)="filterNewSchedules()" 
+            [ngClass]="{'active': currentFilter === 'latest'}">
+            Latest Schedules
+        </button>
+        <button 
+            class="btn btn-secondary" 
+            (click)="showAllSchedules()" 
+            [ngClass]="{'active': currentFilter === 'all'}">
+            All Schedules
+        </button>
     </div>
 
+    <!-- Indicator for the current filter -->
+    <div class="filter-indicator text-center mb-3">
+        <p><strong>Currently showing: </strong>{{ currentFilter === 'latest' ? 'Latest Schedules' : 'All Schedules' }}</p>
+    </div>
+
+    <!-- Search Bars for Bus Number and Departure Date (side by side with reset button) -->
+    <div class="mb-3 d-flex justify-content-start">
+        <input 
+            type="text" 
+            class="form-control w-25 mr-2" 
+            placeholder="Search by Bus Number" 
+            [(ngModel)]="busNumberSearch" 
+            (ngModelChange)="onSearch()">
+
+        <input 
+            type="date" 
+            class="form-control w-25 mr-2" 
+            placeholder="Search by Departure Date" 
+            [(ngModel)]="departureDateSearch" 
+            (ngModelChange)="onSearch()">
+
+        <button class="btn btn-warning" (click)="resetSearch()">Reset</button>
+    </div>
+
+    <!-- Schedule Table -->
     <div *ngIf="schedules.length > 0" class="schedule-list">
         <table class="table table-striped table-hover">
             <thead>
@@ -66,15 +79,16 @@
                     <td>{{ schedule.arrivalTime | date }}</td>
                     <td>{{ schedule.arrivalTime | date:'shortTime' }}</td>
                     <td>₹{{ schedule.fare }}</td>
-                    <td class="action-buttons" >
+                    <td class="action-buttons">
                         <button 
                             class="btn btn-primary" 
-                            (click)="onUpdate(schedule.scheduleId)" >
+                            [disabled]="isSchedulePast(schedule.departureTime)" 
+                            (click)="onUpdate(schedule.scheduleId)">
                             Update
                         </button>
                         <button 
                             class="btn btn-danger" 
-                            (click)="onDelete(schedule.scheduleId)" >
+                            (click)="onDelete(schedule.scheduleId)">
                             Delete
                         </button>
                     </td>

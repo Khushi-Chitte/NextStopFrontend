@@ -1,0 +1,94 @@
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"] {
+  background-color: #4caf50; /* Green */
+  color: white;
+}
+
+button[type="submit"]:disabled {
+  background-color: #9e9e9e; /* Grey */
+  cursor: not-allowed;
+}
+
+button[type="button"] {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button[type="button"]:hover {
+  background-color: #d32f2f; /* Darker Red */
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background-color: #45a049; /* Darker Green */
+}
+
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+select,
+input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+select.invalid,
+input.invalid {
+  border-color: #f44336; /* Red for invalid fields */
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.success-message {
+  color: #4caf50;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 20px;
+}

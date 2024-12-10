@@ -1,0 +1,100 @@
+<div class="form-container">
+    <h2>Update Schedule</h2>
+  
+    <form [formGroup]="updateScheduleForm" (ngSubmit)="onUpdateSchedule()">
+      <div class="form-group">
+        <label for="busId">Bus Number</label>
+        <select
+          id="busId"
+          formControlName="busId"
+          [class.invalid]="updateScheduleForm.get('busId')?.invalid && updateScheduleForm.get('busId')?.touched"
+        >
+          <option value="" disabled>Select Bus</option>
+          <option *ngFor="let bus of isAdmin ? allBuses : operatorBuses" [value]="bus.busId">
+            {{ bus.busNumber }} ({{ bus.busName }}) (ID: {{ bus.busId }}) (Operator: {{ bus.operatorName }})
+          </option>
+        </select>
+        <div class="error-message" *ngIf="updateScheduleForm.get('busId')?.invalid && updateScheduleForm.get('busId')?.touched">
+          Bus Number is required.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="routeId">Route ID</label>
+        <select
+          id="routeId"
+          formControlName="routeId"
+          [class.invalid]="updateScheduleForm.get('routeId')?.invalid && updateScheduleForm.get('routeId')?.touched"
+        >
+          <option value="" disabled>Select Route</option>
+          <option *ngFor="let route of routes" [value]="route.routeId">
+            (ID: {{ route.routeId }}) - {{ route.origin }} to {{ route.destination }} (Distance: {{ route.distance }} Km)
+          </option>
+        </select>
+        <div class="error-message" *ngIf="updateScheduleForm.get('routeId')?.invalid && updateScheduleForm.get('routeId')?.touched">
+          Route ID is required.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="departureDate">Departure Date</label>
+        <input
+          id="departureDate"
+          type="date"
+          formControlName="departureDate"
+          [min]="minDate"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="departureTime">Departure Time</label>
+        <input
+          id="departureTime"
+          type="time"
+          formControlName="departureTime"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="arrivalDate">Arrival Date</label>
+        <input
+          id="arrivalDate"
+          type="date"
+          formControlName="arrivalDate"
+          [min]="minDate"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="arrivalTime">Arrival Time</label>
+        <input
+          id="arrivalTime"
+          type="time"
+          formControlName="arrivalTime"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="fare">Fare (in ₹)</label>
+        <input
+          id="fare"
+          type="number"
+          formControlName="fare"
+        />
+      </div>
+  
+      <div class="form-actions">
+        <button type="submit" [disabled]="isSubmitting || updateScheduleForm.invalid">Update Schedule</button>
+        <button type="button" (click)="onCancel()">Cancel</button>
+      </div>
+    </form>
+  
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
+  

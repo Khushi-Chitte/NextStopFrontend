@@ -47,6 +47,7 @@
         id="departureDate"
         type="date"
         formControlName="departureDate"
+        [min]="minDate"
         [class.invalid]="createScheduleForm.get('departureDate')?.invalid && createScheduleForm.get('departureDate')?.touched"
       />
       <div class="error-message" *ngIf="createScheduleForm.get('departureDate')?.invalid && createScheduleForm.get('departureDate')?.touched">
@@ -75,6 +76,7 @@
         id="arrivalDate"
         type="date"
         formControlName="arrivalDate"
+        [min]="minDate"
         [class.invalid]="createScheduleForm.get('arrivalDate')?.invalid && createScheduleForm.get('arrivalDate')?.touched"
       />
       <div class="error-message" *ngIf="createScheduleForm.get('arrivalDate')?.invalid && createScheduleForm.get('arrivalDate')?.touched">

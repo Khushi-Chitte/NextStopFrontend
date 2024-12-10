@@ -80,6 +80,7 @@
     <div class="actions">
       <button class="cancel-button" (click)="onCancelBooking()"
         [disabled]="bookingDetails.status === 'cancelled'">Cancel Booking</button>
+        <button class="btn btn-success" (click)="generatePDF()">Download PDF</button>
     </div>
   </div>
 

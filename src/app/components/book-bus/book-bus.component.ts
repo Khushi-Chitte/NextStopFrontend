@@ -84,7 +84,6 @@ export class BookBusComponent implements OnInit{
           console.log('Booked seats numbers:', this.bookedSeatNumbers);
         },
         error: (error: any) => {
-          this.errorMessage = 'Failed to fetch scheduled seats';
           console.error(this.errorMessage, error);
         }
       });
