@@ -149,7 +149,7 @@ export class ViewBookingComponent implements OnInit {
         },
         {
           table: {
-            widths: ['25%', '75%'], // Adjust column widths
+            widths: ['25%', '75%'], 
             body: [
               [
                 { text: 'Booking ID:', bold: true },
