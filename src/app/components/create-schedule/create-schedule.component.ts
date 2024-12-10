@@ -64,6 +64,7 @@ export class CreateScheduleComponent implements OnInit {
       ]),
       fare: new FormControl(0, [
         Validators.required,
+        Validators.min(1)
       ]),
     });
   }

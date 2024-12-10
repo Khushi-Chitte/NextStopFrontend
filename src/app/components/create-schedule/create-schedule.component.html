@@ -107,7 +107,7 @@
         placeholder="Enter fare amount"
       />
       <div class="error-message" *ngIf="createScheduleForm.get('fare')?.invalid && createScheduleForm.get('fare')?.touched">
-        Fare is required and must be a positive number.
+        Fare is required and must be greater than 0.
       </div>
     </div>
 
