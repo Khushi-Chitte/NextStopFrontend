@@ -272,7 +272,6 @@ export class ApiServiceService {
   }
 
   updateBus(busId: number, busData: any): Observable<any> {
-
     return this.http.put(`${Constant.BASE_URI}${Constant.UpdateBus}${busId}`, busData).pipe(
       catchError((error: any) => {
         console.error('Error updating bus:', error);
@@ -316,8 +315,40 @@ export class ApiServiceService {
     );
   }
 
+  fetchOperatorByBusId(busId: number) {
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetOperatorByBusId}${busId}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching Payment Status:', error);
+        return throwError(() => error);
+      })
+    );
+  }
   
-  
-  
+  createSchedule(scheduleData: any) : Observable<any> {
+    return this.http.post(`${Constant.BASE_URI}${Constant.CreateSchedule}`, scheduleData).pipe(
+      catchError((error: any) => {
+        console.error('Error create schedule:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  updateSchedule(scheduleId: number, scheduleData: any): Observable<any> {
+    return this.http.put(`${Constant.BASE_URI}${Constant.UpdateSchedule}${scheduleId}`, scheduleData).pipe(
+      catchError((error: any) => {
+        console.error('Error updating schedule:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  deleteSchedule(scheduleId: number): Observable<any> {
+    return this.http.delete(`${Constant.BASE_URI}${Constant.DeleteSchedule}${scheduleId}`).pipe(
+      catchError((error: any) => {
+        console.error('Error deleting schedule:', error);
+        return throwError(() => error);
+      })
+    );
+  } 
 
 }

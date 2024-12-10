@@ -30,5 +30,9 @@ export const Constant = {
     UpdateBus: 'Bus/UpdateBus/',
     GetAllSchedules: 'Schedule/GetAllSchedules',
     GetSchedulesByBusId: 'Schedule/bus/',
-    GetSchedulesByOperatorId: 'Schedule/operator/',
+    GetSchedulesByOperatorId: 'Schedule/GetSchedulesByOperatorId/',
+    GetOperatorByBusId: 'Bus/GetOperatorByBusId/',
+    CreateSchedule: 'Schedule/CreateSchedule',
+    UpdateSchedule: 'Schedule/UpdateSchedule/',
+    DeleteSchedule: 'Schedule/DeleteSchedule/',
 }

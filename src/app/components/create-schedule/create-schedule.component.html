@@ -1,1 +1,127 @@
-<p>create-schedule works!</p>
+<div class="form-container">
+  <h2>Create a New Schedule</h2>
+
+  <form [formGroup]="createScheduleForm" (ngSubmit)="onCreateSchedule()">
+    
+    <div class="form-group">
+      <label for="busId">Bus Number</label>
+      <select
+        id="busId"
+        formControlName="busId"
+        [class.invalid]="createScheduleForm.get('busId')?.invalid && createScheduleForm.get('busId')?.touched"
+      >
+        <option value="" disabled>Select Bus</option>
+        <!-- Show all buses for admin, and only operator's buses for operator -->
+        <option *ngFor="let bus of isAdmin ? allBuses : operatorBuses" [value]="bus.busId">
+          {{ bus.busNumber }} ({{ bus.busName }}) (ID: {{ bus.busId }}) (Operator: {{ bus.operatorName }})
+        </option>
+      </select>
+      <div class="error-message" *ngIf="createScheduleForm.get('busId')?.invalid && createScheduleForm.get('busId')?.touched">
+        Bus Number is required.
+      </div>
+    </div>
+
+    <!-- Route ID Selection -->
+    <div class="form-group">
+      <label for="routeId">Route ID</label>
+      <select
+        id="routeId"
+        formControlName="routeId"
+        [class.invalid]="createScheduleForm.get('routeId')?.invalid && createScheduleForm.get('routeId')?.touched"
+      >
+        <option value="" disabled>Select Route</option>
+        <!-- Show Route ID, Origin, and Destination -->
+        <option *ngFor="let route of routes" [value]="route.routeId">
+          (ID: {{ route.routeId }}) - {{ route.origin }} to {{ route.destination }} (Distance: {{ route.distance }} Km) (ET: {{route.estimatedTime}})
+        </option>
+      </select>
+      <div class="error-message" *ngIf="createScheduleForm.get('routeId')?.invalid && createScheduleForm.get('routeId')?.touched">
+        Route ID is required.
+      </div>
+    </div>
+
+    <!-- Departure Date -->
+    <div class="form-group">
+      <label for="departureDate">Departure Date</label>
+      <input
+        id="departureDate"
+        type="date"
+        formControlName="departureDate"
+        [class.invalid]="createScheduleForm.get('departureDate')?.invalid && createScheduleForm.get('departureDate')?.touched"
+      />
+      <div class="error-message" *ngIf="createScheduleForm.get('departureDate')?.invalid && createScheduleForm.get('departureDate')?.touched">
+        Departure date is required.
+      </div>
+    </div>
+
+    <!-- Departure Time -->
+    <div class="form-group">
+      <label for="departureTime">Departure Time</label>
+      <input
+        id="departureTime"
+        type="time"
+        formControlName="departureTime"
+        [class.invalid]="createScheduleForm.get('departureTime')?.invalid && createScheduleForm.get('departureTime')?.touched"
+      />
+      <div class="error-message" *ngIf="createScheduleForm.get('departureTime')?.invalid && createScheduleForm.get('departureTime')?.touched">
+        Departure time is required.
+      </div>
+    </div>
+
+    <!-- Arrival Date -->
+    <div class="form-group">
+      <label for="arrivalDate">Arrival Date</label>
+      <input
+        id="arrivalDate"
+        type="date"
+        formControlName="arrivalDate"
+        [class.invalid]="createScheduleForm.get('arrivalDate')?.invalid && createScheduleForm.get('arrivalDate')?.touched"
+      />
+      <div class="error-message" *ngIf="createScheduleForm.get('arrivalDate')?.invalid && createScheduleForm.get('arrivalDate')?.touched">
+        Arrival date is required.
+      </div>
+    </div>
+
+    <!-- Arrival Time -->
+    <div class="form-group">
+      <label for="arrivalTime">Arrival Time</label>
+      <input
+        id="arrivalTime"
+        type="time"
+        formControlName="arrivalTime"
+        [class.invalid]="createScheduleForm.get('arrivalTime')?.invalid && createScheduleForm.get('arrivalTime')?.touched"
+      />
+      <div class="error-message" *ngIf="createScheduleForm.get('arrivalTime')?.invalid && createScheduleForm.get('arrivalTime')?.touched">
+        Arrival time is required.
+      </div>
+    </div>
+
+    <!-- Fare -->
+    <div class="form-group">
+      <label for="fare">Fare(in ₹)</label>
+      <input
+        id="fare"
+        type="number"
+        formControlName="fare"
+        [class.invalid]="createScheduleForm.get('fare')?.invalid && createScheduleForm.get('fare')?.touched"
+        placeholder="Enter fare amount"
+      />
+      <div class="error-message" *ngIf="createScheduleForm.get('fare')?.invalid && createScheduleForm.get('fare')?.touched">
+        Fare is required and must be a positive number.
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="isSubmitting || createScheduleForm.invalid">Create Schedule</button>
+    </div>
+  </form>
+
+  <!-- Success and Error Messages -->
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+</div>

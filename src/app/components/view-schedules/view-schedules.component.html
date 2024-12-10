@@ -41,12 +41,14 @@
                     <th>Bus ID</th>
                     <th>Bus Name</th>
                     <th>Bus Number</th>
+                    <th>Operator Name</th>
                     <th>Route ID</th>
                     <th>Route</th>
+                    <th>Departure Date</th>
                     <th>Departure Time</th>
+                    <th>Arrival Date</th>
                     <th>Arrival Time</th>
                     <th>Fare</th>
-                    <th>Date</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -56,13 +58,15 @@
                     <td>{{ schedule.busId }}</td>
                     <td>{{ schedule.busName }}</td>
                     <td>{{ schedule.busNumber }}</td>
+                    <td>{{ schedule.operatorName }}</td>
                     <td>{{ schedule.routeId }}</td>
                     <td>{{ schedule.origin }} → {{ schedule.destination }}</td>
+                    <td>{{ schedule.departureTime | date }}</td>
                     <td>{{ schedule.departureTime | date:'shortTime' }}</td>
+                    <td>{{ schedule.arrivalTime | date }}</td>
                     <td>{{ schedule.arrivalTime | date:'shortTime' }}</td>
                     <td>₹{{ schedule.fare }}</td>
-                    <td>{{ schedule.date | date:'mediumDate' }}</td>
-                    <td>
+                    <td class="action-buttons" >
                         <button 
                             class="btn btn-primary" 
                             (click)="onUpdate(schedule.scheduleId)" >

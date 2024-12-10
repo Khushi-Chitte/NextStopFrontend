@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiServiceService } from '../../services/api-service.service';
 import { AuthserviceService } from '../../services/authservice.service';
@@ -19,6 +19,7 @@ export class ViewBusesComponent implements OnInit, OnDestroy {
   filteredBuses: any[] = [];
   errorMessage: string = '';
   isAdmin: boolean = false;
+  @Input() showActions: boolean = true;
 
 
   searchBusNumber: string = '';

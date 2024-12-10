@@ -26,11 +26,11 @@
                     <td>{{ booking.origin }} - {{ booking.destination }}</td>
                     <td>{{ booking.busName || 'Loading...' }}</td>
                     
-                    <td *ngIf="booking.reservedSeats.length>0">{{booking.reservedSeats}}</td>
-                    <td *ngIf="booking.reservedSeats.length===0">N/A</td>
+                    <!-- <td *ngIf="booking.reservedSeats.length>0">{{booking.reservedSeats}}</td>
+                    <td *ngIf="booking.reservedSeats.length===0">N/A</td> -->
 
-                    <!-- <td *ngIf="booking.seatFromLog.length>0">{{booking.seatFromLog}}</td>
-                    <td *ngIf="booking.seatFromLog.length===0">N/A</td> -->
+                    <td *ngIf="booking.seatFromLog?.length>0">{{booking.seatFromLog}}</td>
+                    <td *ngIf="booking.seatFromLog?.length===0">N/A</td>
 
                     <td>{{ booking.totalFare }}</td>
                     <td>{{ booking.status }}</td>

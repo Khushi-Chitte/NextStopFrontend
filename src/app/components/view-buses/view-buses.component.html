@@ -51,7 +51,7 @@
                     <th>Amenities</th>
                     <th>Operator Id</th>
                     <th>Operator Name</th>
-                    <th>Actions</th>
+                    <th *ngIf="showActions">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -64,7 +64,7 @@
                     <td>{{ bus.amenities }}</td>
                     <td>{{ bus.operatorId }}</td>
                     <td>{{ bus.operatorName }}</td>
-                    <td>
+                    <td *ngIf="showActions">
                         <button 
                           class="btn btn-primary" 
                           (click)="onUpdate(bus.busId)" >

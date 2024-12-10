@@ -57,7 +57,7 @@
                     <th>Route</th>
                     <th>Distance</th>
                     <th>Estimated Time</th>
-                    <th>Actions</th>
+                    <th *ngIf="showActions">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,7 +66,7 @@
                     <td>{{ route.origin }} → {{ route.destination }}</td>
                     <td>{{ route.distance }}</td>
                     <td>{{ route.estimatedTime }}</td>
-                    <td>
+                    <td *ngIf="showActions">
                         <button 
                           class="btn btn-primary" 
                           (click)="onUpdate(route.routeId)" >

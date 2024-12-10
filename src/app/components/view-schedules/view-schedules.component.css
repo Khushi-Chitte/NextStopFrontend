@@ -1,5 +1,5 @@
 .container {
-    max-width: 1400px;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -51,14 +51,12 @@
 
 .btn-danger {
     border: none;
-    margin-left: 5px;
     padding: 8px 12px;
     color: #fff;
 }
 
 .btn-primary {
     border: none;
-    margin-right: 5px;
     padding: 8px 12px;
     color: #fff;
 }
@@ -83,4 +81,11 @@
 
   .success-message {
     color: green;
+  }
+
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers the buttons horizontally */
+    gap: 5px; /* Adds spacing between buttons */
   }

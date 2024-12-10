@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ApiServiceService } from '../../services/api-service.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +18,7 @@ export class ViewRoutesComponent implements OnInit, OnDestroy {
   routes: any[] = [];
   filteredRoutes: any[] = [];
   errorMessage: string = '';
+  @Input() showActions: boolean = true;
 
 
   searchRouteId: string = '';

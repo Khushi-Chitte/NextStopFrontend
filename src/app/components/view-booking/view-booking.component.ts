@@ -105,6 +105,7 @@ export class ViewBookingComponent implements OnInit {
         this.successMessage = 'Booking canceled successfully and payment refunded!';
         this.errorMessage = null;
         this.fetchBooking(this.bookingId);
+        this.fetchPaymentStatus(this.bookingId);
         console.log('Booking canceled with ID: ', this.bookingId);
       } else {
         console.log('Booking cancellation aborted');
