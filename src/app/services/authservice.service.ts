@@ -3,6 +3,8 @@ import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, of, tap, throwError } from 'rxjs';
 import { Constant } from '../components/Constants/constant';
 import { jwtDecode } from 'jwt-decode';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from './notification.service';
 
 
 @Injectable({
@@ -13,7 +15,7 @@ export class AuthserviceService implements OnInit{
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false); 
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private snackBar: MatSnackBar ) {
   const token = this.getToken();
   const isAuthenticated = !!token;
   this.setAuthStatus(isAuthenticated);
@@ -42,7 +44,11 @@ export class AuthserviceService implements OnInit{
         // Token has expired, log out automatically
         this.logout(this.getRefreshToken()).subscribe(() => {
           console.log('Token expired, logged out automatically');
-          alert('Token expired, logged out automatically');
+          this.snackBar.open('Token expired, logged out automatically', 'Close', {
+            duration: 3000, 
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+          });
           this.setAuthStatus(false); 
           this.removeToken();
           this.removeRefreshToken();

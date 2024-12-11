@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiServiceService } from '../../services/api-service.service';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-confirm-cancel-booking',
@@ -16,6 +17,7 @@ export class ConfirmCancelBookingComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ConfirmCancelBookingComponent>,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiServiceService
   ) {
@@ -54,7 +56,13 @@ export class ConfirmCancelBookingComponent {
     this.apiService.refundPaymentUpdate(bookingId).subscribe({
       next: () => {
         console.log(`Payment refund processed for Booking ID ${bookingId}.`);
-        alert('Booking canceled and refund processed successfully.');
+
+        // Show snackbar notification
+        this.snackBar.open('Booking canceled and refund processed successfully.', 'Close', {
+          duration: 3000, // 3 seconds
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom',
+        });
         this.isProcessing = false; 
         this.dialogRef.close(true);
       },

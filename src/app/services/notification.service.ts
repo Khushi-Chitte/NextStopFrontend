@@ -1,21 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Constant } from '../components/Constants/constant';
+import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationService {
-  constructor(private http: HttpClient) {}
+  private notificationSentSource = new Subject<void>();
 
-  // Send a notification
-  sendNotification(notificationData: any): Observable<any> {
-    return this.http.post(`${Constant.BASE_URI}/Notification/SendNotification`, notificationData);
-  }
+  // Observable stream
+  notificationSent$ = this.notificationSentSource.asObservable();
 
-  // Fetch notifications for a user
-  getNotifications(userId: number): Observable<any> {
-    return this.http.get(`${Constant.BASE_URI}/Notification/ViewNotifications/${userId}`);
+  // Method to trigger notification event
+  notifyNewNotification() {
+    this.notificationSentSource.next();
   }
 }

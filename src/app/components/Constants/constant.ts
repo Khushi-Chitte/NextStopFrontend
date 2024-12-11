@@ -37,4 +37,7 @@ export const Constant = {
     DeleteSchedule: 'Schedule/DeleteSchedule/',
     GenerateReports: 'AdminDashboard/GenerateReports',
     FetchAllUsers: 'Users/GetAllUsers',
+    SendNotification: 'Notification/SendNotification',
+    ViewNotification: 'Notification/ViewNotifications/',
+    MarkNotificationAsRead: 'Notification/MarkNotificationAsRead/',
 }

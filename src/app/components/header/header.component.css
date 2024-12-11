@@ -1,16 +1,4 @@
 /* header.component.css */
-.navbar .nav-item .fa-bell {
-    font-size: 1.5rem;
-    color: #333;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.navbar .nav-item .fa-bell:hover {
-    color: #007bff;
-    /* Change color on hover */
-}
-/* header.component.css */
 .nav-item .dropdown-menu {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -24,5 +12,95 @@
 }
 
 .spacer {
-    margin-right: 10px; 
+    margin-right: 15px; 
 }
+
+/* Scoped styles for notification dropdown */
+.notification .fa-bell {
+    font-size: 1.5rem;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.notification .fa-bell:hover {
+    color: #007bff; /* Change color on hover */
+}
+
+.notification .dropdown-menu {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 425px;
+    max-width: 450px; /* Optional: Set a maximum width */
+    max-height: 300px; /* Optional: Set a maximum height */
+    overflow-y: auto; /* Enable scrolling if content exceeds max height */
+}
+
+.notification .dropdown-item {
+    padding: 10px 15px; /* Adjust padding for better spacing */
+    white-space: normal; /* Allow text wrapping for longer notifications */
+}
+
+.notification .dropdown-item p {
+    margin-bottom: 5px; /* Add spacing between message and timestamp */
+}
+
+.notification .dropdown-item small {
+    font-size: 0.85rem; /* Adjust font size for timestamp */
+    color: #6c757d; /* Muted text color for timestamp */
+}
+
+.notification .badge {
+    font-size: 0.7rem;          /* Font size */
+    position: absolute;
+    top: 0;
+    right: -5px;                /* Slightly adjust position for proper alignment */
+    transform: translate(-50%, 50%);
+    padding: 0;                 /* Remove extra padding */
+    border-radius: 50%;         /* Circular badge */
+    background-color: #dc3545;  /* Red color for badge */
+    color: #fff;                /* White text color for badge */
+    width: 20px;                /* Set width */
+    height: 20px;               /* Set height */
+    text-align: center;         /* Center the text horizontally */
+    line-height: 20px;          /* Center the text vertically */
+    font-weight: bold;          /* Make the number bold */
+    display: flex;
+    justify-content: center;    /* Ensure horizontal centering */
+    align-items: center;        /* Ensure vertical centering */
+}
+
+
+.notification .dropdown-item {
+    padding: 10px 15px;         /* Adjust padding for better spacing */
+    white-space: normal;        /* Allow text wrapping for longer notifications */
+    border-bottom: 1px solid #ddd; /* Add a light border between items */
+}
+
+/* Optional: Remove the border for the last item */
+.notification .dropdown-item:last-child {
+    border-bottom: none; 
+}
+
+/* Optional: Add a divider for more explicit separation */
+.notification .dropdown-item-divider {
+    border-top: 1px solid #ddd;  /* Light gray divider */
+    margin: 5px 0;               /* Space around the divider */
+}
+
+/* Style for read notifications */
+.notification .dropdown-item.read-notification {
+    background-color: #f0f0f0;  /* Subtle gray background for read notifications */
+    color: #6c757d;              /* Muted text color for read notifications */
+}
+
+.notification .dropdown-item.read-notification p {
+    font-weight: normal; 
+}
+
+.notification .dropdown-item.read-notification small {
+    font-style: italic; 
+}
+
+
+

@@ -9,7 +9,6 @@ import { UpdateProfileComponent } from './components/update-profile/update-profi
 import { ConfirmBookingComponent } from './components/confirm-booking/confirm-booking.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { ViewBookingComponent } from './components/view-booking/view-booking.component';
-import { NotificationComponent } from './components/notification/notification.component';
 import { AboutComponent } from './components/about/about.component';
 import { ManageRoutesComponent } from './components/manage-routes/manage-routes.component';
 import { ManageBusesComponent } from './components/manage-buses/manage-buses.component';
@@ -39,7 +38,6 @@ export const routes: Routes = [
     { path: 'app-manage-buses', component: ManageBusesComponent, canActivate: [adminOperatorGuard] },
     { path: 'app-manage-schedules', component: ManageSchedulesComponent, canActivate: [adminOperatorGuard] },
     { path:'app-about', component:AboutComponent},
-    { path: 'app-notification', component: NotificationComponent },
     { path: 'app-gen-reports', component: GenReportsComponent, canActivate: [adminGuard] },
     { path: '', redirectTo: '/app-home', pathMatch: 'full' },
 ];

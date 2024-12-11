@@ -367,5 +367,43 @@ export class ApiServiceService {
       })
     );
   }
+  
+  sendNotification(notifData: any): Observable<any> {
+    return this.http.post(`${Constant.BASE_URI}${Constant.SendNotification}`, notifData).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching users:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  viewNotifications(): Observable<any> {
+    const userId = localStorage.getItem('userId');
+  
+    if (!userId) {
+      return throwError(() => new Error('Missing user ID'));
+    }
+  
+    return this.http.get(`${Constant.BASE_URI}${Constant.ViewNotification}${userId}`).pipe(
+      catchError((error: any) => {
+        if (error.status === 404 && error.error === "No notifications found for this user.") {
+          return of([]);  
+        } else {
+          console.error('Error fetching notifications:', error);
+          return throwError(() => error);
+        }
+      })
+    );
+  }
+  
+
+  markNotifRead(notificationId: number): Observable<any> {
+    return this.http.post(`${Constant.BASE_URI}${Constant.MarkNotificationAsRead}${notificationId}`, {}).pipe(
+      catchError((error: any) => {
+        console.error('Error marking notification as read:', error);
+        return throwError(() => error);
+      })
+    );
+  }  
 
 }

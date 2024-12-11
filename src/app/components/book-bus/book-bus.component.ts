@@ -1,10 +1,11 @@
-import { Component, OnInit, Signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, Signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiServiceService } from '../../services/api-service.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBookingComponent } from '../confirm-booking/confirm-booking.component';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-book-bus',
@@ -13,7 +14,7 @@ import { ConfirmBookingComponent } from '../confirm-booking/confirm-booking.comp
   templateUrl: './book-bus.component.html',
   styleUrl: './book-bus.component.css'
 })
-export class BookBusComponent implements OnInit{
+export class BookBusComponent implements OnInit {
   busId: any;
   scheduleId: any;
   seatsAvailable: number = 0;
@@ -29,7 +30,8 @@ export class BookBusComponent implements OnInit{
   errorMessage: string = '';
   busDetails: any;
   seats: any[] = [];
-  constructor(private route: ActivatedRoute, private apiservice: ApiServiceService, private router: Router, private dialog: MatDialog) { }
+  constructor(private route: ActivatedRoute, private apiservice: ApiServiceService, private router: Router, private dialog: MatDialog,
+    private notificationService: NotificationService) { }
 
 
 
@@ -112,8 +114,6 @@ export class BookBusComponent implements OnInit{
         }
       });
 
-
-
   }
   
 
@@ -175,7 +175,7 @@ export class BookBusComponent implements OnInit{
       dialogRef.afterClosed().subscribe(result => {
         if (result === true) {
           console.log('Booking confirmed and payment successful.');
-          alert('Your booking was successful!');
+          this.notificationService.notifyNewNotification();
           this.router.navigate(['/app-bookings']);
         } else if (result === false) {
           console.log('Booking process canceled or failed.');

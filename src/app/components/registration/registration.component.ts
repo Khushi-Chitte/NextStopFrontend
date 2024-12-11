@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthserviceService } from '../../services/authservice.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-registration',
@@ -15,7 +16,7 @@ export class RegistrationComponent implements OnInit {
   registerForm!: FormGroup;
   apiError: string | null = null;
 
-  constructor(private authS: AuthserviceService, private router : Router) { }
+  constructor(private authS: AuthserviceService, private router : Router, private snackBar: MatSnackBar) { }
 
   roles = ['passenger', 'operator', 'admin'];
 
@@ -80,7 +81,12 @@ export class RegistrationComponent implements OnInit {
             this.authS.setEmail(email);
 
             console.log('Registration successful!');
-            alert('Registered and Logged in successfully!');
+          
+            this.snackBar.open('Registered and Logged in successfully!', 'Close', {
+              duration: 3000, // 3 seconds
+              horizontalPosition: 'right',
+              verticalPosition: 'bottom',
+            });
 
             this.router.navigate(['/app-home']);
           } else {

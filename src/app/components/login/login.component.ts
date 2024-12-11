@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthserviceService } from '../../services/authservice.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
   errorMessage: string = '';
 
-  constructor(private authS: AuthserviceService, private router : Router) { }
+  constructor(private authS: AuthserviceService, private router : Router, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -53,7 +54,11 @@ export class LoginComponent implements OnInit{
             this.authS.decodeToken();
             console.log(this.authS.getTokenExpiry());
 
-            alert('Logged in successfully!');
+            this.snackBar.open('Logged in successfully!', 'Close', {
+              duration: 3000, // 3 seconds
+              horizontalPosition: 'right',
+              verticalPosition: 'bottom',
+            });
 
             this.router.navigate(['/app-home']);
             } else {

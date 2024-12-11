@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/app-view-routes" routerLinkActive="active" *ngIf="(role !== 'admin')">View Routes</a>
+                    <a class="nav-link" routerLink="/app-view-routes" routerLinkActive="active" *ngIf="(role === 'admin')">View Routes</a>
                 </li>
 
                 <li class="nav-item">
@@ -48,9 +48,26 @@
                     <a class="nav-link" routerLink="/app-about" routerLinkActive="active">About</a>
                 </li>
                 
-                <a class="nav-link" *ngIf="isAuthenticated" routerLink="/app-notification">
-                    <i class="fas fa-bell"></i>
-                </a>
+                <li class="nav-item dropdown notification" *ngIf="isAuthenticated">
+                    <a class="nav-link position-relative" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fas fa-bell"></i>
+                      <span *ngIf="unreadNotificationsCount > 0" class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                        {{ unreadNotificationsCount }}
+                      </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                      <li *ngIf="notifications.length === 0" class="dropdown-item text-muted">No new notifications</li>
+                      <li *ngFor="let notification of notifications; let i = index"
+                        [ngClass]="{ 'read-notification': notification.isRead }"
+                        class="dropdown-item"
+                        (click)="markNotificationAsRead(notification.notificationId)">
+                        <p class="mb-0">{{ notification.message }}</p>
+                        <small class="text-muted">{{ notification.timestamp | date: 'short' }}</small>
+                       </li>
+                    </ul>
+                  </li>
+                  
+
                 <span class="spacer"></span> <div class="dropdown">
                 </div>
                 <div class="dropdown">
@@ -69,7 +86,6 @@
                         </li>
                     </ul>
                 </div>
-
             </ul>
         </div>
     </div>

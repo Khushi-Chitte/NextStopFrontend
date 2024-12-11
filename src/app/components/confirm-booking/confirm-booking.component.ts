@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ApiServiceService } from '../../services/api-service.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-confirm-booking',
@@ -23,6 +24,7 @@ export class ConfirmBookingComponent implements OnInit {
     private dialogRef: MatDialogRef<ConfirmBookingComponent>,
     private router: Router, 
     private apiService: ApiServiceService,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any 
   ) {
     this.busDetails = data.busDetails;
@@ -76,12 +78,22 @@ export class ConfirmBookingComponent implements OnInit {
         this.apiService.updatePayment(updatePaymentData).subscribe({
           next: (paymentResponse: any) => {
             console.log('Payment successful:', paymentResponse);
-            alert('Payment and booking successful!');
+
+            // Show snackbar notification
+            this.snackBar.open('Payment and booking successful!', 'Close', {
+              duration: 3000, // 3 seconds
+              horizontalPosition: 'right',
+              verticalPosition: 'bottom',
+            });
+
+            this.sendNotification(`Booking confirmed in ${this.busDetails.busName} with bookingId: ${bookingResponse.bookingId}`);
+
+
             this.dialogRef.close(true);
 
-            this.router.navigate(['/app-bookings'], {
-              queryParams: { bookingId: bookingResponse.bookingId },
-            });
+            // this.router.navigate(['/app-bookings'], {
+            //   queryParams: { bookingId: bookingResponse.bookingId },
+            // });
           },
           error: (paymentError: any) => {
             console.error('Payment failed:', paymentError);
@@ -105,6 +117,23 @@ export class ConfirmBookingComponent implements OnInit {
       },
     });
 
+  }
+
+  sendNotification(message: string) {
+    const notifData = {
+      userId: parseInt(localStorage.getItem('userId') || '0'),
+      message: message,
+      notificationType: 0
+    }
+    this.apiService.sendNotification(notifData).subscribe({
+      next: (response: any) => {
+        console.log('notification sent');
+
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
   }
 
   cancelBooking(bookingId: any) {
