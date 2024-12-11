@@ -1,1 +1,75 @@
-<p>gen-reports works!</p>
+<div class="form-container">
+    <h2>Generate Reports</h2>
+    <form [formGroup]="createReportForm" (ngSubmit)="onGenerateReports()">
+      <!-- Form Fields -->
+      <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <input id="startDate" type="date" formControlName="startDate" />
+      </div>
+      <div class="form-group">
+        <label for="endDate">End Date</label>
+        <input id="endDate" type="date" formControlName="endDate" />
+      </div>
+      <div class="form-group">
+        <label for="origin">Origin</label>
+        <input id="origin" type="text" formControlName="origin" />
+      </div>
+      <div class="form-group">
+        <label for="destination">Destination</label>
+        <input id="destination" type="text" formControlName="destination" />
+      </div>
+      <div class="form-group">
+        <label for="operator">Operator Name</label>
+        <input id="operator" type="text" formControlName="operator" />
+      </div>
+      <div class="form-actions">
+        <button type="submit" [disabled]="isSubmitting || createReportForm.invalid">Generate Report</button>
+      </div>
+    </form>
+  
+    <!-- Success or Error Messages -->
+    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    
+      
+  </div>
+
+     <!-- Display Reports -->
+
+  <div *ngIf="reportsGenerated" class="report-container">
+    <h3>Report Summary</h3>
+    <p><strong>Route:</strong> {{ reportsGenerated.route }}</p>
+    <p><strong>Operator:</strong> {{ reportsGenerated.operator }}</p>
+    <p><strong>Total Bookings:</strong> {{ reportsGenerated.totalBookings }}</p>
+    <p><strong>Total Revenue:</strong> ₹{{ reportsGenerated.totalRevenue }}</p>
+  
+    <h4>Booking Details</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Booking ID</th>
+          <th>User ID</th>
+          <th>Schedule ID</th>
+          <th>Status</th>
+          <th>Booking Date</th>
+          <th>Reserved Seats</th>
+          <th>Total Fare</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of reportsGenerated.bookingDetails">
+          <td>{{ booking.bookingId }}</td>
+          <td>{{ booking.userId }}</td>
+          <td>{{ booking.scheduleId }}</td>
+          <td>{{ booking.status }}</td>
+          <td>{{ booking.bookingDate | date }}</td>
+          <td>{{ booking.reservedSeats.join(', ') }}</td>
+          <td>₹{{ booking.totalFare }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="actions">
+          <button class="btn btn-success" (click)="generatePDF()">Download PDF</button>
+      </div>
+  </div>
+  

@@ -223,7 +223,6 @@ export class ApiServiceService {
         return throwError(() => error);
       })
     );
-
   }
 
   deleteBus(busId: number): Observable<any> {
@@ -350,5 +349,14 @@ export class ApiServiceService {
       })
     );
   } 
+
+  genReport(genReportData: any) : Observable<any> {
+    return this.http.post(`${Constant.BASE_URI}${Constant.GenerateReports}`, genReportData).pipe(
+      catchError((error: any) => {
+        console.error('Error generating reports:', error);
+        return throwError(() => error);
+      })
+    );
+  }
 
 }

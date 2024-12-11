@@ -15,6 +15,7 @@ import { ManageRoutesComponent } from './components/manage-routes/manage-routes.
 import { ManageBusesComponent } from './components/manage-buses/manage-buses.component';
 import { ManageSchedulesComponent } from './components/manage-schedules/manage-schedules.component';
 import { authGuard } from './guards/auth.guard';
+import { GenReportsComponent } from './components/gen-reports/gen-reports.component';
 
 export const routes: Routes = [
     { path: 'app-home', component: HomeComponent },
@@ -33,5 +34,6 @@ export const routes: Routes = [
     { path: 'app-manage-schedules', component: ManageSchedulesComponent },
     { path:'app-about', component:AboutComponent},
     { path: 'app-notification', component: NotificationComponent },
+    { path: 'app-gen-reports', component: GenReportsComponent },
     { path: '', redirectTo: '/app-home', pathMatch: 'full' },
 ];
