@@ -47,7 +47,7 @@ button:disabled {
     background-color: #b0c4de;
 }
 
-.error-message {
+.error-messages {
     color: red;
     font-size: 12px;
     margin-top: 5px;

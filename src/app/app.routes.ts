@@ -14,11 +14,12 @@ import { AboutComponent } from './components/about/about.component';
 import { ManageRoutesComponent } from './components/manage-routes/manage-routes.component';
 import { ManageBusesComponent } from './components/manage-buses/manage-buses.component';
 import { ManageSchedulesComponent } from './components/manage-schedules/manage-schedules.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     { path: 'app-home', component: HomeComponent },
-    { path: 'app-registration', component: RegistrationComponent },
-    { path: 'app-login', component: LoginComponent },
+    { path: 'app-registration', component: RegistrationComponent, canActivate: [authGuard] },
+    { path: 'app-login', component: LoginComponent, canActivate: [authGuard] },
     { path: 'app-viewresults', component: ViewresultsComponent },
     { path: 'app-book-bus', component: BookBusComponent },
     { path: 'app-profile', component: ProfileComponent },

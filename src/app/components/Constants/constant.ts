@@ -35,4 +35,5 @@ export const Constant = {
     CreateSchedule: 'Schedule/CreateSchedule',
     UpdateSchedule: 'Schedule/UpdateSchedule/',
     DeleteSchedule: 'Schedule/DeleteSchedule/',
+    GenerateReports: 'AdminDashboard/GenerateReports',
 }
