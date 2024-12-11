@@ -16,24 +16,30 @@ import { ManageBusesComponent } from './components/manage-buses/manage-buses.com
 import { ManageSchedulesComponent } from './components/manage-schedules/manage-schedules.component';
 import { authGuard } from './guards/auth.guard';
 import { GenReportsComponent } from './components/gen-reports/gen-reports.component';
+import { passengerGuard } from './guards/passenger.guard';
+import { adminGuard } from './guards/admin.guard';
+import { adminOperatorGuard } from './guards/admin-operator.guard';
+import { ViewRoutesComponent } from './components/view-routes/view-routes.component';
+import { adminOperatorPassengerGuard } from './guards/admin-operator-passenger.guard';
 
 export const routes: Routes = [
     { path: 'app-home', component: HomeComponent },
     { path: 'app-registration', component: RegistrationComponent, canActivate: [authGuard] },
     { path: 'app-login', component: LoginComponent, canActivate: [authGuard] },
     { path: 'app-viewresults', component: ViewresultsComponent },
-    { path: 'app-book-bus', component: BookBusComponent },
-    { path: 'app-profile', component: ProfileComponent },
-    { path: 'app-update-profile', component: UpdateProfileComponent },
-    { path: 'app-confirm-booking', component: ConfirmBookingComponent },
-    { path: 'app-bookings', component: BookingsComponent },
-    { path: 'app-view-booking', component: ViewBookingComponent },
-    { path: 'app-confirm-cancel-booking', component: ConfirmBookingComponent },
-    { path: 'app-manage-routes', component: ManageRoutesComponent },
-    { path: 'app-manage-buses', component: ManageBusesComponent },
-    { path: 'app-manage-schedules', component: ManageSchedulesComponent },
+    { path: 'app-book-bus', component: BookBusComponent, canActivate: [passengerGuard] },
+    { path: 'app-profile', component: ProfileComponent, canActivate: [adminOperatorPassengerGuard] },
+    { path: 'app-update-profile', component: UpdateProfileComponent, canActivate: [adminOperatorPassengerGuard] },
+    { path: 'app-confirm-booking', component: ConfirmBookingComponent, canActivate: [passengerGuard] },
+    { path: 'app-bookings', component: BookingsComponent, canActivate: [passengerGuard] },
+    { path: 'app-view-booking', component: ViewBookingComponent, canActivate: [passengerGuard] },
+    { path: 'app-confirm-cancel-booking', component: ConfirmBookingComponent, canActivate: [passengerGuard] },
+    { path: 'app-view-routes', component: ViewRoutesComponent },
+    { path: 'app-manage-routes', component: ManageRoutesComponent, canActivate:  [adminGuard] },
+    { path: 'app-manage-buses', component: ManageBusesComponent, canActivate: [adminOperatorGuard] },
+    { path: 'app-manage-schedules', component: ManageSchedulesComponent, canActivate: [adminOperatorGuard] },
     { path:'app-about', component:AboutComponent},
     { path: 'app-notification', component: NotificationComponent },
-    { path: 'app-gen-reports', component: GenReportsComponent },
+    { path: 'app-gen-reports', component: GenReportsComponent, canActivate: [adminGuard] },
     { path: '', redirectTo: '/app-home', pathMatch: 'full' },
 ];

@@ -49,7 +49,7 @@
                     <th>Bus Type</th>
                     <th>Total Seats</th>
                     <th>Amenities</th>
-                    <th>Operator Id</th>
+                    <th *ngIf="isAdmin">Operator Id</th>
                     <th>Operator Name</th>
                     <th *ngIf="showActions">Actions</th>
                 </tr>
@@ -62,7 +62,7 @@
                     <td>{{ bus.busType }}</td>
                     <td>{{ bus.totalSeats }}</td>
                     <td>{{ bus.amenities }}</td>
-                    <td>{{ bus.operatorId }}</td>
+                    <td *ngIf="isAdmin">{{ bus.operatorId }}</td>
                     <td>{{ bus.operatorName }}</td>
                     <td *ngIf="showActions">
                         <button 

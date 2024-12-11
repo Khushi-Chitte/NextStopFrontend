@@ -26,10 +26,14 @@ export class ViewresultsComponent implements OnInit, OnDestroy {
   private authStatusSubscription!: Subscription;
   private queryParamsSubscription!: Subscription;
   loading: boolean = true;
+  isPassenger: boolean = false;
+
 
   constructor(private route: ActivatedRoute, private router: Router, private apiS: ApiServiceService, private authS: AuthserviceService ) {}
 
   ngOnInit() {
+    this.isPassenger = this.authS.getUserRoles() === 'passenger';
+    
     this.queryParamsSubscription = this.route.queryParams.subscribe((params) => {
       console.log('Search Parameters:', params); 
       this.searchParams = { ...params };

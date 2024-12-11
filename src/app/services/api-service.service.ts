@@ -359,4 +359,13 @@ export class ApiServiceService {
     );
   }
 
+  fetchAllUsers() : Observable<any> {
+    return this.http.get(`${Constant.BASE_URI}${Constant.FetchAllUsers}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching users:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
 }

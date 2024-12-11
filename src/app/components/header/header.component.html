@@ -15,6 +15,10 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" routerLink="/app-view-routes" routerLinkActive="active" *ngIf="(role !== 'admin')">View Routes</a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" *ngIf="isAuthenticated && (role === 'admin')" routerLink="/app-manage-routes" routerLinkActive="active">Manage Routes</a>
                 </li>   
 

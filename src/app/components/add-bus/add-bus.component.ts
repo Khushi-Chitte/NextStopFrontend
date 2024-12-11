@@ -18,6 +18,8 @@ export class AddBusComponent implements OnInit {
   isSubmitting: boolean = false;
   isAdmin: boolean = false;
 
+  operators: any[] = [];
+
   busTypes = ['Sleeper', 'AC', 'NonAC', 'SleeperAC', 'Seater'];
 
   createdBusId : number = 0;
@@ -33,38 +35,24 @@ export class AddBusComponent implements OnInit {
   ngOnInit(): void {
     this.isAdmin = this.authService.getUserRoles() === 'admin';
 
-    console.log(this.isAdmin);
+    console.log('Admin?: ', this.isAdmin);
 
-    var operatorId = parseInt(localStorage.getItem('userId') ?? '0');
+    const operatorId = parseInt(localStorage.getItem('userId') ?? '0');
 
-    if(this.isAdmin) operatorId = 0;
-
-    console.log(`creating bus with operatorId: ${operatorId}`);
+    if(this.isAdmin){
+      this.fetchAllOperators();
+    }
 
     this.createBusForm = new FormGroup({
-      operatorId: new FormControl(operatorId, [
-        Validators.required,
-      ]),
-      busName: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(100),
-      ]),
-      busNumber: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(50),
-      ]),
-      busType: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(50),
-      ]),
-      totalSeats: new FormControl(0, [
-        Validators.required,
-        Validators.min(0),
-      ]),
-      amenities: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(255),
-      ]),
+      operatorId: new FormControl(
+        this.isAdmin ? null : operatorId, 
+        [Validators.required]
+      ),
+      busName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      busNumber: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      busType: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      totalSeats: new FormControl(0, [Validators.required, Validators.min(1)]),
+      amenities: new FormControl('', [Validators.required, Validators.maxLength(255)])
     });
   }
 
@@ -79,6 +67,8 @@ export class AddBusComponent implements OnInit {
     this.successMessage = '';
 
     const busData = this.createBusForm.value;
+
+    console.log('Bus data:', busData);
 
     this.apiService.createBus(busData).subscribe({
       next: (bus: any) => {
@@ -99,6 +89,20 @@ export class AddBusComponent implements OnInit {
       }
     });
   }
+
+  fetchAllOperators(): void {
+    this.apiService.fetchAllUsers().subscribe({
+      next: (users: any[]) => {
+        this.operators = users.filter(user => user.role === 'operator');
+        console.log('Operators:', this.operators);
+      },
+      error: (error: any) => {
+        console.log('Cannot fetch users:', error);
+        this.handleError(error);
+      },
+    });
+  }
+  
 
   handleError(error: any) {
     if (error.error) {

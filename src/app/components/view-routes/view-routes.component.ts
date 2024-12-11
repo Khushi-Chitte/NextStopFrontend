@@ -18,7 +18,7 @@ export class ViewRoutesComponent implements OnInit, OnDestroy {
   routes: any[] = [];
   filteredRoutes: any[] = [];
   errorMessage: string = '';
-  @Input() showActions: boolean = true;
+  isAdmin: boolean = false;
 
 
   searchRouteId: string = '';
@@ -33,6 +33,9 @@ export class ViewRoutesComponent implements OnInit, OnDestroy {
   constructor(private apiService: ApiServiceService, private authService : AuthserviceService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.isAdmin = this.authService.getUserRoles() === 'admin';
+
+
     this.loadRoutes();
 
     this.authStatusSubscription = this.authService.isAuthenticated$.subscribe(status =>  {

@@ -27,7 +27,7 @@
                     <th>Bus Type</th>
                     <th>Fare</th>
                     <th>Seats Available</th>
-                    <th>Action</th>
+                    <th *ngIf="isPassenger">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,7 +41,7 @@
                     <td>{{ bus.busType || 'N/A' }}</td>
                     <td>₹{{ bus.fare }}</td>
                     <td>{{ bus.availableSeats }}</td>
-                    <td>
+                    <td *ngIf="isPassenger">
                         <button class="btn btn-danger" (click)="onView(bus)" [disabled]="bus.availableSeats <= 0">
                             Book Now
                         </button>

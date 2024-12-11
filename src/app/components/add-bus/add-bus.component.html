@@ -2,19 +2,19 @@
     <h2>Create a New Bus</h2>
   
     <form [formGroup]="createBusForm" (ngSubmit)="onAddBus()">
-        <div class="form-group" *ngIf="isAdmin">
-            <label for="operatorId">OperatorId</label>
-            <input
-              id="operatorId"
-              type="number"
-              formControlName="operatorId"
-              [class.invalid]="createBusForm.get('operatorId')?.invalid && createBusForm.get('operatorId')?.touched"
-              placeholder="Enter operatorId(admin only)"
-            />
-            <div class="error-message" *ngIf="createBusForm.get('operatorId')?.invalid && createBusForm.get('operatorId')?.touched">
-              OperatorId is required;
-            </div>
-          </div>
+      <div class="form-group" *ngIf="isAdmin">
+        <label for="operatorId">Select Operator</label>
+        <select formControlName="operatorId" id="operatorId">
+          <option value="" disabled selected>Select an operator</option>
+          <option *ngFor="let operator of operators" [value]="operator.userId">
+            {{ operator.name }} (ID: {{operator.userId}})
+          </option>
+        </select>
+        <div *ngIf="createBusForm.get('operatorId')?.invalid && createBusForm.get('operatorId')?.touched">
+          Operator selection is required.
+        </div>
+      </div>
+
       <div class="form-group">
         <label for="busName">Bus Name</label>
         <input
@@ -67,7 +67,7 @@
           placeholder="Enter total seats"
         />
         <div class="error-message" *ngIf="createBusForm.get('totalSeats')?.invalid && createBusForm.get('totalSeats')?.touched">
-          Total seats are required and must be a positive number.
+          Total seats are required and must be greater than 0.
         </div>
       </div>
   
