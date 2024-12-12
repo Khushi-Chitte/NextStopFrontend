@@ -1,0 +1,36 @@
+<div class="navbar">
+    <button
+      class="nav-btn"
+      [class.active]="activeTab === 'passengers'"
+      (click)="setActiveTab('passengers')"
+    >
+      Manage Passengers
+    </button>
+    <button
+      class="nav-btn"
+      [class.active]="activeTab === 'operators'"
+      (click)="setActiveTab('operators')"
+    >
+      Manage Operators
+    </button>
+    <button
+      class="nav-btn"
+      [class.active]="activeTab === 'admins'"
+      (click)="setActiveTab('admins')"
+    >
+      View Admins
+    </button>
+  </div>
+  
+  <div class="content">
+    <div *ngIf="activeTab === 'passengers'">
+      <app-manage-passengers></app-manage-passengers>
+    </div>
+    <div *ngIf="activeTab === 'operators'">
+      <app-manage-operators></app-manage-operators>
+    </div>
+    <div *ngIf="activeTab === 'admins'">
+      <app-manage-admins></app-manage-admins>
+    </div>
+  </div>
+  

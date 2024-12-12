@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmCancelBookingComponent } from '../confirm-cancel-booking/confirm-cancel-booking.component';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-view-booking',
@@ -24,7 +25,8 @@ export class ViewBookingComponent implements OnInit {
   errorMessage: string | null = null;
   successMessage: string | null = null;
 
-  constructor(private route: ActivatedRoute, private apiService: ApiServiceService, private dialog: MatDialog) {
+  constructor(private route: ActivatedRoute, private apiService: ApiServiceService,
+     private dialog: MatDialog, private notificationService: NotificationService) {
     const pdfMakeInstance = pdfMake as any;
     pdfMakeInstance.vfs = pdfFonts.vfs;
 
@@ -117,11 +119,31 @@ export class ViewBookingComponent implements OnInit {
         this.errorMessage = null;
         this.fetchBooking(this.bookingId);
         this.fetchPaymentStatus(this.bookingId);
+        this.sendNotification(`Booking with Booking Id: ${this.bookingId} cancelled successfully`);
         console.log('Booking canceled with ID: ', this.bookingId);
       } else {
         console.log('Booking cancellation aborted');
         this.errorMessage = 'Booking cancellation aborted';
       }
+    });
+  }
+
+  sendNotification(message: string) {
+    const notifData = {
+      userId: parseInt(localStorage.getItem('userId') || '0'),
+      message: message,
+      notificationType: 0
+    }
+    this.apiService.sendNotification(notifData).subscribe({
+      next: (response: any) => {
+        console.log('notification sent');
+
+        this.notificationService.notifyNewNotification();
+        
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
     });
   }
 

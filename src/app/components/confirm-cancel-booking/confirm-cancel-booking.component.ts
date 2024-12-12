@@ -63,6 +63,7 @@ export class ConfirmCancelBookingComponent {
           horizontalPosition: 'right',
           verticalPosition: 'bottom',
         });
+
         this.isProcessing = false; 
         this.dialogRef.close(true);
       },
@@ -74,4 +75,22 @@ export class ConfirmCancelBookingComponent {
       },
     });
   }
+
+  sendNotification(message: string) {
+    const notifData = {
+      userId: parseInt(localStorage.getItem('userId') || '0'),
+      message: message,
+      notificationType: 0
+    }
+    this.apiService.sendNotification(notifData).subscribe({
+      next: (response: any) => {
+        console.log('notification sent');
+
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
+  }
+
 }

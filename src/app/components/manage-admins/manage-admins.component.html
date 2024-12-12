@@ -1,0 +1,42 @@
+<div class="container">
+    <h3 class="mt-4">View Admins</h3>
+    <div class="mb-3 search-container">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search by Name"
+        [(ngModel)]="searchName"
+        (input)="applySearch()"
+      />
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search by Email"
+        [(ngModel)]="searchEmail"
+        (input)="applySearch()"
+      />
+      <button class="btn btn-secondary" (click)="resetSearch()">Reset</button>
+    </div>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Account Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let admin of filteredAdmins">
+          <td>{{ admin.name }}</td>
+          <td>{{ admin.email }}</td>
+          <td>{{ admin.phone }}</td>
+          <td>{{ admin.address }}</td>
+          <td>{{ admin.isActive }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  </div>
+  

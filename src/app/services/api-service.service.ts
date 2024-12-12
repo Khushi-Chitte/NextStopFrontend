@@ -406,4 +406,32 @@ export class ApiServiceService {
     );
   }  
 
+  updateUserByAdmin(userData: any): Observable<any> {
+  
+    return this.http.put(`${Constant.BASE_URI}${Constant.UpdateUser}${userData.userId}`, userData).pipe(
+      catchError((error: any) => {
+        console.error('Error updating user details:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  deleteUserByAdmin(userId: any): Observable<any> {
+    return this.http.post(`${Constant.BASE_URI}${Constant.DeleteUser}${userId}`,{}).pipe(
+      catchError((error: any) => {
+        console.error('Error deleting user:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  reactivateUserByAdmin(userId: any): Observable<any> {
+    return this.http.get(`${Constant.BASE_URI}${Constant.ReactivateUser}${userId}`).pipe(
+      catchError((error: any) => {
+        console.error('Error deleting user:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
 }

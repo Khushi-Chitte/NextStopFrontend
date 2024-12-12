@@ -1,0 +1,47 @@
+<div class="container">
+  <h3 class="mt-4">Manage Passengers</h3>
+  <div class="mb-3 search-container">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search by Name"
+      [(ngModel)]="searchName"
+      (input)="applySearch()"
+    />
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search by Email"
+      [(ngModel)]="searchEmail"
+      (input)="applySearch()"
+    />
+    <button class="btn btn-secondary" (click)="resetSearch()">Reset</button>
+  </div>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Account Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let passenger of filteredPassengers">
+        <td>{{ passenger.name }}</td>
+        <td>{{ passenger.email }}</td>
+        <td>{{ passenger.phone }}</td>
+        <td>{{ passenger.address }}</td>
+        <td>{{ passenger.isActive }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="onUpdate(passenger.userId)">Update</button>
+          <button class="btn btn-danger" (click)="onDelete(passenger.userId)">Delete</button>
+          <button class="btn btn-secondary" (click)="onReactivate(passenger.userId)">Reactivate</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+</div>

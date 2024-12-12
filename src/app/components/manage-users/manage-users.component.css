@@ -1,0 +1,35 @@
+.navbar {
+    display: flex;
+    background-color: #ff616f;
+    padding: 1rem;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .nav-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav-btn:hover {
+    background-color: #ffcad4;
+    color: #ff616f;
+  }
+  
+  .nav-btn.active {
+    background-color: white;
+    color: #ff616f;
+    border-radius: 5px;
+  }
+  
+  .content {
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+  

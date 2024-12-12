@@ -67,12 +67,21 @@ export class LoginComponent implements OnInit{
           },
           error: (error: any) => {
             console.error('Login failed:', error);
-            if(error.status === 401) {
-              this.errorMessage = 'Invalid email or password. Please try again.';
-              alert(this.errorMessage); 
+            if (error.status === 401) {
+              this.errorMessage = error.error?.message || 'Unauthorized access.';
+              this.snackBar.open(this.errorMessage, 'Close', {
+                duration: 5000,
+                horizontalPosition: 'right',
+                verticalPosition: 'bottom',
+              });
+              console.error('Unauthorized access.', error);
             } else {
-              this.errorMessage = 'An unexpected error occurred. Please try again later.';
-              alert(this.errorMessage);
+              this.snackBar.open('An unexpected error occurred. Please try again later.', 'Close', {
+                duration: 5000,
+                horizontalPosition: 'right',
+                verticalPosition: 'bottom',
+              });
+              console.error('An unexpected error occurred. Please try again later.', error);
             }
           },
           complete: () => {

@@ -86,7 +86,7 @@ export class ConfirmBookingComponent implements OnInit {
               verticalPosition: 'bottom',
             });
 
-            this.sendNotification(`Booking confirmed in ${this.busDetails.busName} with bookingId: ${bookingResponse.bookingId}`);
+            this.sendNotification(`Booking confirmed in ${this.busDetails.busName} with Booking Id: ${bookingResponse.bookingId}`);
 
 
             this.dialogRef.close(true);

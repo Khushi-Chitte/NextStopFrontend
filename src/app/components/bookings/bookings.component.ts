@@ -21,7 +21,11 @@ export class BookingsComponent implements OnInit{
     this.apiService.fetchUserBookings().subscribe({
       next: (booking: any) => {
         this.bookings = booking;
-        console.log('Booking Details: ',booking);
+        
+        this.bookings = booking.sort((a: any, b: any) => {
+          return new Date(b.bookingDate).getTime() - new Date(a.bookingDate).getTime();
+        });
+        console.log('Booking Details (Sorted): ', this.bookings);
         
         this.addFromScheduleDetails();
         this.addFromSeatLogs();

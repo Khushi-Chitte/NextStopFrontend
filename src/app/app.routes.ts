@@ -20,6 +20,10 @@ import { adminGuard } from './guards/admin.guard';
 import { adminOperatorGuard } from './guards/admin-operator.guard';
 import { ViewRoutesComponent } from './components/view-routes/view-routes.component';
 import { adminOperatorPassengerGuard } from './guards/admin-operator-passenger.guard';
+import { ManageUsersComponent } from './components/manage-users/manage-users.component';
+import { ManagePassengersComponent } from './components/manage-passengers/manage-passengers.component';
+import { ManageOperatorsComponent } from './components/manage-operators/manage-operators.component';
+import { ManageAdminsComponent } from './components/manage-admins/manage-admins.component';
 
 export const routes: Routes = [
     { path: 'app-home', component: HomeComponent },
@@ -39,5 +43,12 @@ export const routes: Routes = [
     { path: 'app-manage-schedules', component: ManageSchedulesComponent, canActivate: [adminOperatorGuard] },
     { path:'app-about', component:AboutComponent},
     { path: 'app-gen-reports', component: GenReportsComponent, canActivate: [adminGuard] },
+    { path: 'app-manage-users', component: ManageUsersComponent, canActivate: [adminGuard] },
+    { path: 'app-manage-passengers', component: ManagePassengersComponent, canActivate: [adminGuard] },
+    { path: 'app-manage-operators', component: ManageOperatorsComponent, canActivate: [adminGuard] },
+    { path: 'app-manage-admins', component: ManageAdminsComponent, canActivate: [adminGuard] },
+    { path: 'app-manage-admins', component: ManageAdminsComponent, canActivate: [adminGuard] },
+
+
     { path: '', redirectTo: '/app-home', pathMatch: 'full' },
 ];

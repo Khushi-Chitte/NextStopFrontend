@@ -15,7 +15,11 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/app-view-routes" routerLinkActive="active" *ngIf="(role === 'admin')">View Routes</a>
+                    <a class="nav-link" routerLink="/app-view-routes" routerLinkActive="active" *ngIf="(role === 'operator')">View Routes</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/app-manage-users" routerLinkActive="active" *ngIf="(role === 'admin')">Manage Users</a>
                 </li>
 
                 <li class="nav-item">
