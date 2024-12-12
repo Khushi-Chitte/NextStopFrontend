@@ -4,6 +4,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthserviceService } from '../../services/authservice.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +18,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
   errorMessage: string = '';
+  successMessage: string = '';
 
-  constructor(private authS: AuthserviceService, private router : Router, private snackBar: MatSnackBar) { }
+  constructor(private authS: AuthserviceService, private router : Router, 
+    private snackBar: MatSnackBar, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -90,4 +94,33 @@ export class LoginComponent implements OnInit{
       });
     }
   }
+
+  onForgetPassword(): void {
+    const dialogRef = this.dialog.open(ForgotPasswordComponent);
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result.success) {
+          this.successMessage = result.message;  
+          this.errorMessage='';
+          console.log(this.successMessage);
+          this.snackBar.open(this.successMessage, 'Close', {
+            duration: 5000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+          });
+        } else {
+          this.errorMessage = result.message; 
+          this.successMessage='';
+          this.snackBar.open(this.errorMessage, 'Close', {
+            duration: 5000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+          });
+        }
+      }
+    });
+  }   
+  
+
 }

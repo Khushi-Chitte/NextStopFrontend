@@ -434,4 +434,13 @@ export class ApiServiceService {
     );
   }
 
+  resetPassword(resetPasswordData: any): Observable<any> {
+    return this.http.put(`${Constant.BASE_URI}${Constant.ResetPassword}`, resetPasswordData).pipe(
+      catchError((error: any) => {
+        console.error('Error resetting the password:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
 }

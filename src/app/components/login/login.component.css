@@ -32,7 +32,7 @@ input {
     font-size: 14px;
 }
 
-button {
+.btn-submit {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -43,7 +43,7 @@ button {
     cursor: pointer;
 }
 
-button:disabled {
+.btn-submit:disabled {
     background-color: #b0c4de;
 }
 
@@ -62,7 +62,7 @@ p {
     font-size: 14px;
 }
 
-button {
+.btn-submit {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -74,12 +74,31 @@ button {
     transition: background 0.3s ease;
 }
 
-button:hover {
+.btn-submit:hover {
     background: linear-gradient(to right, #ff616f, #ff9a9e);
     /* Reverse gradient on hover */
 }
 
-button:disabled {
+.btn-submit:disabled {
     background: #b0c4de;
     cursor: not-allowed;
+}
+
+.alert {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.alert.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.alert.alert-danger {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
 }

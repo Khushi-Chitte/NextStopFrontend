@@ -42,4 +42,5 @@ export const Constant = {
     SendNotification: 'Notification/SendNotification',
     ViewNotification: 'Notification/ViewNotifications/',
     MarkNotificationAsRead: 'Notification/MarkNotificationAsRead/',
+    ResetPassword: 'Users/reset-password'
 }
