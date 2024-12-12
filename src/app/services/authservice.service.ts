@@ -54,6 +54,7 @@ export class AuthserviceService implements OnInit{
           this.removeRefreshToken();
           this.removeEmail();
           this.removeUserId();
+          alert('Token expired, logged out automatically');
         });
       }
     } else {

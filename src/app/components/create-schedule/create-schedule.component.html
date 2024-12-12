@@ -9,6 +9,7 @@
         id="busId"
         formControlName="busId"
         [class.invalid]="createScheduleForm.get('busId')?.invalid && createScheduleForm.get('busId')?.touched"
+        required
       >
         <option value="" disabled>Select Bus</option>
         <!-- Show all buses for admin, and only operator's buses for operator -->

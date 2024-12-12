@@ -43,10 +43,10 @@ export class CreateScheduleComponent implements OnInit {
     this.fetchAllRoutes(); 
 
     this.createScheduleForm = new FormGroup({
-      busId: new FormControl(0, [
+      busId: new FormControl(null, [
         Validators.required,
       ]),
-      routeId: new FormControl(0, [
+      routeId: new FormControl(null, [
         Validators.required,
       ]),
       departureDate: new FormControl('', [
