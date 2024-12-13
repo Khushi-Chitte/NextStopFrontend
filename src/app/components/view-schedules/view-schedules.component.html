@@ -62,6 +62,7 @@
                     <th>Arrival Date</th>
                     <th>Arrival Time</th>
                     <th>Fare</th>
+                    <th>Bookings</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -79,6 +80,7 @@
                     <td>{{ schedule.arrivalTime | date }}</td>
                     <td>{{ schedule.arrivalTime | date:'shortTime' }}</td>
                     <td>₹{{ schedule.fare }}</td>
+                    <td> <button class="booking-button" (click)="viewBookings(schedule.scheduleId)"> View Bookings </button> </td>
                     <td class="action-buttons">
                         <button 
                             class="btn btn-primary" 

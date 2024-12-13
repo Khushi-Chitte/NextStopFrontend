@@ -25,6 +25,7 @@
         <th>Phone</th>
         <th>Address</th>
         <th>Account Status</th>
+        <th>Bookings</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -35,6 +36,7 @@
         <td>{{ passenger.phone }}</td>
         <td>{{ passenger.address }}</td>
         <td>{{ passenger.isActive }}</td>
+        <td> <button class="booking-button" (click)="viewBookings(passenger.userId)"> View Bookings </button> </td>
         <td>
           <button class="btn btn-primary" (click)="onUpdate(passenger.userId)">Update</button>
           <button class="btn btn-danger" (click)="onDelete(passenger.userId)">Delete</button>

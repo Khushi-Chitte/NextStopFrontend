@@ -18,6 +18,7 @@ export const Constant = {
     UpdatePayment: 'Payment/InitiatePayment',
     CancelBooking: 'Booking/CancelBooking',
     BookingsByUserId: 'Booking/ViewBookingsByUserId/',
+    BookingsByScheduleId: 'Booking/ViewBookingsByScheduleId/',
     BookingByBookingId: 'Booking/ViewBookingByBookingId/',
     UpdatePaymentToRefund: 'Payment/InitiateRefund',
     PaymentStatus: 'Payment/GetPaymentStatus/',
@@ -42,5 +43,5 @@ export const Constant = {
     SendNotification: 'Notification/SendNotification',
     ViewNotification: 'Notification/ViewNotifications/',
     MarkNotificationAsRead: 'Notification/MarkNotificationAsRead/',
-    ResetPassword: 'Users/reset-password'
+    ResetPassword: 'Users/reset-password',
 }

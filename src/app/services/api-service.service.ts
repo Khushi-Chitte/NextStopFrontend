@@ -443,4 +443,31 @@ export class ApiServiceService {
     );
   }
 
+  fetchBookingByUserId(userId: number) : Observable<any> {
+    return this.http.get(`${Constant.BASE_URI}${Constant.BookingsByUserId}${userId}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching booking details:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  fetchBookingByScheduleId(scheduleId: number) : Observable<any> {
+    return this.http.get(`${Constant.BASE_URI}${Constant.BookingsByScheduleId}${scheduleId}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching booking details:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  getUserByUserId(userId: number) : Observable<any> {
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetUserById}${userId}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching user details:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
 }

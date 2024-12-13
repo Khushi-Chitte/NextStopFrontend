@@ -1,21 +1,29 @@
 .container {
-    max-width: 1500px;
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
 }
 
-.d-flex {
-  display: flex;
-  align-items: center;
+.container > div:first-child {
+    display: flex;
+    justify-content: flex-end;
+    grid-column: 1;
 }
 
-.d-flex input {
-  margin-right: 10px;
+.table-wrapper {
+    /* Wrapping the table inside a scrollable container */
+    max-height: 60vh;
+    overflow-y: auto;
+    overflow-x: auto;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
 .table {
-    width: 100%;
-    margin-top: 20px;
+    width: 100%;    
     border-collapse: collapse;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
@@ -58,68 +66,66 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.btn-danger {
-    border: none;
-    padding: 8px 12px;
-    color: #fff;
-}
-
-.btn-primary {
-    border: none;
-    padding: 8px 12px;
-    color: #fff;
+.text-danger {
+    font-size: 0.9rem;
+    color: #e64c5d;
 }
 
 .loading,
-  .error {
+.error {
     text-align: center;
     font-size: 18px;
     color: #666;
-  }
-  
-  .error {
+}
+
+.error {
     color: red;
     font-weight: bold;
-  }
+}
 
-  .success-message, .error-message {
+.success-message,
+.error-message {
     text-align: center;
     font-weight: bold;
     background-color: #f9f9f9;
-  }
+}
 
-  .success-message {
+.success-message {
     color: green;
-  }
-
-  .action-buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centers the buttons horizontally */
-    gap: 5px; /* Adds spacing between buttons */
-  }
-
-  /* Active button styling */
-button.active {
-  background-color: #007bff;
-  color: white;
 }
 
-/* Filter indicator styling */
-.filter-indicator p {
-  font-size: 1.1em;
-  font-weight: bold;
+/* Close Button Styling */
+.btn-close {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    position: relative;
+    top: -5px;
+    right: -5px;
+    display: inline-block;
 }
 
-.booking-button {
-  background-color: #ff616f;
-  border: none;
-  font-weight: bold;
-  padding: 6px 10px;
-  color: #fff;
-  border-radius: 5px;
+.btn-close:hover {
+    color: red;
+    transform: scale(1.1);
 }
 
-.booking-button:hover{
-  background-color: #e64c5d;
+/* Print Button Styling */
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    width: 140px;
 }
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+

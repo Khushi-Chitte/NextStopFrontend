@@ -107,3 +107,16 @@
 .success-message {
   color: green;
 }
+
+.booking-button {
+  background-color: #ff616f;
+  border: none;
+  font-weight: bold;
+  padding: 6px 10px;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.booking-button:hover{
+  background-color: #e64c5d;
+}

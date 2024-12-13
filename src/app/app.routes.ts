@@ -48,7 +48,5 @@ export const routes: Routes = [
     { path: 'app-manage-operators', component: ManageOperatorsComponent, canActivate: [adminGuard] },
     { path: 'app-manage-admins', component: ManageAdminsComponent, canActivate: [adminGuard] },
     { path: 'app-manage-admins', component: ManageAdminsComponent, canActivate: [adminGuard] },
-
-
     { path: '', redirectTo: '/app-home', pathMatch: 'full' },
 ];

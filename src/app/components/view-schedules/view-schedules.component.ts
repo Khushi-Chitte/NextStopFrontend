@@ -6,6 +6,7 @@ import { AuthserviceService } from '../../services/authservice.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UpdateScheduleComponent } from '../update-schedule/update-schedule.component';
+import { BookingsDialogComponent } from '../bookings-dialog/bookings-dialog.component';
 
 @Component({
   selector: 'app-view-schedules',
@@ -175,6 +176,13 @@ export class ViewSchedulesComponent implements OnInit, OnDestroy {
       this.errorMessage = 'An unexpected error occurred. Please try again later.';
     }
     console.error(this.errorMessage, error);
+  }
+
+  viewBookings(scheduleId: number){
+    const dialogRef = this.dialog.open(BookingsDialogComponent, {
+      data: { scheduleId: scheduleId }
+    });
+
   }
 
   onSearch(): void {

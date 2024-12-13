@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateUserDialogComponent } from '../update-user-dialog/update-user-dialog.component';
+import { BookingsDialogComponent } from '../bookings-dialog/bookings-dialog.component';
 
 @Component({
   selector: 'app-manage-passengers',
@@ -60,6 +61,12 @@ export class ManagePassengersComponent implements OnInit {
 
   searchByEmail(): void {
     this.applySearch();
+  }
+
+  viewBookings(userId: number) {
+    const dialogRef = this.dialog.open(BookingsDialogComponent, {
+          data: { userId: userId }
+        });
   }
 
   onUpdate(userId: number): void {
