@@ -1,0 +1,80 @@
+.feedback-section {
+  padding: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+  width: 600px;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.feedback-item {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.feedback-rating {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.stars {
+  font-size: 20px;
+}
+
+.stars span.filled {
+  color: gold;
+}
+
+.stars span.empty {
+  color: #ccc;
+}
+
+.feedback-dates {
+  margin-bottom: 10px;
+}
+
+.feedback-text {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.feedback-user {
+  font-size: 12px;
+  font-style: italic;
+  color: #555;
+}
+
+.no-feedbacks {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.close-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #ff0000;
+}
+
+.avg-rating {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.7); 
+  color: white; 
+  padding: 5px;
+  border-radius: 5px;
+}

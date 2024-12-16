@@ -1,0 +1,47 @@
+<div class="feedback-container">
+  <h1>Give Feedback</h1>
+  <div>
+    <form [formGroup]="feedbackForm" class="feedback-form">
+      <!-- Star Rating -->
+      <div class="star-rating">
+        <label for="rating">Rating:</label>
+        <div>
+          <span
+            class="star"
+            *ngFor="let star of stars; index as i"
+            [class.filled]="i < rating"
+            (click)="setRating(i + 1)"
+          >
+            ★
+          </span>
+        </div>
+        <div *ngIf="feedbackForm.get('rating')?.invalid && feedbackForm.get('rating')?.touched" class="error">
+          Please provide a rating between 1 and 5.
+        </div>
+      </div>
+
+      <!-- Feedback Textarea -->
+      <div class="form-group">
+        <label for="feedbackText">Feedback:</label>
+        <textarea
+          id="feedbackText"
+          rows="4"
+          formControlName="feedbackText"
+          placeholder="Write your feedback here (max 500 characters)"
+        ></textarea>
+        <div *ngIf="feedbackForm.get('feedbackText')?.hasError('required') && feedbackForm.get('feedbackText')?.touched" class="error">
+          Feedback is required.
+        </div>
+        <div *ngIf="feedbackForm.get('feedbackText')?.hasError('maxlength')" class="error">
+          Maximum 500 characters allowed.
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="form-actions">
+        <button type="button" (click)="closeDialog()">Cancel</button>
+        <button type="submit" (click)="submitFeedback()" [disabled]="feedbackForm.invalid">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

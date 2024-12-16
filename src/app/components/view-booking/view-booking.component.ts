@@ -7,6 +7,9 @@ import { ConfirmCancelBookingComponent } from '../confirm-cancel-booking/confirm
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 import { NotificationService } from '../../services/notification.service';
+import { CreateFeedbackDialogComponent } from '../create-feedback-dialog/create-feedback-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UpdateDeleteFeedbackComponent } from '../update-delete-feedback/update-delete-feedback.component';
 
 @Component({
   selector: 'app-view-booking',
@@ -24,9 +27,15 @@ export class ViewBookingComponent implements OnInit {
   seatLogDetails: any;
   errorMessage: string | null = null;
   successMessage: string | null = null;
+  feedbackMessage: string | null = null;
+  isFeedbackDisabled: boolean = false;
+
+  feedbackExist: boolean = false;
+ 
 
   constructor(private route: ActivatedRoute, private apiService: ApiServiceService,
-     private dialog: MatDialog, private notificationService: NotificationService) {
+     private dialog: MatDialog, private notificationService: NotificationService,
+    private snackBar: MatSnackBar) {
     const pdfMakeInstance = pdfMake as any;
     pdfMakeInstance.vfs = pdfFonts.vfs;
 
@@ -53,6 +62,21 @@ export class ViewBookingComponent implements OnInit {
       }
 
     });
+
+    this.apiService.getFeedbackByBookingId(this.bookingId).subscribe({
+      next: (feedback: any) => {
+        if(feedback && feedback.length>0) {
+          this.feedbackExist = true;
+        }
+        else if(feedback && feedback.length===0) {
+          this.feedbackExist = false;
+        }
+      },
+      error: (error: any) => {
+        console.error('Cannot fetch feedbacks', error);
+      },
+    });
+
   }
 
   fetchBooking(bookingId: any) {
@@ -259,7 +283,149 @@ export class ViewBookingComponent implements OnInit {
     }
     return 'N/A'; 
   }
+
+  isCancelBookingDisabled(): boolean {
+    const currentDate = new Date();
+    const departureDate = new Date(this.scheduleDetails?.departureTime);
   
+    return currentDate >= departureDate || this.bookingDetails?.status === 'cancelled';
+  }
+  
+
+  onGiveFeedback() {
+    const currentDate = new Date();
+    const arrivalDate = new Date(this.scheduleDetails?.arrivalTime);
+
+    if (currentDate < arrivalDate) {
+      this.feedbackMessage = 'You can only give feedback after the bus has completed the trip.';
+      this.isFeedbackDisabled = true;  
+    } else {
+      this.isFeedbackDisabled = false;
+
+      this.apiService.getFeedbackByBookingId(this.bookingId).subscribe({
+        next: (feedback: any) => {
+          if(feedback && feedback.length>0) {
+            console.log('update-delete feedback');
+            this.feedbackExist = true;
+
+            const feedbackId = feedback[0].feedbackId;
+
+            const dialogRef = this.dialog.open(UpdateDeleteFeedbackComponent, {
+              data: {
+                rating: feedback[0].rating,
+                feedbackText: feedback[0].feedbackText
+              }
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+              if(result?.action === 'update') {
+                const feedbackData = {
+                  rating: result.feedback.rating,
+                  feedbackText: result.feedback.feedbackText
+                }
+
+                console.log('Update data', feedbackData);
+
+                this.apiService.updateFeedback(feedbackId, feedbackData).subscribe({
+                  next: (response: any) => {
+                    this.snackBar.open('Feedback updated successfully!', 'Close', {
+                      duration: 3000,
+                      horizontalPosition: 'right',
+                      verticalPosition: 'bottom',
+                    });
+                    console.log('feedback updated successfully', response);
+                    this.ngOnInit();
+                  },
+                  error: (error: any) => {
+                    this.snackBar.open('Error updating feedback', 'Close', {
+                      duration: 3000,
+                      horizontalPosition: 'right',
+                      verticalPosition: 'bottom',
+                    });
+
+                    console.error('Error updating feedback', error);
+                  }
+                });
+
+              } else if(result?.action === 'delete') {
+                console.log('delete feedback');
+                this.apiService.deleteFeedback(feedbackId).subscribe({
+                  next: (response: any) => {
+                    this.snackBar.open('Feedback deleted successfully!', 'Close', {
+                      duration: 3000,
+                      horizontalPosition: 'right',
+                      verticalPosition: 'bottom',
+                    });
+                    console.log('feedback updated successfully', response);
+                    this.ngOnInit();
+                  },
+                  error: (error: any) => {
+                    this.snackBar.open('Error deleting feedback', 'Close', {
+                      duration: 3000,
+                      horizontalPosition: 'right',
+                      verticalPosition: 'bottom',
+                    });
+
+                    console.error('Error updating feedback', error);
+                  }
+                });
+              }
+            });
+
+          }
+          else if(feedback && feedback.length===0) {
+            console.log('submit feedback');
+
+            const dialogRef = this.dialog.open(CreateFeedbackDialogComponent, {
+              data: {
+                bookingId: this.bookingId,
+              }
+            });
+
+            dialogRef.afterClosed().subscribe(feedback => {
+                if(feedback) {
+                  const feedbackData = {
+                    bookingId: parseInt(this.bookingId),
+                    rating: feedback.rating,
+                    feedbackText: feedback.feedbackText
+                  }
+                  
+                  console.log(feedbackData);
+
+                  this.apiService.addFeedback(feedbackData).subscribe({
+                    next: (response: any) => {
+                      console.log('Feedback added successfully', response);
+                      this.snackBar.open('Feedback added successfully!', 'Close', {
+                        duration: 3000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                      });
+
+                      this.ngOnInit();  
+
+
+                    },
+                    error: (error: any) => {
+                      console.error('Cannot add feedback: ', error);
+                    },
+                  });
+
+                }
+            });
+
+            
+          }
+        },
+        error: (error: any) => {
+          console.error(error);
+        },
+      });
+
+    }
+  }
+
+  
+
   
 
 }

@@ -5,6 +5,7 @@ import { Constant } from '../components/Constants/constant';
 import { jwtDecode } from 'jwt-decode';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from './notification.service';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -15,7 +16,7 @@ export class AuthserviceService implements OnInit{
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false); 
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar ) {
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private router: Router ) {
   const token = this.getToken();
   const isAuthenticated = !!token;
   this.setAuthStatus(isAuthenticated);
@@ -54,6 +55,7 @@ export class AuthserviceService implements OnInit{
           this.removeRefreshToken();
           this.removeEmail();
           this.removeUserId();
+          this.router.navigate(['/app-login']);
           alert('Token expired, logged out automatically');
         });
       }

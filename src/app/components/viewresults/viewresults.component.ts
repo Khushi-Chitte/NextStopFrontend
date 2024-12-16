@@ -96,13 +96,37 @@ export class ViewresultsComponent implements OnInit, OnDestroy {
         if (bus) {
           bus.busType = busDetails.busType; 
         }
+
+        this.fetchBusRatings(busId);
       },
       error: (error: any) => {
         console.error('Error fetching bus details: ', error);
       }
     });
   }
-  
+
+  fetchBusRatings(busId: any) {
+    this.apiS.getFeedbacksByBusId(busId).subscribe({
+      next: (feedbacks: any[]) => {
+        const bus = this.buses.find(b => b.busId === busId);
+        if (bus && feedbacks && feedbacks.length > 0) {
+          const averageRating = this.calculateAverageRating(feedbacks);
+          bus.averageRating = averageRating;
+        } else {
+          bus.averageRating = 'No ratings yet'; 
+        }
+      },
+      error: (error: any) => {
+        console.error('Error fetching feedbacks: ', error);
+      }
+    });
+  }
+
+  calculateAverageRating(feedbacks: any[]): number {
+    const totalRating = feedbacks.reduce((acc, feedback) => acc + feedback.rating, 0);
+    const averageRating = totalRating / feedbacks.length;
+    return parseFloat(averageRating.toFixed(2));
+  }
 
   onView(bus: any) {
     if(this.isAuthenticated) {
@@ -112,7 +136,8 @@ export class ViewresultsComponent implements OnInit, OnDestroy {
         queryParams: { 
           scheduleId: bus.scheduleId,
           busId: bus.busId,
-          seatsAvailable: bus.availableSeats
+          seatsAvailable: bus.availableSeats,
+          rating: bus.averageRating ? (bus.averageRating + ' ⭐') : 'No ratings yet' 
         }
      });
     }

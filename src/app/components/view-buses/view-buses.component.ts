@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UpdateBusesComponent } from '../update-buses/update-buses.component';
+import { ViewFeedbacksOperatorsComponent } from '../view-feedbacks-operators/view-feedbacks-operators.component';
 
 @Component({
   selector: 'app-view-buses',
@@ -108,6 +109,14 @@ export class ViewBusesComponent implements OnInit, OnDestroy {
     this.searchBusNumber = '';
     this.searchOperatorId = '';
     this.filteredBuses = [...this.buses];
+  }
+
+  viewFeedBacks(busId: any): void {
+    const dialogRef = this.dialog.open(ViewFeedbacksOperatorsComponent, {
+      data: {
+        busId: busId
+      }
+    });
   }
 
   onUpdate(busId: any): void {

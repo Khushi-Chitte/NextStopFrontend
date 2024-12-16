@@ -44,4 +44,11 @@ export const Constant = {
     ViewNotification: 'Notification/ViewNotifications/',
     MarkNotificationAsRead: 'Notification/MarkNotificationAsRead/',
     ResetPassword: 'Users/reset-password',
+    GetAllFeedbacks: 'Feedback/GetAllFeedbacks',
+    GetFeedbackById: 'Feedback/GetFeedbackById/',
+    GetFeedbacksByBookingId: 'Feedback/GetFeedbacksByBookingId/',
+    AddFeedback: 'Feedback/AddFeedback',
+    UpdateFeedback: 'Feedback/UpdateFeedback/',
+    DeleteFeedback: 'Feedback/DeleteFeedback/',
+    GetFeedbacksByBusId: 'Feedback/GetFeedbacksByBusId/',
 }

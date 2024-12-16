@@ -84,3 +84,16 @@
   .success-message {
     color: green;
   }
+
+  .btn-feedback {
+    background-color: #ff616f;
+    border: none;
+    font-weight: bold;
+    padding: 6px 10px;
+    color: #fff;
+    border-radius: 5px;
+  }
+  
+  .btn-feedback:hover{
+    background-color: #e64c5d;
+  }

@@ -26,6 +26,7 @@
                     <th>Arrival Time</th>
                     <th>Bus Type</th>
                     <th>Fare</th>
+                    <th>Bus Rating</th> 
                     <th>Seats Available</th>
                     <th *ngIf="isPassenger">Action</th>
                 </tr>
@@ -40,6 +41,7 @@
                     <td>{{ bus.arrivalTime | date:'hh:mm a' }}</td>
                     <td>{{ bus.busType || 'N/A' }}</td>
                     <td>₹{{ bus.fare }}</td>
+                    <td>{{ bus.averageRating ? (bus.averageRating + ' ⭐') : 'No ratings yet' }}</td>
                     <td>{{ bus.availableSeats }}</td>
                     <td *ngIf="isPassenger">
                         <button class="btn btn-danger" (click)="onView(bus)" [disabled]="bus.availableSeats <= 0">

@@ -52,6 +52,14 @@
       <span class="value">₹{{ scheduleDetails.fare }}</span>
     </div>
     <div class="detail-item">
+      <span class="label">Bus Rating and Feedbacks:</span>
+      <button 
+        class="btn-feedback" 
+        (click)="viewFeedBacks(busDetails.busId)" >   
+        View Feedback
+      </button>
+    </div>
+    <div class="detail-item">
       <span class="label">Seats Availability:</span>
       <span class="value">{{ seatsAvailable}}/{{busDetails.totalSeats}}</span>
     </div>

@@ -1,0 +1,103 @@
+.feedback-container {
+  max-width: 800px;
+  width: 500px;
+  margin: 0 auto; /* Centering the form with top and bottom margins */
+  padding: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9; /* Light background color */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* More spacing between form elements */
+}
+
+.star-rating {
+  display: flex;
+  flex-direction: column;
+}
+
+.star-rating label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.star-rating .star {
+  font-size: 24px;
+  cursor: pointer;
+  color: #d3d3d3;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.star-rating .star.filled {
+  color: #ffd700;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  resize: none; /* Prevent resizing */
+  margin-top: 0.5rem;
+}
+
+textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem; /* Space between error and input */
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="button"] {
+  background-color: #ccc;
+  color: #fff;
+}
+
+button[type="button"]:hover {
+  background-color: #bbb;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}

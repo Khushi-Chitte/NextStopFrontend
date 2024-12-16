@@ -1,0 +1,42 @@
+<div class="feedback-section">
+    <h3>Feedbacks for this Bus</h3>
+
+    <div *ngIf="feedbacks.length > 0; else noFeedback">
+      <div *ngFor="let feedback of feedbacks" class="feedback-item">
+        <!-- Display Rating as Stars -->
+        <p class="feedback-rating">
+          Rating:
+          <span class="stars">
+            <span *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="star <= feedback.rating ? 'filled' : 'empty'">
+              ★
+            </span>
+          </span>
+        </p>
+  
+        <!-- Display booking date -->
+        <p class="feedback-dates">
+          <span><strong>Booked on:</strong> {{ feedback.bookingDate | date }}</span>
+        </p>
+  
+        <!-- Feedback text -->
+        <p class="feedback-text">{{ feedback.feedbackText }}</p>
+    
+        <!-- Display User Name -->
+        <p class="feedback-user">- {{ feedback.name || 'Anonymous' }}</p>
+      </div>
+    </div>
+  
+    <ng-template #noFeedback>
+      <p>No feedback available for this bus yet.</p>
+    </ng-template>
+  </div>
+
+  
+  <div mat-dialog-actions>
+    <button mat-button class="close-btn" (click)="closeDialog()">Close</button>
+  </div>
+
+  <div class="avg-rating">
+    <p>Avg Rating: {{ averageRating ? (averageRating + ' ⭐') : 'No ratings yet' }} </p>
+  </div>
+  

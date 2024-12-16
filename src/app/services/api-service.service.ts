@@ -470,4 +470,67 @@ export class ApiServiceService {
     );
   }
 
+  getAllFeedbacks() : Observable<any> {
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetAllFeedbacks}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching feedbacks:', error);
+        return throwError(() => error);
+      })
+    );
+  } 
+
+  getFeedbackById(feedbackId: number) : Observable<any> {
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetFeedbackById}${feedbackId}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching feedbacks:', error);
+        return throwError(() => error);
+      })
+    );
+  } 
+
+  getFeedbackByBookingId(bookingId: number) : Observable<any> {
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetFeedbacksByBookingId}${bookingId}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching feedbacks:', error);
+        return throwError(() => error);
+      })
+    );
+  } 
+
+  addFeedback(feedbackData: any) : Observable<any> {
+    return this.http.post(`${Constant.BASE_URI}${Constant.AddFeedback}`, feedbackData).pipe(
+      catchError((error: any) => {
+        console.error('Error adding feedback:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  updateFeedback(feedbackId: number, feedbackData: any) : Observable<any> {
+    return this.http.put(`${Constant.BASE_URI}${Constant.UpdateFeedback}${feedbackId}`, feedbackData).pipe(
+      catchError((error: any) => {
+        console.error('Error updating feedback:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  deleteFeedback(feedbackId: number) : Observable<any> {
+    return this.http.delete(`${Constant.BASE_URI}${Constant.DeleteFeedback}${feedbackId}`).pipe(
+      catchError((error: any) => {
+        console.error('Error deleting feedback:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  getFeedbacksByBusId(busId: number) : Observable<any> {
+    return this.http.get(`${Constant.BASE_URI}${Constant.GetFeedbacksByBusId}${busId}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching feedbacks:', error);
+        return throwError(() => error);
+      })
+    );
+  } 
+
 }

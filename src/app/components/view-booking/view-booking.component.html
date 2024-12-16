@@ -52,11 +52,11 @@
         <span class="value">{{ scheduleDetails?.departureTime | date:'hh:mm a' }}</span>
       </div>
       <div class="detail-item">
-        <span class="label">Departure Date:</span>
+        <span class="label">Arrival Date:</span>
         <span class="value">{{ scheduleDetails?.arrivalTime | date }}</span>
       </div>
       <div class="detail-item">
-        <span class="label">Departure time:</span>
+        <span class="label">Arrival time:</span>
         <span class="value">{{ scheduleDetails?.arrivalTime | date:'hh:mm a' }}</span>
       </div>
       <div class="detail-item">
@@ -76,11 +76,20 @@
         <span class="value">{{ paymentDetails?.paymentStatus }}</span>
       </div>
     </div>
-
+    <p *ngIf="feedbackMessage" class="feedback-message" style="color: blue;">{{ feedbackMessage }}</p>
     <div class="actions">
       <button class="cancel-button" (click)="onCancelBooking()"
-        [disabled]="bookingDetails.status === 'cancelled'">Cancel Booking</button>
+        [disabled]="bookingDetails.status === 'cancelled' || isCancelBookingDisabled()">Cancel Booking</button>
         <button class="btn btn-success" (click)="generatePDF()">Download PDF</button>
+
+        <button class="btn btn-primary" (click)="onGiveFeedback()" *ngIf="!feedbackExist"
+        [disabled]="isFeedbackDisabled || bookingDetails.status === 'cancelled'">
+        Give Ratings and Feedback
+      </button>      
+      <button class="btn btn-primary" (click)="onGiveFeedback()"  *ngIf="feedbackExist"
+        [disabled]="isFeedbackDisabled || bookingDetails.status === 'cancelled'">
+        Edit Ratings and Feedback
+      </button>    
     </div>
   </div>
 

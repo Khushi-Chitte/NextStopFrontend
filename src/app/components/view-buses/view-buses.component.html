@@ -52,6 +52,7 @@
                     <th *ngIf="isAdmin">Operator Id</th>
                     <th>Operator Name</th>
                     <th *ngIf="showActions">Actions</th>
+                    <th>Feedbacks</th>
                 </tr>
             </thead>
             <tbody>
@@ -74,6 +75,13 @@
                           class="btn btn-danger" 
                           (click)="onDelete(bus.busId)" >   
                             Delete
+                        </button>
+                    </td>
+                    <td>
+                      <button 
+                          class="btn-feedback" 
+                          (click)="viewFeedBacks(bus.busId)" >   
+                            View Feedback
                         </button>
                     </td>
                 </tr>

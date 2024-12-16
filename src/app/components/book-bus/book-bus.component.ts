@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBookingComponent } from '../confirm-booking/confirm-booking.component';
 import { NotificationService } from '../../services/notification.service';
+import { ViewFeedbacksOperatorsComponent } from '../view-feedbacks-operators/view-feedbacks-operators.component';
 
 @Component({
   selector: 'app-book-bus',
@@ -18,6 +19,7 @@ export class BookBusComponent implements OnInit {
   busId: any;
   scheduleId: any;
   seatsAvailable: number = 0;
+  rating: any;
   userID: any;
   allSeats: any[] = [];
   allSeatNumbers: any[] = [];
@@ -30,6 +32,7 @@ export class BookBusComponent implements OnInit {
   errorMessage: string = '';
   busDetails: any;
   seats: any[] = [];
+
   constructor(private route: ActivatedRoute, private apiservice: ApiServiceService, private router: Router, private dialog: MatDialog,
     private notificationService: NotificationService) { }
 
@@ -41,6 +44,7 @@ export class BookBusComponent implements OnInit {
       this.busId = params['busId'];
       this.scheduleId = params['scheduleId'];
       this.seatsAvailable = params['seatsAvailable'];
+      this.rating = params['rating'];
     });
 
       this.userID = localStorage.getItem('userId');
@@ -115,8 +119,15 @@ export class BookBusComponent implements OnInit {
       });
 
   }
+  viewFeedBacks(busId: any): void {
+      const dialogRef = this.dialog.open(ViewFeedbacksOperatorsComponent, {
+        data: {
+          busId: busId
+        }
+      });
+    }
   
-
+  
   toggleSeatSelection(seat: any) {
     if (this.startSeatSelection && seat.isAvailable && !this.selectionConfirmed) {
       const index = this.selectedSeats.indexOf(seat.seatNumber);
