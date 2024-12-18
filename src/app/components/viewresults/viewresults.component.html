@@ -1,58 +1,55 @@
-<app-search [searchData]="searchParams"></app-search>
-
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Available Buses</h2>
-
-    <!-- Show loading spinner while fetching data -->
-    <div *ngIf="loading" class="text-center">
-        <p>Loading buses...</p>
-    </div>
+    <h2 class="text-center mb-4 text-dark fw-bold">Available Buses</h2>
 
     <!-- If no results found -->
-    <div *ngIf="!loading && buses.length === 0" class="text-center">
+    <div *ngIf="!loading && buses.length === 0" class="text-center text-danger">
         <p>No buses found for your search criteria. Try again!</p>
     </div>
 
-    <!-- Table of Buses -->
-    <div *ngIf="!loading && buses.length > 0" class="bus-list">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Bus Name</th>
-                    <th>Route</th>
-                    <th>Departure Date</th>
-                    <th>Departure Time</th>
-                    <th>Arrival Date</th>
-                    <th>Arrival Time</th>
-                    <th>Bus Type</th>
-                    <th>Fare</th>
-                    <th>Bus Rating</th> 
-                    <th>Seats Available</th>
-                    <th *ngIf="isPassenger">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let bus of buses" class="card-row">
-                    <td>{{ bus.busName }}</td>
-                    <td>{{ bus.origin }} - {{ bus.destination }}</td>
-                    <td>{{ bus.departureTime | date:'yyyy-MM-dd' }}</td>
-                    <td>{{ bus.departureTime | date:'hh:mm a' }}</td>
-                    <td>{{ bus.arrivalTime | date:'yyyy-MM-dd' }}</td>
-                    <td>{{ bus.arrivalTime | date:'hh:mm a' }}</td>
-                    <td>{{ bus.busType || 'N/A' }}</td>
-                    <td>₹{{ bus.fare }}</td>
-                    <td>{{ bus.averageRating ? (bus.averageRating + ' ⭐') : 'No ratings yet' }}</td>
-                    <td>{{ bus.availableSeats }}</td>
-                    <td *ngIf="isPassenger">
-                        <button class="btn btn-danger" (click)="onView(bus)" [disabled]="bus.availableSeats <= 0">
+    <!-- Card Layout -->
+    <div *ngIf="buses.length > 0">
+        <div class="row justify-content-center">
+            <div *ngFor="let bus of buses" class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card shadow-lg border-0 rounded-4 overflow-hidden h-100">
+                    <!-- Gradient Header -->
+                    <div class="card-header text-white text-center py-3" style="background: #5dade2;">
+                        <h5 class="fw-bold mb-0">{{ bus.busName }}</h5>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-body bg-white position-relative">
+                        <!-- Seats Badge Inside the Card Body -->
+                        <div class="badge position-absolute top-0 end-0 translate-middle bg-success text-white px-3 py-1 rounded-pill"
+                            style="z-index: 10; transform: translate(50%, -50%);">
+                            {{ bus.availableSeats }} Seats
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">🛤️ <strong>Route:</strong></span>
+                            <span>{{ bus.origin }} → {{ bus.destination }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">🕒 <strong>Departure:</strong></span>
+                            <span>{{ bus.departureTime | date: 'hh:mm a' }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">🕓 <strong>Arrival:</strong></span>
+                            <span>{{ bus.arrivalTime | date: 'hh:mm a' }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">💰 <strong>Price:</strong></span>
+                            <span class="fw-bold text-success">₹{{ bus.fare }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer -->
+                    <div class="card-footer text-center bg-light">
+                        <button class="btn btn-danger rounded-pill w-75 py-2 fw-bold shadow-sm" (click)="onView(bus)">
                             Book Now
                         </button>
-                        <div *ngIf="bus.availableSeats <= 0" class="text-danger mt-2">
-                            Sorry, no seats available.
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

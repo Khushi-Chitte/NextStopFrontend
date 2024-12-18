@@ -1,6 +1,6 @@
 export const Constant = {
-    BASE_URI : 'https://localhost:7194/api/',   //ayush uri
-    // BASE_URI : 'https://localhost:7101/api/', //khushi uri
+    // BASE_URI : 'https://localhost:7194/api/',   //ayush uri
+    BASE_URI : 'https://localhost:7194/api/', //khushi uri
     LOGIN:'Authentication/login',
     REGISTER:'Authentication/register',
     LOGOUT: 'Authentication/logout',
