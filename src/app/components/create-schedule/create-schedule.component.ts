@@ -3,29 +3,31 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { ApiServiceService } from '../../services/api-service.service';
 import { AuthserviceService } from '../../services/authservice.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-create-schedule',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './create-schedule.component.html',
-  styleUrl: './create-schedule.component.css'
+  styleUrls: ['./create-schedule.component.css']
 })
 export class CreateScheduleComponent implements OnInit {
   createScheduleForm!: FormGroup;
+  recurrenceOptions: string[] = ['None', 'Daily', 'Weekly', 'Custom'];
   errorMessage: string = '';
   successMessage: string = '';
   isSubmitting: boolean = false;
   isAdmin: boolean = false;
   operatorId: number = 0;
-  operatorBuses: { busId: number, busNumber: string, operatorName: string , busName: string }[] = [];
+  operatorBuses: { busId: number, busNumber: string, operatorName: string, busName: string }[] = [];
   allBuses: { busId: number, busNumber: string, operatorName: string, busName: string }[] = [];
-  routes: any[] = []; 
+  routes: any[] = [];
   minDate: string;
 
   @Output() scheduleCreated = new EventEmitter<void>();
 
-  constructor(private apiService: ApiServiceService, private authService: AuthserviceService) { 
+  constructor(private apiService: ApiServiceService, private authService: AuthserviceService) {
     this.minDate = new Date().toISOString().split('T')[0];
   }
 
@@ -35,47 +37,36 @@ export class CreateScheduleComponent implements OnInit {
     console.log(this.isAdmin, `creating schedule with operatorId: ${this.operatorId}`);
 
     if (this.isAdmin) {
-      this.fetchAllBuses(); 
+      this.fetchAllBuses();
     } else {
-      this.fetchOperatorBuses();  
+      this.fetchOperatorBuses();
     }
 
-    this.fetchAllRoutes(); 
+    this.fetchAllRoutes();
 
     this.createScheduleForm = new FormGroup({
-      busId: new FormControl(null, [
-        Validators.required,
-      ]),
-      routeId: new FormControl(null, [
-        Validators.required,
-      ]),
-      departureDate: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(10),
-      ]),
-      departureTime: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(5),
-      ]),
-      arrivalDate: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(10),
-      ]),
-      arrivalTime: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(5),
-      ]),
-      fare: new FormControl(0, [
-        Validators.required,
-        Validators.min(1)
-      ]),
+      busId: new FormControl(null, [Validators.required]),
+      routeId: new FormControl(null, [Validators.required]),
+      departureDate: new FormControl('', [Validators.required]),
+      departureTime: new FormControl('', [Validators.required]),
+      arrivalDate: new FormControl('', [Validators.required]),
+      arrivalTime: new FormControl('', [Validators.required]),
+      fare: new FormControl(0, [Validators.required, Validators.min(1)]),
+      recurrence: new FormControl('None', Validators.required),
+      recurrenceCount: new FormControl(0, [Validators.min(1), Validators.max(30)]),
+      monday: new FormControl(false),
+      tuesday: new FormControl(false),
+      wednesday: new FormControl(false),
+      thursday: new FormControl(false),
+      friday: new FormControl(false),
+      saturday: new FormControl(false),
+      sunday: new FormControl(false)
     });
   }
 
   fetchOperatorBuses(): void {
     this.apiService.fetchBusesByOperatorId().subscribe({
       next: (buses: any) => {
-        // Now storing busId and busNumber as an object
         this.operatorBuses = buses.map((bus: any) => ({
           busId: bus.busId,
           busNumber: bus.busNumber,
@@ -84,9 +75,7 @@ export class CreateScheduleComponent implements OnInit {
         }));
         console.log('Operator Buses:', this.operatorBuses);
       },
-      error: (error: any) => {
-        this.handleError(error);
-      }
+      error: (error: any) => this.handleError(error)
     });
   }
 
@@ -101,13 +90,9 @@ export class CreateScheduleComponent implements OnInit {
         }));
         console.log('All Buses for Admin:', this.allBuses);
       },
-      error: (error: any) => {
-        this.handleError(error);
-      }
+      error: (error: any) => this.handleError(error)
     });
   }
-  
-  
 
   fetchAllRoutes(): void {
     this.apiService.fetchAllRoutes().subscribe({
@@ -115,49 +100,131 @@ export class CreateScheduleComponent implements OnInit {
         this.routes = routes;
         console.log('Available Routes:', this.routes);
       },
-      error: (error: any) => {
-        this.handleError(error);
-      }
+      error: (error: any) => this.handleError(error)
     });
+  }
+
+  generateRecurrenceSchedules(recurrence: string, count: number, baseSchedule: any): any[] {
+    const schedules = [];
+    let departureDate = new Date(baseSchedule.departureDateTime);
+    let arrivalDate = new Date(baseSchedule.arrivalDateTime);
+
+    // Recurrence logic for each type
+    if (recurrence === 'Daily') {
+      for (let i = 0; i < count; i++) {
+        const schedule = {
+          departureDateTime: departureDate.toISOString(),
+          arrivalDateTime: arrivalDate.toISOString(),
+          departureDate: baseSchedule.departureDate
+        };
+        schedules.push(schedule);
+        departureDate.setDate(departureDate.getDate() + 1);
+        arrivalDate.setDate(arrivalDate.getDate() + 1);
+      }
+    } else if (recurrence === 'Weekly') {
+      for (let i = 0; i < count; i++) {
+        const schedule = {
+          departureDateTime: departureDate.toISOString(),
+          arrivalDateTime: arrivalDate.toISOString(),
+          departureDate: baseSchedule.departureDate
+        };
+        schedules.push(schedule);
+        departureDate.setDate(departureDate.getDate() + 7);
+        arrivalDate.setDate(arrivalDate.getDate() + 7);
+      }
+    } else if (recurrence === 'Custom') {
+      // Handle custom days (Monday, Tuesday, Wednesday, etc.)
+      const selectedDays: number[] = [];
+      if (baseSchedule.monday) selectedDays.push(1); // Monday
+      if (baseSchedule.tuesday) selectedDays.push(2); // Tuesday
+      if (baseSchedule.wednesday) selectedDays.push(3); // Wednesday
+      if (baseSchedule.thursday) selectedDays.push(4); // Thursday
+      if (baseSchedule.friday) selectedDays.push(5); // Friday
+      if (baseSchedule.saturday) selectedDays.push(6); // Saturday
+      if (baseSchedule.sunday) selectedDays.push(0); // Sunday
+
+      let dayIndex = 0;
+      let daysAdded = 0;
+
+      while (daysAdded < count) {
+        // Check if the current day is one of the selected days
+        if (selectedDays.includes(departureDate.getDay())) {
+          const schedule = {
+            departureDateTime: departureDate.toISOString(),
+            arrivalDateTime: arrivalDate.toISOString(),
+            departureDate: baseSchedule.departureDate
+          };
+          schedules.push(schedule);
+          daysAdded++;
+        }
+        // Move to the next day
+        departureDate.setDate(departureDate.getDate() + 1);
+        arrivalDate.setDate(arrivalDate.getDate() + 1);
+      }
+    }
+
+    return schedules;
+  }
+
+  onRecurrenceChange(): void {
+    const recurrenceType = this.createScheduleForm.get('recurrence')?.value;
+    if (recurrenceType !== 'Custom') {
+      this.createScheduleForm.patchValue({
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false,
+        sunday: false
+      });
+    }
   }
 
   onCreateSchedule(): void {
     const formValues = { ...this.createScheduleForm.value };
-    formValues.busId = Number(formValues.busId);
-    formValues.routeId = Number(formValues.routeId);
-  
-    // Combine departureDate and departureTime into a single Date string in ISO format
     const departureDateTime = `${formValues.departureDate}T${formValues.departureTime}:00`;
     const arrivalDateTime = `${formValues.arrivalDate}T${formValues.arrivalTime}:00`;
-  
-    // Convert to the required format for the API
-    const transformedValues = {
-      busId: formValues.busId,
-      routeId: formValues.routeId,
-      departureTime: departureDateTime,  
-      arrivalTime: arrivalDateTime,      
-      fare: formValues.fare,
-      date: formValues.departureDate     
-    };
-  
-    console.log('Transformed Schedule:', transformedValues);
-  
+
+    const schedules = this.generateRecurrenceSchedules(
+      formValues.recurrence,
+      formValues.recurrenceCount,
+      {
+        departureDateTime,
+        arrivalDateTime,
+        departureDate: formValues.departureDate,
+        monday: formValues.monday,
+        tuesday: formValues.tuesday,
+        wednesday: formValues.wednesday,
+        thursday: formValues.thursday,
+        friday: formValues.friday,
+        saturday: formValues.saturday,
+        sunday: formValues.sunday
+      }
+    );
+
     this.isSubmitting = true;
-    this.apiService.createSchedule(transformedValues).subscribe({
+    const requests = schedules.map(schedule => {
+      return this.apiService.createSchedule({
+        busId: Number(formValues.busId),
+        routeId: Number(formValues.routeId),
+        departureTime: schedule.departureDateTime,
+        arrivalTime: schedule.arrivalDateTime,
+        fare: formValues.fare,
+        date: schedule.departureDate
+      });
+    });
+
+    forkJoin(requests).subscribe({
       next: () => {
-        this.successMessage = 'Schedule created successfully!';
+        this.successMessage = 'All schedules created successfully!';
         this.scheduleCreated.emit();
         this.createScheduleForm.reset();
       },
-      error: (error: any) => {
-        this.handleError(error);
-      },
-      complete: () => {
-        this.isSubmitting = false;
-      }
+      error: (error: any) => this.handleError(error),
+      complete: () => (this.isSubmitting = false)
     });
   }
-  
 
   handleError(error: any): void {
     this.errorMessage = error?.error?.message || 'An unexpected error occurred. Please try again later.';
