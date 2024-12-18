@@ -136,8 +136,8 @@ export class ViewSchedulesComponent implements OnInit, OnDestroy {
     if(!this.isAuthenticated) {
       alert('Login first to delete');
     } else {
-      console.log('Delete Bus', scheduleId);
-      if(confirm('Are you sure you want to delete this bus?(⚠️all related data will be lost)')) {
+      console.log('Delete Schedule', scheduleId);
+      if(confirm('Are you sure you want to delete this Schedule?(⚠️all related data will be lost)')) {
         this.deleteSchedule(scheduleId);
       }
     }

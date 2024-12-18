@@ -3,6 +3,7 @@
 
   <form [formGroup]="createScheduleForm" (ngSubmit)="onCreateSchedule()">
     
+    <!-- Bus Selection -->
     <div class="form-group">
       <label for="busId">Bus Number</label>
       <select
@@ -12,7 +13,6 @@
         required
       >
         <option value="" disabled>Select Bus</option>
-        <!-- Show all buses for admin, and only operator's buses for operator -->
         <option *ngFor="let bus of isAdmin ? allBuses : operatorBuses" [value]="bus.busId">
           {{ bus.busNumber }} ({{ bus.busName }}) (ID: {{ bus.busId }}) (Operator: {{ bus.operatorName }})
         </option>
@@ -31,7 +31,6 @@
         [class.invalid]="createScheduleForm.get('routeId')?.invalid && createScheduleForm.get('routeId')?.touched"
       >
         <option value="" disabled>Select Route</option>
-        <!-- Show Route ID, Origin, and Destination -->
         <option *ngFor="let route of routes" [value]="route.routeId">
           (ID: {{ route.routeId }}) - {{ route.origin }} to {{ route.destination }} (Distance: {{ route.distance }} Km) (ET: {{route.estimatedTime}})
         </option>
@@ -50,9 +49,10 @@
         formControlName="departureDate"
         [min]="minDate"
         [class.invalid]="createScheduleForm.get('departureDate')?.invalid && createScheduleForm.get('departureDate')?.touched"
+        required
       />
       <div class="error-message" *ngIf="createScheduleForm.get('departureDate')?.invalid && createScheduleForm.get('departureDate')?.touched">
-        Departure date is required.
+        Departure Date is required.
       </div>
     </div>
 
@@ -64,9 +64,10 @@
         type="time"
         formControlName="departureTime"
         [class.invalid]="createScheduleForm.get('departureTime')?.invalid && createScheduleForm.get('departureTime')?.touched"
+        required
       />
       <div class="error-message" *ngIf="createScheduleForm.get('departureTime')?.invalid && createScheduleForm.get('departureTime')?.touched">
-        Departure time is required.
+        Departure Time is required.
       </div>
     </div>
 
@@ -79,9 +80,10 @@
         formControlName="arrivalDate"
         [min]="minDate"
         [class.invalid]="createScheduleForm.get('arrivalDate')?.invalid && createScheduleForm.get('arrivalDate')?.touched"
+        required
       />
       <div class="error-message" *ngIf="createScheduleForm.get('arrivalDate')?.invalid && createScheduleForm.get('arrivalDate')?.touched">
-        Arrival date is required.
+        Arrival Date is required.
       </div>
     </div>
 
@@ -93,38 +95,106 @@
         type="time"
         formControlName="arrivalTime"
         [class.invalid]="createScheduleForm.get('arrivalTime')?.invalid && createScheduleForm.get('arrivalTime')?.touched"
+        required
       />
       <div class="error-message" *ngIf="createScheduleForm.get('arrivalTime')?.invalid && createScheduleForm.get('arrivalTime')?.touched">
-        Arrival time is required.
+        Arrival Time is required.
       </div>
     </div>
 
     <!-- Fare -->
     <div class="form-group">
-      <label for="fare">Fare(in ₹)</label>
+      <label for="fare">Fare</label>
       <input
         id="fare"
         type="number"
         formControlName="fare"
+        min="1"
         [class.invalid]="createScheduleForm.get('fare')?.invalid && createScheduleForm.get('fare')?.touched"
-        placeholder="Enter fare amount"
+        required
       />
       <div class="error-message" *ngIf="createScheduleForm.get('fare')?.invalid && createScheduleForm.get('fare')?.touched">
-        Fare is required and must be greater than 0.
+        Fare is required and should be at least 1.
       </div>
     </div>
 
-    <div class="form-actions">
-      <button type="submit" [disabled]="isSubmitting || createScheduleForm.invalid">Create Schedule</button>
+    <!-- Recurrence -->
+    <div class="form-group">
+      <label for="recurrence">Recurrence</label>
+      <select
+        id="recurrence"
+        formControlName="recurrence"
+        [class.invalid]="createScheduleForm.get('recurrence')?.invalid && createScheduleForm.get('recurrence')?.touched"
+        (change)="onRecurrenceChange()"
+      >
+        <option value="None">None</option>
+        <option value="Daily">Daily</option>
+        <option value="Weekly">Weekly</option>
+        <option value="Custom">Custom</option>
+      </select>
+      <div class="error-message" *ngIf="createScheduleForm.get('recurrence')?.invalid && createScheduleForm.get('recurrence')?.touched">
+        Recurrence is required.
+      </div>
     </div>
+
+    <!-- Custom Recurrence Days -->
+    <div *ngIf="createScheduleForm.get('recurrence')?.value === 'Custom'" class="form-group">
+      <label>Custom Recurrence Days</label>
+      <div class="checkbox-group">
+        <label>
+          <input type="checkbox" formControlName="monday" /> Monday
+        </label>
+        <label>
+          <input type="checkbox" formControlName="tuesday" /> Tuesday
+        </label>
+        <label>
+          <input type="checkbox" formControlName="wednesday" /> Wednesday
+        </label>
+        <label>
+          <input type="checkbox" formControlName="thursday" /> Thursday
+        </label>
+        <label>
+          <input type="checkbox" formControlName="friday" /> Friday
+        </label>
+        <label>
+          <input type="checkbox" formControlName="saturday" /> Saturday
+        </label>
+        <label>
+          <input type="checkbox" formControlName="sunday" /> Sunday
+        </label>
+      </div>
+    </div>
+    
+
+
+    <!-- Recurrence Count -->
+    <div class="form-group">
+      <label for="recurrenceCount">Number of Schedules</label>
+      <input
+        id="recurrenceCount"
+        type="number"
+        formControlName="recurrenceCount"
+        min="1"
+        max="30"
+        [class.invalid]="createScheduleForm.get('recurrenceCount')?.invalid && createScheduleForm.get('recurrenceCount')?.touched"
+      />
+      <div class="error-message" *ngIf="createScheduleForm.get('recurrenceCount')?.invalid && createScheduleForm.get('recurrenceCount')?.touched">
+        Number of schedules is required and should be between 1 and 30.
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="createScheduleForm.invalid || isSubmitting">Create Schedule</button>
   </form>
 
-  <!-- Success and Error Messages -->
-  <div *ngIf="successMessage" class="success-message">
-    {{ successMessage }}
+  <div *ngIf="isSubmitting" class="loading-spinner">
+    <p>Creating schedules...</p>
   </div>
 
   <div *ngIf="errorMessage" class="error-message">
-    {{ errorMessage }}
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="successMessage" class="success-message">
+    <p>{{ successMessage }}</p>
   </div>
 </div>
