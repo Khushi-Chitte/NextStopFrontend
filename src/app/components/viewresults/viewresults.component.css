@@ -98,3 +98,91 @@
     padding: 0.5rem 1rem;
     /* Adjust padding for better proportion */
 }
+
+/* Style for Filters Button (Square-Rounded) */
+.btn-filter {
+    background-color: transparent;
+    border: 2px solid #5dade2; /* Light blue border */
+    color: #5dade2; /* Blue text */
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 8px 20px;
+    border-radius: 10px; /* Rounded corners */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-transform: uppercase; /* Optional: Capitalize text */
+}
+
+/* Hover Effect */
+.btn-filter:hover {
+    background-color: #5dade2;
+    color: white; /* Change text color on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Focus Effect */
+.btn-filter:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(93, 155, 228, 0.5); /* Subtle focus effect */
+}
+
+/* Filters Section Style */
+.filters {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* Style for Filters Button (Square-Rounded) */
+.btn-sort {
+    background-color: transparent;
+    border: 2px solid #5dade2; /* Light blue border */
+    color: #5dade2; /* Blue text */
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 8px 20px;
+    border-radius: 10px; /* Rounded corners */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-transform: uppercase; /* Optional: Capitalize text */
+}
+
+/* Hover Effect */
+.btn-sort:hover {
+    background-color: #5dade2;
+    color: white; /* Change text color on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Focus Effect */
+.btn-sort:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(93, 155, 228, 0.5); /* Subtle focus effect */
+}
+
+.sort-options {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.btn-reset {
+    background-color: #f44336; /* Red */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-reset:hover {
+    background-color: #d32f2f; /* Darker Red on hover */
+  }

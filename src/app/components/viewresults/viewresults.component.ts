@@ -1,4 +1,3 @@
-// viewresults.component.ts
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -16,6 +15,9 @@ import { Subscription } from 'rxjs';
 })
 export class ViewresultsComponent implements OnInit, OnDestroy {
   buses: any[] = []; 
+  busTypes: string[] = ['Sleeper', 'AC', 'NonAC', 'SleeperAC', 'Seater'];
+  filteredBuses: any[] = [];
+  selectedBusTypes: string[] = [];
   searchParams: any = {
     Origin: '',
     Destination: '',
@@ -23,11 +25,12 @@ export class ViewresultsComponent implements OnInit, OnDestroy {
   }; 
 
   isAuthenticated: boolean = false;
+  showFilters: boolean = false;
+  showSortOptions: boolean = false;
   private authStatusSubscription!: Subscription;
   private queryParamsSubscription!: Subscription;
   loading: boolean = true;
   isPassenger: boolean = false;
-
 
   constructor(private route: ActivatedRoute, private router: Router, private apiS: ApiServiceService, private authS: AuthserviceService ) {}
 
@@ -35,57 +38,81 @@ export class ViewresultsComponent implements OnInit, OnDestroy {
     this.isPassenger = this.authS.getUserRoles() === 'passenger';
     
     this.queryParamsSubscription = this.route.queryParams.subscribe((params) => {
-      console.log('Search Parameters:', params); 
       this.searchParams = { ...params };
-
       this.fetchBusSearchResults(params['Origin'], params['Destination'], params['TravelDate']);
     });
 
-    this.authStatusSubscription = this.authS.isAuthenticated$.subscribe(status =>  {
+    this.authStatusSubscription = this.authS.isAuthenticated$.subscribe(status => {
       this.isAuthenticated = status;
     });
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe to avoid memory leaks
     if (this.queryParamsSubscription) {
       this.queryParamsSubscription.unsubscribe();
     }
-
     if (this.authStatusSubscription) {
       this.authStatusSubscription.unsubscribe();
     }
   }
 
+  toggleFilters() {
+    this.showFilters = !this.showFilters;
+  }
+
+  toggleSortOptions() {
+    this.showSortOptions = !this.showSortOptions;
+  }
 
   fetchBusSearchResults(Origin: string, Destination: string, TravelDate: string) {
     this.loading = true;
-
     this.apiS.fetchBusSearchResults(Origin, Destination, TravelDate).subscribe({
       next: (response: any) => {
-        console.log('Response:', response);
-        if(response && response.length > 0) {
-          this.buses = response;
-
-          this.buses.forEach((bus: any) =>{
-            this.fetchBusDetailsById(bus.busId);
-          });
-
-          console.log(response);
-        } else {
-          console.error('Invalid response from server');
-        }
+        this.buses = response || [];
+        this.filteredBuses = [...this.buses]; // Initialize filteredBuses with all buses
+        this.buses.forEach(bus => this.fetchBusDetailsById(bus.busId));
       },
-      error: (error: any) => {
-        console.error('Error in fetching search results', error);
-      },
-      complete: () => {
-        console.log('Request completed');
-        this.loading = false;
-      }
+      error: (error: any) => console.error('Error in fetching search results', error),
+      complete: () => this.loading = false,
     });
+  }
 
+  onBusTypeChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.checked) {
+      this.selectedBusTypes.push(target.value);
+    } else {
+      this.selectedBusTypes = this.selectedBusTypes.filter(type => type !== target.value);
+    }
+    this.filterBuses();
+  }
+
+  onSortChange(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    const sortOption = target.value;
     
+    if (sortOption === 'priceAsc') {
+      this.filteredBuses.sort((a, b) => a.fare - b.fare);
+    } else if (sortOption === 'priceDesc') {
+      this.filteredBuses.sort((a, b) => b.fare - a.fare);
+    } else if (sortOption === 'rating') {
+      this.filteredBuses.sort((a, b) => (b.averageRating || 0) - (a.averageRating || 0));
+    }
+  }
+
+  resetFilters() {
+    this.showFilters = false;
+    this.showSortOptions = false;
+    this.selectedBusTypes = [];
+    this.filteredBuses = [...this.buses];
+  }
+
+  filterBuses() {
+    if (this.selectedBusTypes.length === 0) {
+      this.filteredBuses = [...this.buses];
+    } else {
+      this.filteredBuses = this.buses.filter(bus => this.selectedBusTypes.includes(bus.busType));
+    }
   }
 
   fetchBusDetailsById(busId: any) {
