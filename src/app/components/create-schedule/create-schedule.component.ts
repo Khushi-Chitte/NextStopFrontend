@@ -28,7 +28,7 @@ export class CreateScheduleComponent implements OnInit {
   @Output() scheduleCreated = new EventEmitter<void>();
 
   constructor(private apiService: ApiServiceService, private authService: AuthserviceService) {
-    this.minDate = new Date().toISOString().split('T')[0];
+    this.minDate = new Date().toISOString().split('T')[0];  // Set minimum date to today
   }
 
   ngOnInit(): void {
@@ -183,9 +183,17 @@ export class CreateScheduleComponent implements OnInit {
 
   onCreateSchedule(): void {
     const formValues = { ...this.createScheduleForm.value };
-    const departureDateTime = `${formValues.departureDate}T${formValues.departureTime}:00`;
-    const arrivalDateTime = `${formValues.arrivalDate}T${formValues.arrivalTime}:00`;
-
+    const departureDateTime = new Date(
+      `${formValues.departureDate}T${formValues.departureTime}:00`
+    );
+    const arrivalDateTime = new Date(
+      `${formValues.arrivalDate}T${formValues.arrivalTime}:00`
+    );
+  
+    // Convert both dates to ISO string in the local timezone
+    const departureDateTimeLocal = departureDateTime.toISOString();
+    const arrivalDateTimeLocal = arrivalDateTime.toISOString();
+  
     const schedules = this.generateRecurrenceSchedules(
       formValues.recurrence,
       formValues.recurrenceCount,
@@ -202,27 +210,58 @@ export class CreateScheduleComponent implements OnInit {
         sunday: formValues.sunday
       }
     );
-
+  
     this.isSubmitting = true;
-    const requests = schedules.map(schedule => {
-      return this.apiService.createSchedule({
-        busId: Number(formValues.busId),
-        routeId: Number(formValues.routeId),
-        departureTime: schedule.departureDateTime,
-        arrivalTime: schedule.arrivalDateTime,
-        fare: formValues.fare,
-        date: schedule.departureDate
-      });
-    });
+  
+    // Fetch existing schedules for the selected bus
+    this.apiService.fetchSchedulesByBusId(formValues.busId).subscribe({
+      next: (existingSchedules: any) => {
+        const hasOverlap = this.checkForScheduleOverlap(existingSchedules, schedules);
+        if (hasOverlap) {
+          this.errorMessage = 'The selected bus has an overlapping schedule at the given time.';
+          this.isSubmitting = false;
+          return;
+        }
+  
+        // No overlap, proceed with schedule creation
+        const requests = schedules.map(schedule => {
+          return this.apiService.createSchedule({
+            busId: Number(formValues.busId),
+            routeId: Number(formValues.routeId),
+            departureTime: schedule.departureDateTime,
+            arrivalTime: schedule.arrivalDateTime,
+            fare: formValues.fare,
+            date: schedule.departureDate
+          });
+        });
 
-    forkJoin(requests).subscribe({
-      next: () => {
-        this.successMessage = 'All schedules created successfully!';
-        this.scheduleCreated.emit();
-        this.createScheduleForm.reset();
+        console.log(schedules);
+  
+        forkJoin(requests).subscribe({
+          next: () => {
+            this.successMessage = 'All schedules created successfully!';
+            this.scheduleCreated.emit();
+            this.createScheduleForm.reset();
+          },
+          error: (error: any) => this.handleError(error),
+          complete: () => (this.isSubmitting = false)
+        });
       },
-      error: (error: any) => this.handleError(error),
-      complete: () => (this.isSubmitting = false)
+      error: (error: any) => this.handleError(error)
+    });
+  }
+
+  checkForScheduleOverlap(existingSchedules: any[], newSchedules: any[]): boolean {
+    return newSchedules.some(newSchedule => {
+      return existingSchedules.some(existingSchedule => {
+        const existingStart = new Date(existingSchedule.departureTime).getTime();
+        const existingEnd = new Date(existingSchedule.arrivalTime).getTime();
+        const newStart = new Date(newSchedule.departureDateTime).getTime();
+        const newEnd = new Date(newSchedule.arrivalDateTime).getTime();
+  
+        // Check for overlap
+        return (newStart < existingEnd && newEnd > existingStart);
+      });
     });
   }
 

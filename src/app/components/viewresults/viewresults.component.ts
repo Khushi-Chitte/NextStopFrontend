@@ -31,6 +31,8 @@ export class ViewresultsComponent implements OnInit, OnDestroy {
   private queryParamsSubscription!: Subscription;
   loading: boolean = true;
   isPassenger: boolean = false;
+  totalSeats: number = 0;
+  seatsBooked: number = 0;
 
   constructor(private route: ActivatedRoute, private router: Router, private apiS: ApiServiceService, private authS: AuthserviceService ) {}
 
@@ -38,8 +40,16 @@ export class ViewresultsComponent implements OnInit, OnDestroy {
     this.isPassenger = this.authS.getUserRoles() === 'passenger';
     
     this.queryParamsSubscription = this.route.queryParams.subscribe((params) => {
-      this.searchParams = { ...params };
-      this.fetchBusSearchResults(params['Origin'], params['Destination'], params['TravelDate']);
+      console.log(params['TravelDate']);
+
+
+      this.searchParams = {
+        Origin: params['Origin'],
+        Destination: params['Destination'],
+        TravelDate: params['TravelDate']
+      };
+
+      this.fetchAllSchedules();
     });
 
     this.authStatusSubscription = this.authS.isAuthenticated$.subscribe(status => {
@@ -64,18 +74,49 @@ export class ViewresultsComponent implements OnInit, OnDestroy {
     this.showSortOptions = !this.showSortOptions;
   }
 
-  fetchBusSearchResults(Origin: string, Destination: string, TravelDate: string) {
+  fetchAllSchedules() {
     this.loading = true;
-    this.apiS.fetchBusSearchResults(Origin, Destination, TravelDate).subscribe({
-      next: (response: any) => {
-        this.buses = response || [];
-        this.filteredBuses = [...this.buses]; // Initialize filteredBuses with all buses
+  
+    const travelDate = new Date(this.searchParams.TravelDate);
+    const istOffset = 5.5 * 60 * 60 * 1000; 
+
+    travelDate.setHours(0, 0, 0, 0);
+    const istTravelDate = new Date(travelDate.getTime() + istOffset);
+    this.apiS.fetchAllSchedules().subscribe({
+      next: (schedules: any[]) => {
+        const filteredSchedules = schedules.filter(schedule => {
+          const scheduleDepartureDate = new Date(schedule.departureTime);
+  
+          const istScheduleDeparture = new Date(scheduleDepartureDate.getTime() + istOffset);
+
+          return schedule.origin.toLowerCase() === this.searchParams.Origin.toLowerCase() &&
+          schedule.destination.toLowerCase() === this.searchParams.Destination.toLowerCase() &&
+          this.isSameDate(istScheduleDeparture, istTravelDate);
+        });
+
+  
+        this.buses = filteredSchedules;
         this.buses.forEach(bus => this.fetchBusDetailsById(bus.busId));
+        this.filteredBuses = [...this.buses]; 
       },
-      error: (error: any) => console.error('Error in fetching search results', error),
-      complete: () => this.loading = false,
+      error: (error: any) => {
+        console.error('Error fetching schedules:', error);
+        this.filteredBuses = [];
+      },
+      complete: () => {
+        this.loading = false;
+      }
     });
   }
+    
+
+  isSameDate(date1: Date, date2: Date): boolean {
+    return date1.getDate() === date2.getDate() &&
+           date1.getMonth() === date2.getMonth() &&
+           date1.getFullYear() === date2.getFullYear();
+  }
+   
+  
 
   onBusTypeChange(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -119,9 +160,15 @@ export class ViewresultsComponent implements OnInit, OnDestroy {
     this.apiS.fetchBusDetailsById(busId).subscribe({
       next: (busDetails: any) => {
         console.log('Bus Details:', busDetails);
+
+        const totalSeats = busDetails.totalSeats;
+
         const bus = this.buses.find(b => b.busId === busId);
         if (bus) {
           bus.busType = busDetails.busType; 
+          const bookedSeats = bus.seats.length;
+          const seatsAvailable = totalSeats - bookedSeats;
+          bus.availableSeats = seatsAvailable;
         }
 
         this.fetchBusRatings(busId);
@@ -153,6 +200,13 @@ export class ViewresultsComponent implements OnInit, OnDestroy {
     const totalRating = feedbacks.reduce((acc, feedback) => acc + feedback.rating, 0);
     const averageRating = totalRating / feedbacks.length;
     return parseFloat(averageRating.toFixed(2));
+  }
+
+  convertToIST(utcDate: string): string {
+    const date = new Date(utcDate);
+    const istOffset = 5.5 * 60; // IST offset is UTC +5:30
+    date.setMinutes(date.getMinutes() + istOffset);  // Adjust the date to IST
+    return date.toISOString();  // or use date.toLocaleString() depending on your needs
   }
 
   onView(bus: any) {

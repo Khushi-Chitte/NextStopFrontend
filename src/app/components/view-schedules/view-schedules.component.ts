@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UpdateScheduleComponent } from '../update-schedule/update-schedule.component';
 import { BookingsDialogComponent } from '../bookings-dialog/bookings-dialog.component';
+import { Schedule } from './ISchedule';
 
 @Component({
   selector: 'app-view-schedules',
@@ -16,11 +17,11 @@ import { BookingsDialogComponent } from '../bookings-dialog/bookings-dialog.comp
   styleUrl: './view-schedules.component.css'
 })
 export class ViewSchedulesComponent implements OnInit, OnDestroy {
-  schedules: any[] = [];
-  filteredSchedules: any[] = [];
+  schedules: Schedule[] = [];
+  filteredSchedules: Schedule[] = [];
   errorMessage: string = '';
   isAdmin: boolean = false;
-  schedulesNew: any[] = [];
+  schedulesNew: Schedule[] = [];
   currentFilter: string = 'latest';
 
   isAuthenticated: boolean = false;
@@ -58,24 +59,37 @@ export class ViewSchedulesComponent implements OnInit, OnDestroy {
 
   loadScheduleOperator(): void {
     this.apiService.fetchSchedulesByOperatorId().subscribe({
-      next: (schedules: any) => {
-        this.schedules = schedules;
-        this.filteredSchedules = schedules;
+      next: (schedules: Schedule[]) => {
+        // Sort schedules by departure time
+        this.schedules = schedules.sort((a, b) => 
+          new Date(a.departureTime).getTime() - new Date(b.departureTime).getTime()
+        );
+        this.filteredSchedules = [...this.schedules];
         this.filterNewSchedules();
-        console.log(schedules);
       },
       error: (error: any) => {
         this.handleError(error);
         console.log(error);
       }
-    });    
+    });
   }
+
+  convertToIST(utcDate: string): string {
+    const date = new Date(utcDate);
+    const istOffset = 5.5 * 60; // IST offset is UTC +5:30
+    date.setMinutes(date.getMinutes() + istOffset);  // Adjust the date to IST
+    return date.toISOString();  // or use date.toLocaleString() depending on your needs
+  }
+  
 
   loadScheduleAdmin(): void {
     this.apiService.fetchAllSchedules().subscribe({
-      next: (schedules: any) => {
-        this.schedules = schedules;
-        this.filteredSchedules = schedules;
+      next: (schedules: Schedule[]) => {
+        // Sort schedules by departure time
+        this.schedules = schedules.sort((a, b) => 
+          new Date(a.departureTime).getTime() - new Date(b.departureTime).getTime()
+        );
+        this.filteredSchedules = [...this.schedules];
         this.filterNewSchedules();
       },
       error: (error: any) => {

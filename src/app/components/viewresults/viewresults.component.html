@@ -79,11 +79,11 @@
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-muted">🕒 <strong>Departure:</strong></span>
-                            <span>{{ bus.departureTime | date: 'dd MMM yyyy, hh:mm a' }}</span>
+                            <span>{{ convertToIST(bus.departureTime) | date: 'dd MMM yyyy, hh:mm a' }}</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-muted">🕓 <strong>Arrival:</strong></span>
-                            <span>{{ bus.arrivalTime | date: 'dd MMM yyyy, hh:mm a' }}</span>
+                            <span>{{ convertToIST(bus.arrivalTime) | date: 'dd MMM yyyy, hh:mm a' }}</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-muted">💰 <strong>Price:</strong></span>

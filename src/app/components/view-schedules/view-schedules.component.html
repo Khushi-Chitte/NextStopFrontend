@@ -75,10 +75,10 @@
                     <td>{{ schedule.operatorName }}</td>
                     <td>{{ schedule.routeId }}</td>
                     <td>{{ schedule.origin }} → {{ schedule.destination }}</td>
-                    <td>{{ schedule.departureTime | date }}</td>
-                    <td>{{ schedule.departureTime | date:'shortTime' }}</td>
-                    <td>{{ schedule.arrivalTime | date }}</td>
-                    <td>{{ schedule.arrivalTime | date:'shortTime' }}</td>
+                    <td>{{ convertToIST(schedule.departureTime) | date: 'EEE, dd MMM yyyy' }}</td>
+                    <td>{{ convertToIST(schedule.departureTime) | date: 'shortTime' }}</td>
+                    <td>{{ convertToIST(schedule.arrivalTime) | date: 'EEE, dd MMM yyyy' }}</td>
+                    <td>{{ convertToIST(schedule.arrivalTime) | date: 'shortTime' }}</td>
                     <td>₹{{ schedule.fare }}</td>
                     <td> <button class="booking-button" (click)="viewBookings(schedule.scheduleId)"> View Bookings </button> </td>
                     <td class="action-buttons">
