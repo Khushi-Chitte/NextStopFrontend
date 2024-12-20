@@ -2,18 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from '../../services/api-service.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-bookings',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './bookings.component.html',
   styleUrl: './bookings.component.css'
 })
 export class BookingsComponent implements OnInit{
   bookings: any[] = [];
+  filteredBookings: any[] = [];
   errorMessage: string = '';
   successMessage: string = '';
+  searchOrigin: string = '';
+  searchDestination: string = '';
+  searchBookingDate: string = '';
 
   constructor(private apiService: ApiServiceService, private router: Router) { }
 
@@ -29,6 +34,7 @@ export class BookingsComponent implements OnInit{
         
         this.addFromScheduleDetails();
         this.addFromSeatLogs();
+        this.filteredBookings = [...this.bookings]; 
 
       },
       error: (error: any) => {
@@ -100,4 +106,22 @@ export class BookingsComponent implements OnInit{
        }
     });
   }
+
+  filterBookings(): void {
+    this.filteredBookings = this.bookings.filter((booking) => {
+      return (
+        (this.searchOrigin ? booking.origin.toLowerCase().includes(this.searchOrigin.toLowerCase()) : true) &&
+        (this.searchDestination ? booking.destination.toLowerCase().includes(this.searchDestination.toLowerCase()) : true) &&
+        (this.searchBookingDate ? booking.bookingDate.split('T')[0] === this.searchBookingDate : true)
+      );
+    });
+  }
+
+  resetFilters(): void {
+    this.searchOrigin = '';
+    this.searchDestination = '';
+    this.searchBookingDate = '';
+    this.filteredBookings = [...this.bookings]; // Reset to original bookings list
+  }
+  
 }

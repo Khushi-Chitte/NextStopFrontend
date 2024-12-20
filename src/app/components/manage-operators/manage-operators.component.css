@@ -4,26 +4,8 @@
   padding: 20px;
 }
 
-.table {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-}
+/* Removed styles related to tables */
 
-.table th,
-.table td {
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-}
-
-.table th {
-  background-color: #ff616f;
-  color: #fff;
-  font-weight: bold;
-}
-
-/* Flex container for search fields */
 .search-container {
   display: flex;
   gap: 10px;
@@ -40,28 +22,33 @@
   padding: 8px 20px;
 }
 
-.card-row {
-  padding: 20px;
-  margin: 10px 0;
+.operator-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust as needed */
+  gap: 20px;
+}
+
+.card {
+  max-width: 570px;
+  border: 1px solid #ddd;
   border-radius: 10px;
-  background-color: #fff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.card-row:hover {
+.card:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
 
-.table-striped tbody tr:nth-of-type(odd) .card-row {
-  background-color: #f9f9f9;
+.card-title {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-top: 5px;
 }
 
-.table-hover tbody tr:hover .card-row {
-  background-color: #f1f1f1;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.card-text {
+  margin: 0.5em 0;
 }
 
 .btn-danger {
@@ -97,13 +84,13 @@
   font-weight: bold;
 }
 
-.success-message,
-.error-message {
-  text-align: center;
-  font-weight: bold;
-  background-color: #f9f9f9;
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }
 
-.success-message {
-  color: green;
+.action-buttons button {
+  flex: 1;
+  margin-right: 5px;
 }

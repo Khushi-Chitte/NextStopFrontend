@@ -1,47 +1,67 @@
 <div class="container mt-5">
     <h2 class="text-center mb-4">My Bookings</h2>
 
+    <!-- Search Bar -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+          <input 
+            type="text" 
+            [(ngModel)]="searchOrigin" 
+            (ngModelChange)="filterBookings()" 
+            placeholder="Search by Origin" 
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-3">
+          <input 
+            type="text" 
+            [(ngModel)]="searchDestination" 
+            (ngModelChange)="filterBookings()" 
+            placeholder="Search by Destination" 
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-3">
+          <input 
+            type="date" 
+            [(ngModel)]="searchBookingDate" 
+            (ngModelChange)="filterBookings()" 
+            placeholder="Search by Booking Date" 
+            class="form-control"
+          />
+        </div>
+        <button class="btn btn-secondary col-md-1" (click)="resetFilters()">Reset</button>
+      </div>
+
     <div *ngIf="errorMessage" class="error">
         <p>{{ errorMessage }}</p>
     </div>
 
-    <!-- Table of Bookings -->
+    <!-- Card List for Bookings -->
     <div *ngIf="bookings.length > 0" class="bus-list">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Booking Id</th>
-                    <th>Route</th>
-                    <th>Bus Name</th>
-                    <th>Reserved Seats</th>
-                    <th>Total Fare</th>
-                    <th>Status</th>
-                    <th>Booking Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let booking of bookings" class="card-row">
-                    <td>{{ booking.bookingId }}</td>
-                    <td>{{ booking.origin }} - {{ booking.destination }}</td>
-                    <td>{{ booking.busName || 'Loading...' }}</td>
-                    
-                    <!-- <td *ngIf="booking.reservedSeats.length>0">{{booking.reservedSeats}}</td>
-                    <td *ngIf="booking.reservedSeats.length===0">N/A</td> -->
-
-                    <td *ngIf="booking.seatFromLog?.length>0">{{booking.seatFromLog}}</td>
-                    <td *ngIf="booking.seatFromLog?.length===0">N/A</td>
-
-                    <td>{{ booking.totalFare }}</td>
-                    <td>{{ booking.status }}</td>
-                    <td>{{ booking.bookingDate | date:'yyyy-MM-dd' }}</td>
-                    <td>
+        <div class="row">
+            <div *ngFor="let booking of filteredBookings" class="col-md-4 mb-4">
+                <div class="card card-booking">
+                    <div class="card-header">
+                        <h5 class="card-title">{{ booking.origin }} - {{ booking.destination }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong>Booking Id:</strong> {{ booking.bookingId }} <br>
+                            <strong>Bus Name:</strong> {{ booking.busName || 'Loading...' }} <br>
+                            <strong>Reserved Seats:</strong> 
+                            <span *ngIf="booking.seatFromLog?.length > 0">{{ booking.seatFromLog }}</span>
+                            <span *ngIf="booking.seatFromLog?.length === 0">N/A</span> <br>
+                            <strong>Total Fare:</strong> {{ booking.totalFare }} <br>
+                            <strong>Status:</strong> {{ booking.status }} <br>
+                            <strong>Booking Date:</strong> {{ booking.bookingDate | date:'yyyy-MM-dd' }}
+                        </p>
                         <button class="btn btn-danger" (click)="onView(booking)">
                             View Booking
                         </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

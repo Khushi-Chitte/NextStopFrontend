@@ -1,42 +1,38 @@
 <div class="container">
-    <h3 class="mt-4">View Admins</h3>
-    <div class="mb-3 search-container">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Search by Name"
-        [(ngModel)]="searchName"
-        (input)="applySearch()"
-      />
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Search by Email"
-        [(ngModel)]="searchEmail"
-        (input)="applySearch()"
-      />
-      <button class="btn btn-secondary" (click)="resetSearch()">Reset</button>
-    </div>
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Address</th>
-          <th>Account Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let admin of filteredAdmins">
-          <td>{{ admin.name }}</td>
-          <td>{{ admin.email }}</td>
-          <td>{{ admin.phone }}</td>
-          <td>{{ admin.address }}</td>
-          <td>{{ admin.isActive }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  <h3 class="text-center mb-4">View Admins</h3>
+  <div class="mb-3 search-container">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search by Name"
+      [(ngModel)]="searchName"
+      (input)="applySearch()"
+    />
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search by Email"
+      [(ngModel)]="searchEmail"
+      (input)="applySearch()"
+    />
+    <button class="btn btn-secondary" (click)="resetSearch()">Reset</button>
   </div>
-  
+
+  <div class="operator-list">
+    <div *ngFor="let admin of filteredAdmins" class="card-row">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">{{ admin.name }}</h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text"><strong>Email:</strong> {{ admin.email }}</p>
+          <p class="card-text"><strong>Phone:</strong> {{ admin.phone }}</p>
+          <p class="card-text"><strong>Address:</strong> {{ admin.address }}</p>
+          <p class="card-text"><strong>Account Status:</strong> {{ admin.isActive }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+</div>
