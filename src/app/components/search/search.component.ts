@@ -15,7 +15,14 @@ export class SearchComponent {
 
   constructor(private router: Router) {
     const today = new Date();
-    this.minDate = today.toISOString().split('T')[0];
+
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+
+    this.minDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+
+    console.log('Today:', this.minDate);
   }
 
   onSearch() {

@@ -28,7 +28,15 @@ export class CreateScheduleComponent implements OnInit {
   @Output() scheduleCreated = new EventEmitter<void>();
 
   constructor(private apiService: ApiServiceService, private authService: AuthserviceService) {
-    this.minDate = new Date().toISOString().split('T')[0];  // Set minimum date to today
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+
+    this.minDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+
+    console.log('Today:', this.minDate);
   }
 
   ngOnInit(): void {
