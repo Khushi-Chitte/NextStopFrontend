@@ -49,10 +49,19 @@ export class UpdateScheduleComponent implements OnInit {
   }
 
   initializeForm(): void {
-    const departureDate = this.data.departureTime?.split('T')[0];
-    const departureTime = this.data.departureTime?.split('T')[1]?.substring(0, 5);
-    const arrivalDate = this.data.arrivalTime?.split('T')[0];
-    const arrivalTime = this.data.arrivalTime?.split('T')[1]?.substring(0, 5);
+    const IST_OFFSET = 5 * 60 + 30;
+
+    const departureDateIST = new Date(this.data.departureTime);
+    departureDateIST.setMinutes(departureDateIST.getMinutes() + IST_OFFSET);
+
+    const arrivalDateIST = new Date(this.data.arrivalTime);
+    arrivalDateIST.setMinutes(arrivalDateIST.getMinutes() + IST_OFFSET);
+    
+    const departureDate = this.formatDate(departureDateIST);  
+    const departureTime = this.formatTime(departureDateIST);  
+  
+    const arrivalDate = this.formatDate(arrivalDateIST);  
+    const arrivalTime = this.formatTime(arrivalDateIST);
 
     this.updateScheduleForm = new FormGroup({
       busId: new FormControl(this.data.busId, [Validators.required]),
@@ -63,6 +72,19 @@ export class UpdateScheduleComponent implements OnInit {
       arrivalTime: new FormControl(arrivalTime, [Validators.required]),
       fare: new FormControl(this.data.fare, [Validators.required, Validators.min(1)]),
     });
+  }
+
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  private formatTime(date: Date): string {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
   }
 
   fetchOperatorBuses(): void {
@@ -89,13 +111,19 @@ export class UpdateScheduleComponent implements OnInit {
   onUpdateSchedule(): void {
     const formValues = this.updateScheduleForm.value;
 
+    const departureTimeISO = new Date(`${formValues.departureDate}T${formValues.departureTime}:00`).toISOString();
+    const arrivalTimeISO = new Date(`${formValues.arrivalDate}T${formValues.arrivalTime}:00`).toISOString();
+
+
     const updatedSchedule = {
       busId: Number(formValues.busId),
       routeId: Number(formValues.routeId),
-      departureTime: `${formValues.departureDate}T${formValues.departureTime}:00`,
-      arrivalTime: `${formValues.arrivalDate}T${formValues.arrivalTime}:00`,
+      departureTime: departureTimeISO,
+      arrivalTime: arrivalTimeISO,
       fare: formValues.fare,
     };
+
+    console.log(updatedSchedule);
 
     this.isSubmitting = true;
     this.dialogRef.close(updatedSchedule); // Pass updated schedule back to parent component

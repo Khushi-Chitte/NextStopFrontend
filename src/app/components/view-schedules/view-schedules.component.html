@@ -45,57 +45,38 @@
         <button class="btn btn-warning" (click)="resetSearch()">Reset</button>
     </div>
 
-    <!-- Schedule Table -->
+    <!-- Schedule Cards -->
     <div *ngIf="schedules.length > 0" class="schedule-list">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <!-- <th>Schedule ID</th> -->
-                    <!-- <th>Bus ID</th> -->
-                    <th>Bus Name</th>
-                    <th>Bus Number</th>
-                    <th>Operator Name</th>
-                    <th>Route ID</th>
-                    <th>Route</th>
-                    <th>Departure Date</th>
-                    <th>Departure Time</th>
-                    <th>Arrival Date</th>
-                    <th>Arrival Time</th>
-                    <th>Fare</th>
-                    <th>Bookings</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let schedule of filteredSchedules" class="card-row">
-                    <!-- <td>{{ schedule.scheduleId }}</td> -->
-                    <!-- <td>{{ schedule.busId }}</td> -->
-                    <td>{{ schedule.busName }}</td>
-                    <td>{{ schedule.busNumber }}</td>
-                    <td>{{ schedule.operatorName }}</td>
-                    <td>{{ schedule.routeId }}</td>
-                    <td>{{ schedule.origin }} → {{ schedule.destination }}</td>
-                    <td>{{ convertToIST(schedule.departureTime) | date: 'EEE, dd MMM yyyy' }}</td>
-                    <td>{{ convertToIST(schedule.departureTime) | date: 'shortTime' }}</td>
-                    <td>{{ convertToIST(schedule.arrivalTime) | date: 'EEE, dd MMM yyyy' }}</td>
-                    <td>{{ convertToIST(schedule.arrivalTime) | date: 'shortTime' }}</td>
-                    <td>₹{{ schedule.fare }}</td>
-                    <td> <button class="booking-button" (click)="viewBookings(schedule.scheduleId)"> View Bookings </button> </td>
-                    <td class="action-buttons">
-                        <button 
-                            class="btn btn-primary" 
-                            [disabled]="isSchedulePast(schedule.departureTime)" 
-                            (click)="onUpdate(schedule.scheduleId)">
-                            Update
-                        </button>
-                        <button 
-                            class="btn btn-danger" 
-                            (click)="onDelete(schedule.scheduleId)">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="row">
+            <div *ngFor="let schedule of filteredSchedules" class="col-md-4 col-sm-6 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">{{ schedule.busName }} ({{ schedule.busNumber }})</h5> 
+                      </div>
+                    <div class="card-body">
+                        <!-- <h5 class="card-title">{{ schedule.busName }} ({{ schedule.busNumber }})</h5> -->
+                        <p class="card-text"><strong>Operator:</strong> {{ schedule.operatorName }}</p>
+                        <p class="card-text"><strong>Route:</strong> {{ schedule.origin }} → {{ schedule.destination }}</p>
+                        <p class="card-text"><strong>Departure:</strong> {{ convertToIST(schedule.departureTime) | date: 'EEE, dd MMM yyyy' }} at {{ convertToIST(schedule.departureTime) | date: 'shortTime' }}</p>
+                        <p class="card-text"><strong>Arrival:</strong> {{ convertToIST(schedule.arrivalTime) | date: 'EEE, dd MMM yyyy' }} at {{ convertToIST(schedule.arrivalTime) | date: 'shortTime' }}</p>
+                        <p class="card-text"><strong>Fare:</strong> ₹{{ schedule.fare }}</p>
+                        <div class="action-buttons">
+                            <button 
+                                class="btn btn-primary" 
+                                [disabled]="isSchedulePast(schedule.departureTime)" 
+                                (click)="onUpdate(schedule.scheduleId)">
+                                Update
+                            </button>
+                            <button 
+                                class="btn btn-danger" 
+                                (click)="onDelete(schedule.scheduleId)">
+                                Delete
+                            </button>
+                        </div>
+                        <button class="booking-button" (click)="viewBookings(schedule.scheduleId)"> View Bookings </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

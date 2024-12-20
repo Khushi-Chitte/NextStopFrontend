@@ -133,7 +133,12 @@ export class ViewSchedulesComponent implements OnInit, OnDestroy {
   filterNewSchedules(): void {
     const today = new Date().setHours(0, 0, 0, 0); 
     this.schedulesNew = this.schedules.filter(schedule => {
-      const departureDate = new Date(schedule.departureTime).setHours(0, 0, 0, 0); 
+      const departureDateIST = new Date(schedule.departureTime);
+      const IST_OFFSET = 5 * 60 + 30;
+      departureDateIST.setMinutes(departureDateIST.getMinutes() + IST_OFFSET);
+      departureDateIST.setHours(0,0,0,0);
+
+      const departureDate = new Date(departureDateIST).setHours(0, 0, 0, 0); 
       return departureDate >= today; 
     });
 
@@ -173,6 +178,11 @@ export class ViewSchedulesComponent implements OnInit, OnDestroy {
   isSchedulePast(departureTime: string): boolean {
     const currentDate = new Date();
     const scheduleDate = new Date(departureTime);
+
+    const IST_OFFSET = 5 * 60 + 30;
+
+    scheduleDate.setMinutes(scheduleDate.getMinutes() + IST_OFFSET);
+
   
     return scheduleDate < currentDate;
   }
@@ -202,7 +212,12 @@ export class ViewSchedulesComponent implements OnInit, OnDestroy {
   onSearch(): void {
     this.filteredSchedules = this.schedules.filter(schedule => {
       const matchesBusNumber = this.busNumberSearch ? schedule.busNumber.includes(this.busNumberSearch) : true;
-      const matchesDate = this.departureDateSearch ? new Date(schedule.departureTime).toLocaleDateString() === new Date(this.departureDateSearch).toLocaleDateString() : true;
+
+      const departureDate = new Date(schedule.departureTime);
+      const IST_OFFSET = 5 * 60 + 30;
+      departureDate.setMinutes(departureDate.getMinutes() + IST_OFFSET);
+
+      const matchesDate = this.departureDateSearch ? departureDate.toLocaleDateString() === new Date(this.departureDateSearch).toLocaleDateString() : true;
       return matchesBusNumber && matchesDate;
     });
   }

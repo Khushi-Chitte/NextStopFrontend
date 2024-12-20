@@ -1,85 +1,76 @@
 <div class="container mt-2">
-    <h2 class="text-center mb-4">Routes</h2>
+  <h2 class="text-center mb-4">Routes</h2>
 
-    <div *ngIf="errorMessage" class="error">
-        <p>{{ errorMessage }}</p>
+  <div *ngIf="errorMessage" class="error">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div class="mb-3">
+    <div class="row g-2">
+      <div class="col-md-2">
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Search by Route ID" 
+          [(ngModel)]="searchRouteId" 
+          (input)="searchByRouteId()" 
+        />
       </div>
 
-      <div class="mb-3">
-        <div class="row g-2">
-          <!-- Search by Route ID -->
-          <div class="col-md-2">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search by Route ID"
-              [(ngModel)]="searchRouteId"
-              (input)="searchByRouteId()"
-            />
-          </div>
+      <div class="col-md-4">
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Search by Origin" 
+          [(ngModel)]="searchOrigin" 
+          (input)="searchByOrigin()" 
+        />
+      </div>
 
+      <div class="col-md-4">
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Search by Destination" 
+          [(ngModel)]="searchDestination" 
+          (input)="searchByDestination()" 
+        />
+      </div>
 
-          <div class="col-md-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search by Origin"
-              [(ngModel)]="searchOrigin"
-              (input)="searchByOrigin()"
-            />
-          </div>
-
-          <div class="col-md-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search by Destination"
-              [(ngModel)]="searchDestination"
-              (input)="searchByDestination()"
-            />
-          </div>
-
-          <div class="col">
-            <button class="btn btn-secondary" (click)="resetSearch()">Reset</button>
-          </div>
-        </div> 
-        </div>
-
-
-        
-
-
-    <div *ngIf="routes.length > 0" class="route-list">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Route Id</th>
-                    <th>Route</th>
-                    <th>Distance</th>
-                    <th>Estimated Time</th>
-                    <th *ngIf="isAdmin">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let route of filteredRoutes" class="card-row">
-                    <td>{{ route.routeId }}</td>
-                    <td>{{ route.origin }} → {{ route.destination }}</td>
-                    <td>{{ route.distance }}</td>
-                    <td>{{ route.estimatedTime }}</td>
-                    <td *ngIf="isAdmin">
-                        <button 
-                          class="btn btn-primary" 
-                          (click)="onUpdate(route.routeId)" >
-                            Update
-                        </button>
-                        <button 
-                          class="btn btn-danger" 
-                          (click)="onDelete(route.routeId)" >
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      <div class="col">
+        <button class="btn btn-secondary" (click)="resetSearch()">Reset</button>
+      </div>
     </div>
+  </div>
+
+  <div *ngIf="routes.length > 0" class="route-list">
+    <div class="row">
+      <div *ngFor="let route of filteredRoutes" class="col-md-4 col-sm-6 mb-3">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">{{ route.origin }} → {{ route.destination }}</h5> 
+          </div>
+          <div class="card-body">
+            <p class="card-text"><strong>Route ID:</strong> {{ route.routeId }}</p>
+            <p class="card-text"><strong>Distance:</strong> {{ route.distance }}</p>
+            <p class="card-text"><strong>Estimated Time:</strong> {{ route.estimatedTime }}</p>
+            <div *ngIf="isAdmin" class="action-buttons">
+              <button 
+                class="btn btn-primary" 
+                (click)="onUpdate(route.routeId)" 
+              >
+                Update
+              </button>
+              <button 
+                class="btn btn-danger" 
+                (click)="onDelete(route.routeId)" 
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

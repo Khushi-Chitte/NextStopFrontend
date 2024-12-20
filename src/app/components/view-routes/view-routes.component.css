@@ -2,68 +2,30 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
-}
-
-.table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-}
-
-.table th,
-.table td {
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.table th {
-    background-color: #ff616f;
-    color: #fff;
-    font-weight: bold;
-}
-
-/* Card-like styling for each row */
-.card-row {
-    padding: 20px;
-    margin: 10px 0;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.card-row:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* Striping for rows */
-.table-striped tbody tr:nth-of-type(odd) .card-row {
-    background-color: #f9f9f9;
-}
-
-.table-hover tbody tr:hover .card-row {
-    background-color: #f1f1f1;
-    transform: translateY(-2px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.btn-danger {
+  }
+  
+  .d-flex {
+    display: flex;
+    align-items: center;
+  }
+  
+  .d-flex input {
+    margin-right: 10px;
+  }
+  
+  .btn-danger {
     border: none;
-    margin-left: 5px;
     padding: 8px 12px;
     color: #fff;
-}
-
-.btn-primary {
+  }
+  
+  .btn-primary {
     border: none;
-    margin-right: 5px;
     padding: 8px 12px;
     color: #fff;
-}
-
-.loading,
+  }
+  
+  .loading,
   .error {
     text-align: center;
     font-size: 18px;
@@ -74,13 +36,53 @@
     color: red;
     font-weight: bold;
   }
-
+  
   .success-message, .error-message {
     text-align: center;
     font-weight: bold;
     background-color: #f9f9f9;
   }
-
+  
   .success-message {
     color: green;
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-title {
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+  .card-text {
+    margin: 0.5em 0;
+  }
+  
+  .route-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 20px; 
+    justify-content: center; 
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: space-between; 
+    margin-top: 10px;
+  }
+  
+  .action-buttons button {
+    flex: 1; 
+    margin-right: 5px; 
   }

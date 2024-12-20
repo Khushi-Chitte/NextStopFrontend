@@ -1,99 +1,103 @@
 .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+.d-flex {
+  display: flex;
+  align-items: center;
 }
 
-.table th,
-.table td {
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.table th {
-    background-color: #ff616f;
-    color: #fff;
-    font-weight: bold;
-}
-
-/* Card-like styling for each row */
-.card-row {
-    padding: 20px;
-    margin: 10px 0;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.card-row:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* Striping for rows */
-.table-striped tbody tr:nth-of-type(odd) .card-row {
-    background-color: #f9f9f9;
-}
-
-.table-hover tbody tr:hover .card-row {
-    background-color: #f1f1f1;
-    transform: translateY(-2px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.d-flex input {
+  margin-right: 10px;
 }
 
 .btn-danger {
-    border: none;
-    margin-left: 5px;
-    padding: 8px 12px;
-    color: #fff;
+  border: none;
+  padding: 8px 12px;
+  color: #fff;
 }
 
 .btn-primary {
-    border: none;
-    margin-right: 5px;
-    padding: 8px 12px;
-    color: #fff;
+  border: none;
+  padding: 8px 12px;
+  color: #fff;
 }
 
 .loading,
-  .error {
-    text-align: center;
-    font-size: 18px;
-    color: #666;
-  }
-  
-  .error {
-    color: red;
-    font-weight: bold;
-  }
+.error {
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+}
 
-  .success-message, .error-message {
-    text-align: center;
-    font-weight: bold;
-    background-color: #f9f9f9;
-  }
+.error {
+  color: red;
+  font-weight: bold;
+}
 
-  .success-message {
-    color: green;
-  }
+.success-message, .error-message {
+  text-align: center;
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
 
-  .btn-feedback {
-    background-color: #ff616f;
-    border: none;
-    font-weight: bold;
-    padding: 6px 10px;
-    color: #fff;
-    border-radius: 5px;
-  }
-  
-  .btn-feedback:hover{
-    background-color: #e64c5d;
-  }
+.success-message {
+  color: green;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.card-text {
+  margin: 0.5em 0;
+}
+
+.bus-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust minmax values as needed */
+  gap: 20px; /* Increase gap for more space */
+  justify-content: center; /* Center cards horizontally */
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between; /* Distributes space between buttons */
+  margin-top: 10px;
+}
+
+.action-buttons button {
+  flex: 1; /* Makes buttons take equal space */
+  margin-right: 5px; /* Adds space between buttons */
+}
+
+.btn-feedback {
+  background-color: #ff616f;
+  border: none;
+  font-weight: bold;
+  padding: 6px 10px;
+  color: #fff;
+  border-radius: 5px;
+  margin-top: 10px;
+  width: 99%;
+}
+
+.btn-feedback:hover {
+  background-color: #e64c5d;
+}
