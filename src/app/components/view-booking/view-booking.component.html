@@ -45,19 +45,19 @@
       
       <div class="detail-item">
         <span class="label">Departure Date:</span>
-        <span class="value">{{ scheduleDetails?.departureTime | date }}</span>
+        <span class="value">{{ convertToIST(scheduleDetails?.departureTime) | date: 'EEE, dd MMM yyyy' }}</span>
       </div>
       <div class="detail-item">
         <span class="label">Departure time:</span>
-        <span class="value">{{ scheduleDetails?.departureTime | date:'hh:mm a' }}</span>
+        <span class="value">{{ convertToIST(scheduleDetails?.departureTime) | date: 'shortTime' }}</span>
       </div>
       <div class="detail-item">
         <span class="label">Arrival Date:</span>
-        <span class="value">{{ scheduleDetails?.arrivalTime | date }}</span>
+        <span class="value">{{ convertToIST(scheduleDetails?.arrivalTime) | date: 'EEE, dd MMM yyyy' }}</span>
       </div>
       <div class="detail-item">
         <span class="label">Arrival time:</span>
-        <span class="value">{{ scheduleDetails?.arrivalTime | date:'hh:mm a' }}</span>
+        <span class="value">{{ convertToIST(scheduleDetails?.arrivalTime) | date: 'shortTime' }}</span>
       </div>
       <div class="detail-item">
         <span class="label">Total Fare:</span>
@@ -69,7 +69,7 @@
       </div>
       <div class="detail-item">
         <span class="label">Booking Date:</span>
-        <span class="value">{{ bookingDetails?.bookingDate | date }}</span>
+        <span class="value">{{ bookingDetails?.bookingDate | date: 'EEE, dd MMM yyyy' }}</span>
       </div>
       <div class="detail-item">
         <span class="label">Payment Status:</span>

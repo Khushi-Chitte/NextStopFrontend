@@ -11,8 +11,8 @@
 
     <h3>Schedule Details</h3>
     <p><strong>Route:</strong> {{ scheduleDetails.origin }} - {{ scheduleDetails.destination }}</p>
-    <p><strong>Departure:</strong> {{ scheduleDetails.departureTime | date:'yyyy-MM-dd HH:mm' }}</p>
-    <p><strong>Arrival:</strong> {{ scheduleDetails.arrivalTime | date:'yyyy-MM-dd HH:mm' }}</p>
+    <p><strong>Departure:</strong> {{ convertToIST(scheduleDetails.departureTime) | date:'EEE, dd MMM yyyy, hh:mm a' }}</p>
+    <p><strong>Arrival:</strong> {{ convertToIST(scheduleDetails.arrivalTime) | date:'EEE, dd MMM yyyy, hh:mm a' }}</p>
     <p><strong>Fare per seat:</strong> ₹{{ scheduleDetails.fare }}</p>
 
     <h3>Selected Seats</h3>

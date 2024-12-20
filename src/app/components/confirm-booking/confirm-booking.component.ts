@@ -146,6 +146,13 @@ export class ConfirmBookingComponent implements OnInit {
       },
     });
   }
+
+  convertToIST(utcDate: string): string {
+    const date = new Date(utcDate);
+    const istOffset = 5.5 * 60; // IST offset is UTC +5:30
+    date.setMinutes(date.getMinutes() + istOffset);  // Adjust the date to IST
+    return date.toISOString();  // or use date.toLocaleString() depending on your needs
+  }
   
 
   goBack() {
