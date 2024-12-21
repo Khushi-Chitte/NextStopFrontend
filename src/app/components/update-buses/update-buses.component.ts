@@ -11,6 +11,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrl: './update-buses.component.css'
 })
 export class UpdateBusesComponent {
+  allAmenities: string[] = ['Blankets', 'CCTV', 'Charging Ports'];
+  selectedAmenities: Set<string> = new Set();
+
   constructor(
     public dialogRef: MatDialogRef<UpdateBusesComponent>,
     @Inject(MAT_DIALOG_DATA) public busData: any
@@ -19,7 +22,8 @@ export class UpdateBusesComponent {
     busTypes = busTypes.filter((type) => type !== busData.busType );
     busData.busTypes = busTypes;
 
-    
+    const amenitiesArray = (busData.amenities || '').split(',').map((item: string) => item.trim());
+    this.selectedAmenities = new Set(amenitiesArray);
   }
 
   onCancel(): void {
@@ -27,7 +31,16 @@ export class UpdateBusesComponent {
   }
 
   onSave(): void {
+    this.busData.amenities = Array.from(this.selectedAmenities).join(', ');
     this.dialogRef.close(this.busData);  
+  }
+
+  toggleAmenity(amenity: string): void {
+    if (this.selectedAmenities.has(amenity)) {
+      this.selectedAmenities.delete(amenity);
+    } else {
+      this.selectedAmenities.add(amenity);
+    }
   }
 
 }

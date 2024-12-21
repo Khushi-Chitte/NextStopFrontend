@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiServiceService } from '../../services/api-service.service';
 import { AuthserviceService } from '../../services/authservice.service';
 
@@ -17,6 +17,8 @@ export class AddBusComponent implements OnInit {
   successMessage: string = '';
   isSubmitting: boolean = false;
   isAdmin: boolean = false;
+  
+  amenities: string[] = ['Blankets', 'CCTV', 'Charging Ports'];
 
   operators: any[] = [];
 
@@ -52,7 +54,9 @@ export class AddBusComponent implements OnInit {
       busNumber: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       busType: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       totalSeats: new FormControl(0, [Validators.required, Validators.min(1)]),
-      amenities: new FormControl('', [Validators.required, Validators.maxLength(255)])
+      amenities: new FormArray(
+        this.amenities.map(() => new FormControl(false)) // Initialize a checkbox for each amenity
+      )
     });
   }
 
@@ -66,7 +70,13 @@ export class AddBusComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
-    const busData = this.createBusForm.value;
+    const selectedAmenities = this.amenities
+    .filter((_, i) => this.amenitiesFormArray.at(i).value);
+
+    const busData = {
+      ...this.createBusForm.value,
+      amenities: selectedAmenities.join(', ') // Convert selected amenities to a comma-separated string
+    };
 
     console.log('Bus data:', busData);
 
@@ -102,7 +112,10 @@ export class AddBusComponent implements OnInit {
       },
     });
   }
-  
+
+  get amenitiesFormArray(): FormArray {
+    return this.createBusForm.get('amenities') as FormArray;
+  }  
 
   handleError(error: any) {
     if (error.error) {

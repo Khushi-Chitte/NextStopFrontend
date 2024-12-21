@@ -81,4 +81,22 @@
     background: #b0c4de;
     cursor: not-allowed;
 }
+
+.amenity-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 10px; /* Add space between checkbox and label */
+}
+
+.amenity-checkbox label {
+  font-size: 14px; /* Match the font size of other inputs */
+  cursor: pointer; /* Add a pointer cursor for labels */
+}
+
+.amenity-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer; /* Add a pointer cursor for checkboxes */
+}
   

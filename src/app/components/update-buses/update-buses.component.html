@@ -49,16 +49,17 @@
   </div>
 
   <div class="mb-3">
-    <label for="amenities" class="form-label">Amenities</label>
-    <input
-      type="text"
-      id="amenities"
-      name="amenities"  
-      [(ngModel)]="busData.amenities"
-      required
-      class="form-control"
-      placeholder="Enter amenities"
-    />
+    <label>Amenities:</label>
+    <div class="form-check" *ngFor="let amenity of allAmenities">
+      <input
+        type="checkbox"
+        [id]="'amenity-' + amenity"
+        class="form-check-input"
+        [checked]="selectedAmenities.has(amenity)"
+        (change)="toggleAmenity(amenity)"
+      />
+      <label class="form-check-label" [for]="'amenity-' + amenity">{{ amenity }}</label>
+    </div>
   </div>
 
   <!-- Actions -->

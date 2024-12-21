@@ -72,18 +72,23 @@
       </div>
   
       <div class="form-group">
-        <label for="amenities">Amenities</label>
-        <input
-          id="amenities"
-          type="text"
-          formControlName="amenities"
-          [class.invalid]="createBusForm.get('amenities')?.invalid && createBusForm.get('amenities')?.touched"
-          placeholder="Enter bus amenities"
-        />
-        <div class="error-message" *ngIf="createBusForm.get('amenities')?.invalid && createBusForm.get('amenities')?.touched">
-          Amenities are required and must not exceed 255 characters.
+        <label>Amenities:</label>
+        <div formArrayName="amenities">
+          <div *ngFor="let amenity of amenities; let i = index" class="amenity-checkbox">
+            <input
+              type="checkbox"
+              [formControlName]="i"
+              [id]="'amenity-' + i"
+            />
+            <label [for]="'amenity-' + i">{{ amenity }}</label>
+          </div>
+        </div>
+        <div *ngIf="amenitiesFormArray.invalid && createBusForm.touched">
+          At least one amenity must be selected.
         </div>
       </div>
+      
+      
   
       <div class="form-actions">
         <button type="submit" [disabled]="isSubmitting || createBusForm.invalid">Create Bus</button>
